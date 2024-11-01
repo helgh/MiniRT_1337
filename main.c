@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:10:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/21 02:06:14 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/10/21 19:25:14 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,19 @@ int	check_extention(const char *str)
 		return (close(fd), 0);
 	}
 	return (close(fd), write(2, "invalid extention\n", 19), 1);
+}
+
+void	free_spl(char **spl)
+{
+	char	**tmp;
+	int		i;
+
+	tmp = spl;
+	i = -1;
+	while (spl && tmp[++i])
+		free(tmp[i]);
+	if (spl)
+		free(spl);
 }
 
 int	ft_isdigit(int c)
@@ -115,7 +128,7 @@ int		check_color(char *str)
 	tmp = ft_split(str, ',');
 	len = lengh(tmp);
 	if (len != 3)
-		return (-1);
+		return (free_spl(tmp), -1);
 	if (tmp[len - 1][ft_strlen(tmp[len - 1]) - 1] == 10)
 		tmp[len - 1][ft_strlen(tmp[len - 1]) - 1] = 0;
 	while (tmp[++s])
@@ -124,11 +137,11 @@ int		check_color(char *str)
 		while (ft_isdigit(tmp[s][++i]))
 			;
 		if (tmp[s][i])
-			return (-1);
+			return (free_spl(tmp), -1);
 		if (ft_atoi(tmp[s]) > 255)
-			return (1);
+			return (free_spl(tmp), 1);
 	}
-	return (0);
+	return (free_spl(tmp), 0);
 }
 
 double	ft_atof(char *str)
@@ -175,14 +188,14 @@ int		parse_A(char **spl, int len)
 	return (0);
 }
 
-// int		parse_C(char **spl, int len)
-// {
-// 	if (len != 4)
-// 		return (print_scene_err(ERR_C), 1);
-// 	if (valid_vector(spl[1]) || valid_vector(spl[2]))
-// 		return (print_scene_err(ERR_C_1), 1);
-// 	return (0);
-// }
+int		parse_C(char **spl, int len)
+{
+	if (len != 4)
+		return (print_scene_err(ERR_C), 1);
+	if (valid_vector(spl[1]) || valid_vector(spl[2]))
+		return (print_scene_err(ERR_C_1), 1);
+	return (0);
+}
 
 int		check_element(t_scene *scene, char **spl, int len)
 {
@@ -191,8 +204,8 @@ int		check_element(t_scene *scene, char **spl, int len)
 		return (parse_window(spl, len));
 	else if (!strcmp("A", spl[0]))
 		return (parse_A(spl, len));
-	// else if (!strcmp("C", spl[0]))
-	// 	return (parse_C(spl, len));
+	else if (!strcmp("C", spl[0]))
+		return (parse_C(spl, len));
 	// else if (!strcmp("l", spl[0]))
 	// 	return (parse_l(spl));
 	// else if (!strcmp("pl", spl[0]))
@@ -220,18 +233,6 @@ int		lengh(char **str)
 	return (i);
 }
 
-void	free_spl(char **spl)
-{
-	char	**tmp;
-	int		i;
-
-	tmp = spl;
-	i = -1;
-	while (spl && tmp[++i])
-		free(tmp[i]);
-	if (spl)
-		free(spl);
-}
 
 void	parse_scene(t_scene *scene, char *str)
 {
@@ -271,7 +272,5 @@ int	main(int ac, char **av)
 	if (check_extention(av[1]))
 		return (1);
 	else
-	{
 		parse_scene(scene, av[1]);
-	}
 }

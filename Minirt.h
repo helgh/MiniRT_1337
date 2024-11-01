@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/21 00:25:56 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/01 19:26:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@
 # include <math.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 30
+# define BUFFER_SIZE 1
+#endif
+
+# ifndef RADIAN
+# define RADIAN 3.14159265359
 #endif
 
 # define BAD_TYPE "  Bad type of element in the scene\n"
 # define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
-# define ERR_C "  Forget information for element 'C' in the scene\n"
 # define ERR_l "  Forget information for element 'l' in the scene\n"
 # define ERR_pl "  Forget information for element 'pl' in the scene\n"
 # define ERR_sp "  Forget information for element 'sp' in the scene\n"
@@ -54,8 +57,27 @@
 
 /*------------------------- err Ambient lightning ---------------------------*/
 
-# define ERR_C "  Forget information for element 'C' in the scene\n"
+# define ERR_C "  Invalid information for element 'A' in the scene\n"
 # define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
+
+typedef struct s_intersect
+{
+	int		nbr_sec;
+	double	*point_sec;	
+}				t_intersect;
+
+typedef struct s_axis
+{
+	double	x;
+	double	y;
+	double	z;
+	double	w;
+}				t_axis;
+typedef struct s_ray
+{
+	t_axis	*origin_p;
+	t_axis	*direction_v;
+}				t_ray;
 
 char	*get_next_line(int fd);
 char	*find_leak(char *all);
@@ -67,13 +89,23 @@ int		lengh(char **str);
 char	**ft_split(char const *s, char c);
 int		ft_atoi(const char *str);
 int		ft_strcmp(char *s1, char *s2);
+int		count_size(double **a);
+double	**trans_mat(double **a, double det);
+double	**inverse(double **a);
+t_axis	*mult_mat_point(double **mat, t_axis *point);
+t_axis	*mult_mat_vec(double **mat, t_axis *vec);
+double	**translation(double x, double y, double z);
+double	**scaling(double x, double y, double z);
+double	**rotate_x(double angle);
+double	**rotate_y(double angle);
+double	**rotate_z(double angle);
+double	degree_to_rad(double degree);
+double	**shearing(t_axis *p1, t_axis *p2, t_axis *p3);
+t_axis	*position(t_ray *ray, double t);
+t_axis	*addition(t_axis *point, t_axis *vec);
+double	distance_point(t_axis *p1, t_axis *p2);
+t_axis	*subtract(t_axis *ax1, t_axis *ax2);
 
-typedef struct s_axis
-{
-	bool	x;
-	bool	y;
-	bool	z;
-}				t_axis;
 
 typedef struct s_color
 {

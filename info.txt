@@ -1,0 +1,6 @@
+if adding vector to point the result is a new point
+
+if subtract vector from a point the result is a new point
+
+if subtract point from a vector or a vector from vector or a point from point the result is a new vector
+
