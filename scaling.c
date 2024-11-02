@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 18:45:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/29 16:13:13 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:18:43 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	**scaling(double x, double y, double z)
+double	**scaling(double x, double y, double z, double w)
 {
 	double	**scaling;
 	int		i;
@@ -31,7 +31,7 @@ double	**scaling(double x, double y, double z)
 	scaling[0][0] = x;
 	scaling[1][1] = y;
 	scaling[2][2] = z;
-	scaling[3][3] = 1;
+	scaling[3][3] = w;
 	scaling[4] = NULL;
 	return (scaling);
 }

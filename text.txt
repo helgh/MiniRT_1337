@@ -1,9 +1,3 @@
-if adding vector to point the result is a new point
-
-if subtract vector from a point the result is a new point
-
-if subtract point from a vector or a vector from vector or a point from point the result is a new vector
-
 translation matrix ==>  transformation thats moves a point, it changes the cordonates of the point by adding to or subtracting from them.
 
 if take inverse of translation matrix we can get translation matrix thats moves points in reverse
@@ -40,4 +34,6 @@ rotation matrix ==>   multiplying a tuple by a rotation matrix around an axis wi
 Rotation matrices depend on the sine and cosine functions from trigonometry.
 
 The rotation will appear to be clockwise around the corresponding axis when viewed along that axis.
+
+
 

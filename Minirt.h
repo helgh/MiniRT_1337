@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 19:26:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:19:24 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,17 +94,18 @@ double	**trans_mat(double **a, double det);
 double	**inverse(double **a);
 t_axis	*mult_mat_point(double **mat, t_axis *point);
 t_axis	*mult_mat_vec(double **mat, t_axis *vec);
-double	**translation(double x, double y, double z);
-double	**scaling(double x, double y, double z);
+double	**translation(double x, double y, double z, double w);
+double	**scaling(double x, double y, double z, double w);
 double	**rotate_x(double angle);
 double	**rotate_y(double angle);
 double	**rotate_z(double angle);
 double	degree_to_rad(double degree);
 double	**shearing(t_axis *p1, t_axis *p2, t_axis *p3);
 t_axis	*position(t_ray *ray, double t);
-t_axis	*addition(t_axis *point, t_axis *vec);
+t_axis	*addition(t_axis *ax1, t_axis *ax2);
 double	distance_point(t_axis *p1, t_axis *p2);
 t_axis	*subtract(t_axis *ax1, t_axis *ax2);
+bool	campare_mat(double **arr1, double **arr2);
 
 
 typedef struct s_color

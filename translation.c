@@ -6,19 +6,19 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:15:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/28 18:03:14 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/02 21:07:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	**translation(double x, double y, double z)
+double	**translation(double x, double y, double z, double w)
 {
 	double	**tr;
 	int		i;
 	int		s;
 	int		a;
-	int		arr[3];
+	int		arr[4];
 
 	i = -1;
 	a = 0;
@@ -26,6 +26,7 @@ double	**translation(double x, double y, double z)
 	arr[0] = x;
 	arr[1] = y;
 	arr[2] = z;
+	arr[3] = w;
 	while (++i < 4)
 	{
 		s = -1;

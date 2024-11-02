@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   magnitude.c                                        :+:      :+:    :+:   */
+/*   mult_by_scalar.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 18:26:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 22:35:46 by hael-ghd         ###   ########.fr       */
+/*   Created: 2024/11/01 22:02:04 by hael-ghd          #+#    #+#             */
+/*   Updated: 2024/11/01 22:05:12 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	magnitude(t_axis *point)
+t_axis	*mult_by_scalar(t_axis *ax, double scalar)
 {
-	double	magnitude;
+	t_axis	*new_ax;
 
-	magnitude = pow(point->x, 2);
-	magnitude += pow(point->y, 2);
-	magnitude += pow(point->z, 2);
-	magnitude = sqrt(magnitude);
-	return (magnitude);
+	new_ax = malloc(sizeof(t_axis));
+	if (!new_ax)
+		return (NULL);
+	new_ax->x = ax->x * scalar;
+	new_ax->y = ax->y * scalar;
+	new_ax->z = ax->z * scalar;
+	new_ax->w = ax->w * scalar;
+	return (new_ax);
 }

@@ -6,74 +6,111 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:42:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/28 00:24:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/02 17:34:45 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-int main() {
-    // Define a 4x4 matrix
-    double **matrix = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
-    matrix[0] = malloc(sizeof(double) * 4); // Row 0
-    matrix[1] = malloc(sizeof(double) * 4); // Row 1
-    matrix[2] = malloc(sizeof(double) * 4); // Row 2
-    matrix[3] = malloc(sizeof(double) * 4); // Row 3
-    matrix[4] = NULL; // NULL terminate the array
+double	find_new_value(double **a, double **b, int i, int s)
+{
+	double	value;
+	int		r;
+	int		size;
 
-    // Fill the matrix
-    matrix[0][0] = 8; matrix[0][1] = -5; matrix[0][2] = 9;  matrix[0][3] = 2;
-    matrix[1][0] = 7; matrix[1][1] = 5;  matrix[1][2] = 6;  matrix[1][3] = 1;
-    matrix[2][0] = -6;  matrix[2][1] = 0;  matrix[2][2] = 9; matrix[2][3] = 6;
-    matrix[3][0] = -3; matrix[3][1] = 0;  matrix[3][2] = -9;  matrix[3][3] = -4;
-    double **matri = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
-    matri[0] = malloc(sizeof(double) * 4); // Row 0
-    matri[1] = malloc(sizeof(double) * 4); // Row 1
-    matri[2] = malloc(sizeof(double) * 4); // Row 2
-    matri[3] = malloc(sizeof(double) * 4); // Row 3
-    matri[4] = NULL; // NULL terminate the array
-
-    // Fill the matrix
-    matri[0][0] = 9; matri[0][1] = 3; matri[0][2] = 0;  matri[0][3] = 9;
-    matri[1][0] = -5; matri[1][1] = -2;  matri[1][2] = -6;  matri[1][3] = -3;
-    matri[2][0] = -4;  matri[2][1] = 9;  matri[2][2] = 6; matri[2][3] = 4;
-    matri[3][0] = 7; matri[3][1] = 6;  matri[3][2] = 6;  matri[3][3] = 2;
-
-    // Calculate the determinant
-    // double determinant = det(matrix);
-	double **c = mult_matrix(matrix, matri);
-	int row = -1;
-	while (c[++row])
-	{
-		int i = -1;
-		while (++i < 4)
-			printf("%f -- ", c[row][i]);
-		printf("\n");
-	}
-	printf("\n-------------------------------------\n");
-	c = mult_matrix(c, inverse(matrix));
-	row = -1;
-	while (c[++row])
-	{
-		int i = -1;
-		while (++i < 4)
-			printf("%f -- ", c[row][i]);
-		printf("\n");
-	}
-    // Print the determinant
-    // printf("Determinant: %f\n", determinant);
-
-	// inverse(matrix);
-    // Free the allocated memory for the matrix
-    for (int i = 0; i < 4; i++)
-        free(matrix[i]);
-    free(matrix);
-    for (int i = 0; i < 4; i++)
-        free(matri[i]);
-    free(matri);
-
-    return 0;
+	r = -1;
+	value = 0;
+	size = count_size(a);
+	while (++r < size)
+		value += (a[i][r] * b[r][s]);
+	return (value);
 }
+
+double	**mult_matrix(double **a, double **b)
+{
+	int		i;
+	int		s;
+	int		size;
+	double	**new_mat;
+
+	i = -1;
+	size = count_size(a);
+	new_mat = malloc(sizeof(double *) * (size + 1));
+	while (++i < size)
+		new_mat[i] = malloc(sizeof(double) * size);
+	i = -1;
+	while (++i < size)
+	{
+		s = -1;
+		while (++s < size)
+			new_mat[i][s] = find_new_value(a, b, i, s);
+	}
+	new_mat[i] = NULL;
+	return (new_mat);
+}
+
+// int main() {
+//     // Define a 4x4 matrix
+//     double **matrix = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
+//     matrix[0] = malloc(sizeof(double) * 4); // Row 0
+//     matrix[1] = malloc(sizeof(double) * 4); // Row 1
+//     matrix[2] = malloc(sizeof(double) * 4); // Row 2
+//     matrix[3] = malloc(sizeof(double) * 4); // Row 3
+//     matrix[4] = NULL; // NULL terminate the array
+
+//     // Fill the matrix
+//     matrix[0][0] = 8; matrix[0][1] = -5; matrix[0][2] = 9;  matrix[0][3] = 2;
+//     matrix[1][0] = 7; matrix[1][1] = 5;  matrix[1][2] = 6;  matrix[1][3] = 1;
+//     matrix[2][0] = -6;  matrix[2][1] = 0;  matrix[2][2] = 9; matrix[2][3] = 6;
+//     matrix[3][0] = -3; matrix[3][1] = 0;  matrix[3][2] = -9;  matrix[3][3] = -4;
+//     double **matri = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
+//     matri[0] = malloc(sizeof(double) * 4); // Row 0
+//     matri[1] = malloc(sizeof(double) * 4); // Row 1
+//     matri[2] = malloc(sizeof(double) * 4); // Row 2
+//     matri[3] = malloc(sizeof(double) * 4); // Row 3
+//     matri[4] = NULL; // NULL terminate the array
+
+//     // Fill the matrix
+//     matri[0][0] = 9; matri[0][1] = 3; matri[0][2] = 0;  matri[0][3] = 9;
+//     matri[1][0] = -5; matri[1][1] = -2;  matri[1][2] = -6;  matri[1][3] = -3;
+//     matri[2][0] = -4;  matri[2][1] = 9;  matri[2][2] = 6; matri[2][3] = 4;
+//     matri[3][0] = 7; matri[3][1] = 6;  matri[3][2] = 6;  matri[3][3] = 2;
+
+//     // Calculate the determinant
+//     // double determinant = det(matrix);
+// 	double **c = mult_matrix(matrix, matri);
+// 	int row = -1;
+// 	while (c[++row])
+// 	{
+// 		int i = -1;
+// 		while (++i < 4)
+// 			printf("%f -- ", c[row][i]);
+// 		printf("\n");
+// 	}
+// 	printf("\n-------------------------------------\n");
+// 	c = mult_matrix(c, inverse(matrix));
+// 	row = -1;
+// 	while (c[++row])
+// 	{
+// 		int i = -1;
+// 		while (++i < 4)
+// 			printf("%f -- ", c[row][i]);
+// 		printf("\n");
+// 	}
+//     // Print the determinant
+//     // printf("Determinant: %f\n", determinant);
+
+// 	// inverse(matrix);
+//     // Free the allocated memory for the matrix
+//     for (int i = 0; i < 4; i++)
+//         free(matrix[i]);
+//     free(matrix);
+//     for (int i = 0; i < 4; i++)
+//         free(matri[i]);
+//     free(matri);
+
+//     return 0;
+// }
 
 // int main()
 // {
