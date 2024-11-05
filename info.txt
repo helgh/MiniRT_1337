@@ -41,3 +41,45 @@ Rotation matrices depend on the sine and cosine functions from trigonometry.
 
 The rotation will appear to be clockwise around the corresponding axis when viewed along that axis.
 
+Each of the three axes requires a different matrix to implement the rotation.
+
+the inverse of this rotation matrix simply rotates in the opposite direction.
+
+rotation_x matrix structred :
+
+[1  0       0        0]
+[0  cos(r)  -sin(r)  0]
+[0  sin(r)  cos(r)   0]
+[0  0       0        1]
+
+rotation_y matrix structred :
+
+[cos(r)  0  sin(r)   0]
+[0       1  0        0]
+[-sin(r) 0  cos(r)   0]
+[0       0  0        1]
+
+rotation_z matrix structred :
+
+[cos(r)  -sin(r)  0   0]
+[sin(r)  cos(r)       0]
+[0       0        1   0]
+[0       0        0   1]
+
+shearing (or skew) matrix ==>   transformation has the effect of making straight lines slanted.
+
+when applied to a tuple, a shearing transformation changes each component of the tuple in proportion tod the other two components.
+
+the x component changes in proportion to y and z.
+the y component changes in proportion to x and z.
+the z component changes in proportion to x and y.
+
+shearing matrix structred :
+
+[1     	   x(y)     x(z)     0]
+[y(x)  	   1        y(z)     0]
+[z(x)      z(y)     1        0]
+[0         0        0        1]
+
+chained transformation ==>  Chained transformations must be applied in reverse order.
+

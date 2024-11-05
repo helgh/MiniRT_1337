@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/02 21:19:24 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/05 18:59:57 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@
 # define ERR_C "  Invalid information for element 'A' in the scene\n"
 # define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
 
+typedef struct s_sphere
+{
+	int		id;
+	bool	diameter;
+	t_axis	*cord;
+	t_color	*color;
+}				t_sphere;
+
 typedef struct s_intersect
 {
 	int		nbr_sec;
@@ -106,6 +114,8 @@ t_axis	*addition(t_axis *ax1, t_axis *ax2);
 double	distance_point(t_axis *p1, t_axis *p2);
 t_axis	*subtract(t_axis *ax1, t_axis *ax2);
 bool	campare_mat(double **arr1, double **arr2);
+double	ft_atof(char *str);
+double	dot_product(t_axis *vec1, t_axis *vec2);
 
 
 typedef struct s_color
@@ -138,13 +148,6 @@ typedef struct s_light
 	t_color	*color;
 }				t_light;
 
-typedef struct s_sphere
-{
-	char	*sp;
-	bool	diameter;
-	t_axis	*cord;
-	t_color	*color;
-}				t_sphere;
 
 typedef struct s_plane
 {

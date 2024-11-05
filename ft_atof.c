@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   oposite.c                                          :+:      :+:    :+:   */
+/*   ft_atof.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 21:45:37 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/05 17:11:56 by hael-ghd         ###   ########.fr       */
+/*   Created: 2024/11/05 18:46:05 by hael-ghd          #+#    #+#             */
+/*   Updated: 2024/11/05 18:46:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*oposite(t_axis *ax1)
+double	ft_atof(char *str)
 {
-	t_axis	*new_ax;
+	double	int_part;
+	double	div_part;
+	double	sign;
+	int		i;
 
-	new_ax = malloc(sizeof(t_axis));
-	if (!new_ax)
-		return (NULL);
-	new_ax->x = -1 * ax1->x;
-	new_ax->y = -1 * ax1->y;
-	new_ax->z = -1 * ax1->z;
-	new_ax->w = -1 * ax1->w;
-	return (new_ax);
+	int_part = 0.0;
+	div_part = 0.0;
+	sign = 1.0;
+	while (ft_isdigit(*str))
+		int_part = int_part * 10 + (*str++ - '0');
+	i = -1;
+	if (*str == '.' && *str++)
+	{
+		while (ft_isdigit(*str))
+			div_part += (pow(10, i--) * (*str++ - '0'));
+	}
+	return (sign * (int_part + div_part));
 }

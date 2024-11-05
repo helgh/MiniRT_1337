@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   oposite.c                                          :+:      :+:    :+:   */
+/*   campare_mateix.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 21:45:37 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/05 17:11:56 by hael-ghd         ###   ########.fr       */
+/*   Created: 2024/11/02 17:20:57 by hael-ghd          #+#    #+#             */
+/*   Updated: 2024/11/02 17:25:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*oposite(t_axis *ax1)
+bool	campare_mat(double **arr1, double **arr2)
 {
-	t_axis	*new_ax;
+	int	i;
+	int	s;
+	int	size;
 
-	new_ax = malloc(sizeof(t_axis));
-	if (!new_ax)
-		return (NULL);
-	new_ax->x = -1 * ax1->x;
-	new_ax->y = -1 * ax1->y;
-	new_ax->z = -1 * ax1->z;
-	new_ax->w = -1 * ax1->w;
-	return (new_ax);
+	i = -1;
+	size = count_size(arr1);
+	if (size != count_size(arr2))
+		return (true);
+	while (++i < size)
+	{
+		s = -1;
+		while (++s < size)
+			if (arr1[i][s] != arr2[i][s])
+				return (true);
+	}
+	return (false);
 }
