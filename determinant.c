@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:25:09 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/30 22:10:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:14:41 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -371,7 +371,7 @@ int main()
 	// p2.y = 1;
 	// p2.z = 0;
 	// double	**rad = rotate_x(1.570796);
-	double	**rad1 = scaling(5, 5, 5);
+	// double	**rad1 = scaling(5, 5, 5);
 	// double	**rad2 = translation(10, 5, 7);
 	// printf("--- %f ---\n",rad);
 	// double	**matrix = rotate_z(rad);
@@ -391,6 +391,6 @@ int main()
 	// a->z = 1;
 	// a->w = 1;
 	t_axis *point = mult_mat_point(rotate_x(1.570796), &p);
-	point = mult_mat_point(rad1, point);
+	// point = mult_mat_point(rad1, point);
 	printf("-- %f -- %f -- %f  \n", point->x, point->y, point->z);
 }

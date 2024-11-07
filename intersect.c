@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:48:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/05 19:06:24 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:14:28 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,52 @@ double	discriminant(t_sphere *sp, t_ray *ray)
 	sp_to_origin = subtract(ray->origin_p, sp->cord);
 	a = dot_product(ray->direction_v, ray->direction_v);
 	b = 2 * dot_product(ray->direction_v, sp_to_origin);
-	c = dot_product(sp_to_origin, sp_to_origin);
+	c = dot_product(sp_to_origin, sp_to_origin) - 1;
 	discriminant = power(b, 2) - (4 * a * c);
 	return (discriminant);
 }
 
 t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray)
 {
-	double	dis;
+	t_intersect	*sec;
+	double		dis;
+	double		b;
+	double		a;
 
 	dis = discriminant(sp, ray);
 	if (dis < 0)
 		return (NULL);
-	
+	sec = malloc(sizeof(t_intersect));
+	if (!sec)
+		return (NULL);
+	sec->point_sec = malloc(sizeof(double) * 2);
+	if (!sec->point_sec)
+		return (NULL);
+	a = dot_product(ray->direction_v, ray->direction_v);
+	b = 2 * dot_product(ray->direction_v, subtract(ray->origin_p, sp->cord));
+	sec->nbr_sec = 2;
+	sec->point_sec[0] = (-(b) - sqrt(dis)) / (2 * a);
+	sec->point_sec[1] = (-(b) + sqrt(dis)) / (2 * a);
+	sec->object = sp;
+	sec->next = NULL;
+	return (sec);
+}
+
+t_intersect	*group_intersect(t_sphere *sp, t_ray *ray)
+{
+	t_intersect	*grp_sec;
+	t_intersect	*tmp;
+	t_intersect	*last;
+
+	tmp = intersect_sphere(sp, ray);
+	last = grp_sec;
+	if (!last)
+	{
+		grp_sec = tmp;
+		return (grp_sec);
+	}
+	while (last->next)
+		last = last->next;
+	last->next = tmp;
+	return (grp_sec);
 }

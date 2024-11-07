@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/05 18:59:57 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/06 18:02:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ typedef struct s_sphere
 
 typedef struct s_intersect
 {
-	int		nbr_sec;
-	double	*point_sec;	
+	int					nbr_sec;
+	double				*point_sec;
+	void				*object;
+	struct s_intersect	*next;
 }				t_intersect;
 
 typedef struct s_axis
