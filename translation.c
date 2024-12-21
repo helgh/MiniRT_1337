@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 17:15:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/02 21:07:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/20 17:27:59 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,32 +15,30 @@
 double	**translation(double x, double y, double z, double w)
 {
 	double	**tr;
-	int		i;
-	int		s;
-	int		a;
-	int		arr[4];
 
-	i = -1;
-	a = 0;
-	tr = malloc(sizeof(double *) * 5);
-	arr[0] = x;
-	arr[1] = y;
-	arr[2] = z;
-	arr[3] = w;
-	while (++i < 4)
-	{
-		s = -1;
-		tr[i] = malloc(sizeof(double) * 4);
-		while (++s < 4)
-		{
-			if (i == s)
-				tr[i][s] = 1;
-			else if (s == 3)
-				tr[i][s] = arr[a++];
-			else
-				tr[i][s] = 0;
-		}
-	}
-	tr[i] = NULL;
+	tr = identity_matrix();
+	tr[0][3] = x;
+	tr[1][3] = y;
+	tr[2][3] = z;
+	tr[3][3] = w;
 	return (tr);
 }
+
+// int main()
+// {
+// 	double	**tr;
+// 	t_tuple	*point;
+// 	t_tuple	*new_point;
+
+// 	tr = translation(5, -3, 2, 1);
+// 	tr = inverse(tr);
+// 	point->x = -3;
+// 	point->y = 4;
+// 	point->z = 5;
+// 	point->w = 0;
+// 	new_point = mult_mat_point(tr, point);
+// 	printf("x = %2.f\n", new_point->x);
+// 	printf("y = %2.f\n", new_point->y);
+// 	printf("z = %2.f\n", new_point->z);
+// 	printf("w = %2.f\n", new_point->w);
+// }

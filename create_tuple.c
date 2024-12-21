@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   campare_matrix.c                                   :+:      :+:    :+:   */
+/*   create_tuple.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 17:20:57 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/18 16:18:37 by hael-ghd         ###   ########.fr       */
+/*   Created: 2024/12/16 16:00:43 by hael-ghd          #+#    #+#             */
+/*   Updated: 2024/12/16 16:02:56 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-// camparing two matrix if equal //
-
-bool	campare_mat(double **arr1, double **arr2)
+t_axis	*create_tuple(double x, double y, double z, double w)
 {
-	int	i;
-	int	s;
-	int	size;
+	t_axis	*tuple;
 
-	i = -1;
-	size = count_size(arr1);
-	if (size != count_size(arr2))
-		return (true);
-	while (++i < size)
-	{
-		s = -1;
-		while (++s < size)
-			if (fabs(arr1[i][s] - arr2[i][s]) < EPSILON)
-				return (true);
-	}
-	return (false);
+	tuple = malloc (sizeof(t_axis));
+	if (!tuple)
+		return (NULL);
+	tuple->x = x;
+	tuple->y = y;
+	tuple->z = z;
+	tuple->w = w;
+	return (tuple);
 }

@@ -6,22 +6,26 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:18:04 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 21:19:44 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:47:42 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*subtract(t_axis *ax1, t_axis *ax2)
-{
-	t_axis	*new_ax;
+// Subtracting two point or Subtracting vector from a point or Subtracting two vector //
+// Subtracting vector from a point is just moving backward by the given vector //
+// Subtracting two vector representing the change in direction between the two //
 
-	new_ax = malloc(sizeof(t_axis));
-	if (!new_ax)
+t_tuple	*subtract(t_tuple *tuple1, t_tuple *tuple2)
+{
+	t_tuple	*new_tuple;
+
+	new_tuple = malloc(sizeof(t_tuple));
+	if (!new_tuple)
 		return (NULL);
-	new_ax->x = ax1->x - ax2->x;
-	new_ax->y = ax1->y - ax2->y;
-	new_ax->z = ax1->z - ax2->z;
-	new_ax->w = ax1->w - ax2->w;
-	return (new_ax);
+	new_tuple->x = tuple1->x - tuple2->x;
+	new_tuple->y = tuple1->y - tuple2->y;
+	new_tuple->z = tuple1->z - tuple2->z;
+	new_tuple->w = tuple1->w - tuple2->w;
+	return (new_tuple);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 23:54:38 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/27 23:21:03 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/18 16:21:42 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ double	**trans_mat(double **a)
 	size = count_size(a);
 	i = -1;
 	tr = malloc(sizeof(double *) * (size + 1));
+	if (!tr)
+		return (NULL);
 	while (++i < size)
 	{
 		s = -1;

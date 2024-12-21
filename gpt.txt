@@ -1,0 +1,406 @@
+Explanation of Operations:
+Dot Product:
+
+This function calculates the scalar result of two vectors' dot product.
+Cross Product:
+
+This function computes a new vector that is perpendicular to both input vectors.
+Vector Addition:
+
+Adds two vectors component-wise.
+Scalar Multiplication:
+
+Scales each component of the vector by a scalar value.
+Magnitude:
+
+Calculates the length of the vector using the Pythagorean theorem.
+Normalization:
+
+Scales the vector so that its magnitude is 1, which is important for unit vectors used in ray direction, normal calculations, etc.
+How These Tools are Used in Ray Tracing:
+Ray Direction and Intersection:
+
+Rays are represented as a point (origin) and a direction (normalized vector). You'll use dot products to calculate how rays intersect with surfaces (like spheres or planes).
+Normals and Lighting:
+
+Normals are often used for lighting calculations, and the cross product is useful for finding normals to surfaces or planes.
+Reflection and Refraction:
+
+You'll use vector operations like dot product for calculating reflection vectors, where the angle between the incident ray and the surface normal is essential.
+Next Steps:
+Once these tools are in place, you can start implementing ray-object intersection algorithms (like ray-sphere intersection).
+After that, implement shading models using the dot product for light intensity calculations.
+Finally, optimize and render the image using MLX or another
+
+
+Certainly! Let’s take a step-by-step, deeper dive into what the dot product is, what it does, and how it is used, especially in the context of graphics and ray tracing.
+
+1. What is the Dot Product?
+At its core, the dot product (also called the scalar product) is a mathematical operation that takes two vectors and returns a single scalar (a number). The vectors themselves are typically n-dimensional, but in graphics, we usually deal with 3-dimensional vectors for spatial calculations.
+
+For two 3D vectors:
+
+𝐴
+⃗
+=
+(
+𝐴
+𝑥
+,
+𝐴
+𝑦
+,
+𝐴
+𝑧
+)
+A
+ =(A 
+x
+​
+ ,A 
+y
+​
+ ,A 
+z
+​
+ )
+𝐵
+⃗
+=
+(
+𝐵
+𝑥
+,
+𝐵
+𝑦
+,
+𝐵
+𝑧
+)
+B
+ =(B 
+x
+​
+ ,B 
+y
+​
+ ,B 
+z
+​
+ )
+The dot product 
+𝐴
+⃗
+⋅
+𝐵
+⃗
+A
+ ⋅ 
+B
+  is calculated as:
+
+𝐴
+⃗
+⋅
+𝐵
+⃗
+=
+𝐴
+𝑥
+⋅
+𝐵
+𝑥
++
+𝐴
+𝑦
+⋅
+𝐵
+𝑦
++
+𝐴
+𝑧
+⋅
+𝐵
+𝑧
+A
+ ⋅ 
+B
+ =A 
+x
+​
+ ⋅B 
+x
+​
+ +A 
+y
+​
+ ⋅B 
+y
+​
+ +A 
+z
+​
+ ⋅B 
+z
+​
+ 
+So, it's the sum of the products of corresponding components of the two vectors.
+
+2. Geometric Meaning of the Dot Product
+One of the most important things to understand about the dot product is that it has a geometric interpretation. Instead of thinking about it purely as an algebraic operation, consider the following:
+
+a. Projection of One Vector onto Another:
+The dot product measures how much one vector "projects" onto another vector. In other words, it tells you how much of the direction of one vector points in the direction of the other vector.
+
+If the two vectors are parallel (pointing in the same or opposite direction), the dot product will be maximum or minimum.
+If the two vectors are perpendicular (at 90 degrees to each other), the dot product will be zero, because there is no projection of one vector on the other.
+b. Relation to the Angle Between Two Vectors:
+The dot product also has a direct relationship to the cosine of the angle 
+𝜃
+θ between the two vectors. This is the geometric interpretation of the dot product:
+
+𝐴
+⃗
+⋅
+𝐵
+⃗
+=
+∣
+𝐴
+⃗
+∣
+⋅
+∣
+𝐵
+⃗
+∣
+⋅
+cos
+⁡
+(
+𝜃
+)
+A
+ ⋅ 
+B
+ =∣ 
+A
+ ∣⋅∣ 
+B
+ ∣⋅cos(θ)
+Where:
+
+∣
+𝐴
+⃗
+∣
+∣ 
+A
+ ∣ is the magnitude (length) of vector 
+𝐴
+⃗
+A
+ ,
+∣
+𝐵
+⃗
+∣
+∣ 
+B
+ ∣ is the magnitude (length) of vector 
+𝐵
+⃗
+B
+ ,
+cos
+⁡
+(
+𝜃
+)
+cos(θ) is the cosine of the angle between the two vectors.
+This means the dot product can tell us how similar the directions of the two vectors are, depending on the angle between them:
+
+If the vectors are pointing in the same direction, the cosine of the angle 
+𝜃
+=
+0
+∘
+θ=0 
+∘
+ , so 
+cos
+⁡
+(
+0
+∘
+)
+=
+1
+cos(0 
+∘
+ )=1. Hence, the dot product will be positive and maximized.
+If the vectors are pointing in opposite directions, the cosine of the angle 
+𝜃
+=
+18
+0
+∘
+θ=180 
+∘
+ , so 
+cos
+⁡
+(
+18
+0
+∘
+)
+=
+−
+1
+cos(180 
+∘
+ )=−1. Hence, the dot product will be negative and minimized.
+If the vectors are perpendicular, the cosine of the angle 
+𝜃
+=
+9
+0
+∘
+θ=90 
+∘
+ , so 
+cos
+⁡
+(
+9
+0
+∘
+)
+=
+0
+cos(90 
+∘
+ )=0. Hence, the dot product will be zero.
+3. How is the Dot Product Used in Ray Tracing?
+In ray tracing, we deal with rays, normals, and light sources, and the dot product plays a crucial role in various aspects of these calculations.
+
+a. Ray-Object Intersection:
+To check if a ray intersects an object (such as a sphere, plane, or triangle), we need to calculate whether the direction of the ray and the surface of the object are aligned in a certain way. This often involves dot product calculations.
+
+For example, if you have a ray 
+𝑅
+⃗
+R
+  that starts at a point and travels in a direction 
+𝐷
+⃗
+D
+ , and you're checking for intersections with a plane (which has a normal vector 
+𝑁
+⃗
+N
+ ), you can use the dot product to determine how the ray and the plane relate to each other.
+
+b. Normal and Light Direction:
+In lighting calculations, the dot product is used to determine how much light is being reflected from a surface.
+Specifically, the dot product of the light direction vector and the surface normal vector gives you a value that is crucial for shading.
+For example, imagine a surface with a normal vector 
+𝑁
+⃗
+N
+  and a light source coming from a direction 
+𝐿
+⃗
+L
+ . The dot product 
+𝑁
+⃗
+⋅
+𝐿
+⃗
+N
+ ⋅ 
+L
+  will tell you how much of the light hits the surface. This value is important for calculating the diffuse lighting intensity, often used in models like Lambertian reflection.
+
+If the light is perpendicular to the surface, the dot product is 1 (maximum intensity).
+If the light is parallel to the surface, the dot product is 0, meaning no light hits the surface directly (the surface is in shadow).
+c. Reflection Calculation:
+When simulating reflections, we need to compute the reflection direction of a ray bouncing off a surface. The reflection vector 
+𝑅
+⃗
+R
+  is related to the incoming ray direction 
+𝐼
+⃗
+I
+  and the surface normal 
+𝑁
+⃗
+N
+  using the formula:
+
+𝑅
+⃗
+=
+𝐼
+⃗
+−
+2
+⋅
+(
+𝐼
+⃗
+⋅
+𝑁
+⃗
+)
+⋅
+𝑁
+⃗
+R
+ = 
+I
+ −2⋅( 
+I
+ ⋅ 
+N
+ )⋅ 
+N
+ 
+Here, the dot product 
+𝐼
+⃗
+⋅
+𝑁
+⃗
+I
+ ⋅ 
+N
+  calculates how much the incoming ray is aligned with the surface normal, and this value is used to calculate the reflected ray direction.
+
+d. Shadows:
+The dot product also plays a role in shadow calculation. After finding the intersection point of a ray with an object, a shadow ray is often cast from that point to the light source. The dot product between the normal at the intersection point and the light direction helps to determine if the point is in shadow or if it is illuminated by the light source.
+
+If the dot product is negative, it means the surface is facing away from the light source (and is in shadow). If the dot product is positive, the surface is facing the light, and the point is illuminated.
+
+4. Result of the Dot Product
+The result of the dot product of two vectors is a scalar that gives you the following information:
+
+Magnitude of Projection: It tells you how much of one vector points in the direction of the other vector.
+
+If the result is large and positive, the vectors are aligned and pointing in the same direction.
+If the result is large and negative, the vectors are pointing in opposite directions.
+If the result is zero, the vectors are perpendicular to each other.
+Relation to Angle: It gives you information about the cosine of the angle between the vectors. A large positive dot product means a small angle (vectors are close to parallel), a large negative dot product means a large angle (vectors are close to opposite), and zero means the vectors are at a right angle (perpendicular).
+
+Shading and Lighting: In lighting calculations, the dot product determines how much light hits a surface based on the angle between the light source and the surface normal. A higher dot product means more light (and brighter shading).
+
+5. Intuitive Understanding of the Dot Product
+Think of the dot product as a measure of similarity between two vectors.
+If you have two vectors, one representing the direction of a ray and the other representing a surface normal, the dot product tells you how "aligned" the ray is with the surface. If the ray is pointing directly at the surface, the dot product is large and positive. If the ray is parallel to the surface, the dot product is zero. If the ray is pointing away from the surface, the dot product is negative.
+Conclusion:
+The dot product is an incredibly important operation in ray tracing. It gives you a scalar that encodes information about the relationship between two vectors, such as how much one vector projects onto another, the angle between them, and how much light hits a surface. Understanding and using the dot product properly is key to calculating things like intersections, lighting, shadows, and reflections, which are central to ray tracing and rendering realistic images.
+
+If any specific aspect is still unclear or you need more explanation on how it fits into a particular part of ray tracing, feel free to ask!

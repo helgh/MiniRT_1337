@@ -1,35 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   campare_matrix.c                                   :+:      :+:    :+:   */
+/*   identity_matrix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/02 17:20:57 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/18 16:18:37 by hael-ghd         ###   ########.fr       */
+/*   Created: 2024/12/18 15:47:10 by hael-ghd          #+#    #+#             */
+/*   Updated: 2024/12/20 16:53:24 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-// camparing two matrix if equal //
-
-bool	campare_mat(double **arr1, double **arr2)
+double	**identity_matrix(void)
 {
+	double	**matrix;
 	int	i;
-	int	s;
-	int	size;
 
+	matrix = calloc(5, sizeof(double *));
+	if (!matrix)
+		return (NULL);
 	i = -1;
-	size = count_size(arr1);
-	if (size != count_size(arr2))
-		return (true);
-	while (++i < size)
+	while (++i < 4)
 	{
-		s = -1;
-		while (++s < size)
-			if (fabs(arr1[i][s] - arr2[i][s]) < EPSILON)
-				return (true);
+		matrix[i] = calloc(4, sizeof(double));
+		if (!matrix[i])
+			return (NULL);
+		matrix[i][i] = 1;
 	}
-	return (false);
+	matrix[i] = NULL;
+	return (matrix);
 }

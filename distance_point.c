@@ -6,29 +6,26 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 19:14:33 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 19:27:58 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:44:35 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	distance_point(t_axis *p1, t_axis *p2)
+double	distance_point(t_tuple *p1, t_tuple *p2)
 {
 	double	distance;
-	t_axis	*sub;
+	t_tuple	*sub;
 
 	sub = subtract(p1, p2);
-	distance = pow(sub->x, 2);
-	distance += pow(sub->y, 2);
-	distance += pow(sub->z, 2);
-	distance = sqrt(distance);
+	distance = magnitude(sub);
 	return (distance);
 }
 
 // int main ()
 // {
-	// t_axis	*point = malloc(sizeof(t_axis));
-	// t_axis	*vec = malloc(sizeof(t_axis));
+	// t_tuple	*point = malloc(sizeof(t_tuple));
+	// t_tuple	*vec = malloc(sizeof(t_tuple));
 
 	// point->x = 2;
 	// point->y = 3;
@@ -41,11 +38,11 @@ double	distance_point(t_axis *p1, t_axis *p2)
 	// double	distance = distance_point(point, vec);
 	// printf("%f\n", distance);
 	// t_ray *ray = malloc(sizeof(t_ray));
-	// ray->origin_p = malloc(sizeof(t_axis));
-	// ray->direction_v = malloc(sizeof(t_axis));
+	// ray->origin_p = malloc(sizeof(t_tuple));
+	// ray->direction_v = malloc(sizeof(t_tuple));
 	// ray->origin_p = point;
 	// ray->direction_v = vec;
-	// t_axis	*new_point = position(ray, 0);
+	// t_tuple	*new_point = position(ray, 0);
 	// printf("x = %f -- y = %f -- z = %f\n", new_point->x, new_point->y, new_point->z);
 	// new_point = position(ray, 1);
 	// printf("x = %f -- y = %f -- z = %f\n", new_point->x, new_point->y, new_point->z);

@@ -6,22 +6,24 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:45:37 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/05 17:11:56 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:02:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*oposite(t_axis *ax1)
-{
-	t_axis	*new_ax;
+// function get oposite of some vector //
 
-	new_ax = malloc(sizeof(t_axis));
-	if (!new_ax)
+t_tuple	*oposite(t_tuple *tuple)
+{
+	t_tuple	*new_tuple;
+
+	new_tuple = malloc(sizeof(t_tuple));
+	if (!new_tuple)
 		return (NULL);
-	new_ax->x = -1 * ax1->x;
-	new_ax->y = -1 * ax1->y;
-	new_ax->z = -1 * ax1->z;
-	new_ax->w = -1 * ax1->w;
-	return (new_ax);
+	new_tuple->x = -1 * tuple->x;
+	new_tuple->y = -1 * tuple->y;
+	new_tuple->z = -1 * tuple->z;
+	new_tuple->w = -1 * tuple->w;
+	return (new_tuple);
 }

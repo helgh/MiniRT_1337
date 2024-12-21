@@ -6,22 +6,22 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 22:02:04 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 22:05:12 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/16 17:12:59 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*mult_by_scalar(t_axis *ax, double scalar)
+t_tuple	*mult_by_scalar(t_tuple *tuple, double scalar)
 {
-	t_axis	*new_ax;
+	t_tuple	*new_tuple;
 
-	new_ax = malloc(sizeof(t_axis));
-	if (!new_ax)
+	new_tuple = malloc(sizeof(t_tuple));
+	if (!new_tuple)
 		return (NULL);
-	new_ax->x = ax->x * scalar;
-	new_ax->y = ax->y * scalar;
-	new_ax->z = ax->z * scalar;
-	new_ax->w = ax->w * scalar;
-	return (new_ax);
+	new_tuple->x = tuple->x * scalar;
+	new_tuple->y = tuple->y * scalar;
+	new_tuple->z = tuple->z * scalar;
+	new_tuple->w = tuple->w * scalar;
+	return (new_tuple);
 }

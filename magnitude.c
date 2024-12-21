@@ -6,19 +6,21 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:26:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 22:35:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/17 15:43:56 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	magnitude(t_axis *point)
+// count magnitude (lenght) of a vector //
+
+double	magnitude(t_tuple *tuple)
 {
 	double	magnitude;
 
-	magnitude = pow(point->x, 2);
-	magnitude += pow(point->y, 2);
-	magnitude += pow(point->z, 2);
+	magnitude = pow(tuple->x, 2);
+	magnitude += pow(tuple->y, 2);
+	magnitude += pow(tuple->z, 2);
 	magnitude = sqrt(magnitude);
 	return (magnitude);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/06 18:02:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:44:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@
 # ifndef RADIAN
 # define RADIAN 3.14159265359
 #endif
+
+# define TRANSLATING 1
+# define SCALING 2
+# define EPSILON 0.00001
 
 # define BAD_TYPE "  Bad type of element in the scene\n"
 # define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
@@ -60,11 +64,28 @@
 # define ERR_C "  Invalid information for element 'A' in the scene\n"
 # define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
 
+typedef struct s_color
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}				t_color;
+
+typedef struct s_tuple
+{
+	double	x;
+	double	y;
+	double	z;
+	double	w;
+}				t_tuple;
+
 typedef struct s_sphere
 {
 	int		id;
-	bool	diameter;
-	t_axis	*cord;
+	double	diameter;
+	double	radius;
+	double	**trans;
+	t_tuple	*cord;
 	t_color	*color;
 }				t_sphere;
 
@@ -76,17 +97,10 @@ typedef struct s_intersect
 	struct s_intersect	*next;
 }				t_intersect;
 
-typedef struct s_axis
-{
-	double	x;
-	double	y;
-	double	z;
-	double	w;
-}				t_axis;
 typedef struct s_ray
 {
-	t_axis	*origin_p;
-	t_axis	*direction_v;
+	t_tuple	*origin_p;
+	t_tuple	*direction_v;
 }				t_ray;
 
 char	*get_next_line(int fd);
@@ -102,30 +116,28 @@ int		ft_strcmp(char *s1, char *s2);
 int		count_size(double **a);
 double	**trans_mat(double **a, double det);
 double	**inverse(double **a);
-t_axis	*mult_mat_point(double **mat, t_axis *point);
-t_axis	*mult_mat_vec(double **mat, t_axis *vec);
+t_tuple	*mult_mat_point(double **mat, t_tuple *point);
+t_tuple	*mult_mat_vec(double **mat, t_tuple *vec);
 double	**translation(double x, double y, double z, double w);
 double	**scaling(double x, double y, double z, double w);
 double	**rotate_x(double angle);
 double	**rotate_y(double angle);
 double	**rotate_z(double angle);
 double	degree_to_rad(double degree);
-double	**shearing(t_axis *p1, t_axis *p2, t_axis *p3);
-t_axis	*position(t_ray *ray, double t);
-t_axis	*addition(t_axis *ax1, t_axis *ax2);
-double	distance_point(t_axis *p1, t_axis *p2);
-t_axis	*subtract(t_axis *ax1, t_axis *ax2);
+double	**shearing(double *arr);
+t_tuple	*position(t_ray *ray, double t);
+t_tuple	*addition(t_tuple *ax1, t_tuple *ax2);
+double	distance_point(t_tuple *p1, t_tuple *p2);
+t_tuple	*subtract(t_tuple *ax1, t_tuple *ax2);
 bool	campare_mat(double **arr1, double **arr2);
 double	ft_atof(char *str);
-double	dot_product(t_axis *vec1, t_axis *vec2);
+double	dot_product(t_tuple *vec1, t_tuple *vec2);
+t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray, int flag);
+t_ray	*transform_ray(t_ray *ray, double **a, int flag);
+double	**translation(double x, double y, double z, double w);
+double	**identity_matrix(void);
+double	**mult_matrix(double **a, double **b);
 
-
-typedef struct s_color
-{
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
-}				t_color;
 
 typedef struct s_am_light
 {
@@ -138,15 +150,15 @@ typedef struct s_camera
 {
 	char	C;
 	int		FOV;
-	t_axis	*cord;
-	t_axis	*norm_vector;
+	t_tuple	*cord;
+	t_tuple	*norm_vector;
 }				t_camera;
 
 typedef struct s_light
 {
 	char	L;
 	bool	brightness;
-	t_axis	*cord;
+	t_tuple	*cord;
 	t_color	*color;
 }				t_light;
 
@@ -154,8 +166,8 @@ typedef struct s_light
 typedef struct s_plane
 {
 	char	*pl;
-	t_axis	*cord;
-	t_axis	*norm_vector;
+	t_tuple	*cord;
+	t_tuple	*norm_vector;
 	t_color	*color;
 }				t_plane;
 
@@ -164,8 +176,8 @@ typedef struct s_cylinder
 	char	*cy;
 	bool	diameter;
 	bool	height;
-	t_axis	*cord;
-	t_axis	*norm_vector;
+	t_tuple	*cord;
+	t_tuple	*norm_vector;
 	t_color	*color;
 }				t_cylinder;
 

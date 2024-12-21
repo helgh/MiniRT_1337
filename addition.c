@@ -6,22 +6,26 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:14:05 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 21:13:17 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/16 16:38:05 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*addition(t_axis *ax1, t_axis *ax2)
-{
-	t_axis	*poin;
+// this function get new point for know where you would be if you followed the vector from the old point (start) //
+// or //
+// this function get new vec //
 
-	poin = malloc(sizeof(t_axis));
-	if (!poin)
+t_tuple	*addition(t_tuple *start, t_tuple *vec)
+{
+	t_tuple	*point;
+
+	point = malloc(sizeof(t_tuple));
+	if (!point)
 		return (NULL);
-	poin->x = ax1->x + ax2->x;
-	poin->y = ax1->y + ax2->y;
-	poin->z = ax1->z + ax2->z;
-	poin->w = ax1->w + ax2->w;
-	return (poin);
+	point->x = start->x + vec->x;
+	point->y = start->y + vec->y;
+	point->z = start->z + vec->z;
+	point->w = start->w + vec->w;
+	return (point);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:48:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/07 14:44:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/11/08 15:54:21 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,32 @@ double	discriminant(t_sphere *sp, t_ray *ray)
 	double	b;
 	double	c;
 	double	discriminant;
+	double	rad;
 
+	rad = sp->trans[0][0];
+	rad += sp->trans[1][1];
+	rad += sp->trans[2][2];
+	sp->radius = rad / 3;
 	sp_to_origin = subtract(ray->origin_p, sp->cord);
 	a = dot_product(ray->direction_v, ray->direction_v);
 	b = 2 * dot_product(ray->direction_v, sp_to_origin);
-	c = dot_product(sp_to_origin, sp_to_origin) - 1;
-	discriminant = power(b, 2) - (4 * a * c);
+	c = dot_product(sp_to_origin, sp_to_origin) - pow(sp->radius, 2);
+	// printf("%f -- %f -- %f -- %f\n", a, b, c, sp->radius);
+	discriminant = pow(b, 2) - (4 * a * c);
 	return (discriminant);
 }
 
-t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray)
+t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray, int flag)
 {
 	t_intersect	*sec;
+	t_ray		*new_ray;
 	double		dis;
 	double		b;
 	double		a;
 
-	dis = discriminant(sp, ray);
+	new_ray = transform_ray(ray, inverse(sp->trans), flag);
+	dis = discriminant(sp, new_ray);
+	// printf("%f\n", dis);
 	if (dis < 0)
 		return (NULL);
 	sec = malloc(sizeof(t_intersect));
@@ -44,8 +53,8 @@ t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray)
 	sec->point_sec = malloc(sizeof(double) * 2);
 	if (!sec->point_sec)
 		return (NULL);
-	a = dot_product(ray->direction_v, ray->direction_v);
-	b = 2 * dot_product(ray->direction_v, subtract(ray->origin_p, sp->cord));
+	a = dot_product(new_ray->direction_v, new_ray->direction_v);
+	b = 2 * dot_product(new_ray->direction_v, subtract(new_ray->origin_p, sp->cord));
 	sec->nbr_sec = 2;
 	sec->point_sec[0] = (-(b) - sqrt(dis)) / (2 * a);
 	sec->point_sec[1] = (-(b) + sqrt(dis)) / (2 * a);
@@ -54,13 +63,13 @@ t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray)
 	return (sec);
 }
 
-t_intersect	*group_intersect(t_sphere *sp, t_ray *ray)
+t_intersect	*group_intersect(t_sphere *sp, t_ray *ray, int flag)
 {
 	t_intersect	*grp_sec;
 	t_intersect	*tmp;
 	t_intersect	*last;
 
-	tmp = intersect_sphere(sp, ray);
+	tmp = intersect_sphere(sp, ray, flag);
 	last = grp_sec;
 	if (!last)
 	{

@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:42:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/02 17:34:45 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/20 16:57:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	find_new_value(double **a, double **b, int i, int s)
+static double	find_new_value(double **a, double **b, int i, int s)
 {
 	double	value;
 	int		r;

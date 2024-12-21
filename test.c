@@ -6,5 +6,8 @@
 
 int main(int ac, char **av)
 {
-	printf("%f\n", pow(-1, 3) * -60);
+	if (fabs(-4.00002 - 4.00002) < 0.00001)
+		printf("ok\n");
+	else
+		printf("ko\n");
 }

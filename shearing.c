@@ -6,39 +6,47 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/30 16:08:44 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/10/30 20:44:44 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/20 19:48:15 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-void	help_shearing(double **sh, t_axis *p1, t_axis *p2, t_axis *p3)
+double	**shearing(double *arr)
 {
-	sh[0][1] = p1->y;
-	sh[0][2] = p1->z;
-	sh[1][0] = p2->x;
-	sh[1][2] = p2->z;
-	sh[2][0] = p3->x;
-	sh[2][1] = p3->y;
+	double	**shearing;
+
+	shearing = identity_matrix();
+	shearing[0][1] = arr[0];
+	shearing[0][2] = arr[1];
+	shearing[1][0] = arr[2];
+	shearing[1][2] = arr[3];
+	shearing[2][0] = arr[4];
+	shearing[2][1] = arr[5];
+	return (shearing);
 }
-
-double	**shearing(t_axis *p1, t_axis *p2, t_axis *p3)
+int main()
 {
-	double	**sh;
-	int		i;
-	int		s;
-
-	i = -1;
-	sh = malloc(sizeof(double *) * 5);
-	while (++i < 4)
-	{
-		s = -1;
-		sh[i] = malloc(sizeof(double) * 4);
-		bzero(sh[i], 4);
-		while (++s < 4)
-			if (i == s)
-				sh[i][s] = 1;
-	}
-	help_shearing(sh, p1, p2, p3);
-	return (sh);
+	double	**tr;
+	t_tuple	*point;
+	t_tuple	*new_point;
+	double	*arr;
+	arr = malloc(sizeof(double) * 6);
+	arr[0] = 0;
+	arr[1] = 1;
+	arr[2] = 0;
+	arr[3] = 0;
+	arr[4] = 0;
+	arr[5] = 0;
+	tr = shearing(arr);
+	// tr = inverse(tr);
+	point->x = 2;
+	point->y = 3;
+	point->z = 4;
+	point->w = 1;
+	new_point = mult_mat_point(tr, point);
+	printf("x = %2.f\n", new_point->x);
+	printf("y = %2.f\n", new_point->y);
+	printf("z = %2.f\n", new_point->z);
+	printf("w = %2.f\n", new_point->w);
 }

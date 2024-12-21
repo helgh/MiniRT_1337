@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:25:09 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/06 18:14:41 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/18 18:31:27 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ double	minor(double **a, int row, int col)
 	{
 		sub = submatrix(a, row, col);
 		res = (sub[0][0] * sub[1][1]) - (sub[0][1] * sub[1][0]);
+		if (sub)
+			free_sub_matrix(sub);
 	}
 	else
 		res = (a[0][0] * a[1][1]) - (a[0][1] * a[1][0]);
-	if (sub)
-		free_sub_matrix(sub);
 	return (res);
 }
 
@@ -230,6 +230,34 @@ double	**mult_matrix(double **a, double **b)
 
 // int main() {
 //     // Define a 4x4 matrix
+//     double **matrix = malloc(sizeof(double *) * 4); // 4 rows + 1 for NULL termination
+//     matrix[0] = malloc(sizeof(double) * 3); // Row 0
+//     matrix[1] = malloc(sizeof(double) * 3); // Row 1
+//     matrix[2] = malloc(sizeof(double) * 3); // Row 2
+//     // matrix[3] = malloc(sizeof(double) * 4); // Row 3
+//     matrix[3] = NULL; // NULL terminate the array
+
+//     // Fill the matrix
+//     matrix[0][0] = 1; matrix[0][1] = 2; matrix[0][2] = 6; // matrix[0][3] = 2;
+//     matrix[1][0] = -5; matrix[1][1] = 8;  matrix[1][2] = -4; // matrix[1][3] = 1;
+//     matrix[2][0] = 2;  matrix[2][1] = 6;  matrix[2][2] = 4; // matrix[2][3] = 6;
+//     // matrix[3][0] = -3; matrix[3][1] = 0;  matrix[3][2] = -9; // matrix[3][3] = -4;
+
+// 	printf("cofactor (0, 0) = %f\n", cofactor(matrix, 0, 0));
+// 	// printf("minor (0, 0) = %f\n", minor(matrix, 0, 0));
+// 	printf("cofactor (0, 1) = %f\n", cofactor(matrix, 0, 1));
+// 	printf("cofactor (0, 2) = %f\n", cofactor(matrix, 0, 2));
+// 	printf("determinant (matrix) = %f\n", det(matrix));
+// 	// printf("minor (1, 0) = %f\n", minor(matrix, 1, 0));
+//     for (int i = 0; i < 3; i++)
+//         free(matrix[i]);
+//     free(matrix);
+
+//     return 0;
+// }
+
+// int main() {
+//     // Define a 4x4 matrix
 //     double **matrix = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
 //     matrix[0] = malloc(sizeof(double) * 4); // Row 0
 //     matrix[1] = malloc(sizeof(double) * 4); // Row 1
@@ -342,8 +370,8 @@ double	**mult_matrix(double **a, double **b)
 
 //     return 0;
 // }
-int main()
-{
+// int main()
+// {
 
 	// double **matrix = malloc(sizeof(double *) * 5); // 4 rows + 1 for NULL termination
     // matrix[0] = malloc(sizeof(double) * 4); // Row 0
@@ -357,13 +385,13 @@ int main()
     // matrix[1][0] = 0; matrix[1][1] = 1;  matrix[1][2] = 0;  matrix[1][3] = -3;
     // matrix[2][0] = 0;  matrix[2][1] = 0;  matrix[2][2] = 1; matrix[2][3] = 2;
     // matrix[3][0] = 0; matrix[3][1] = 0;  matrix[3][2] = 0;  matrix[3][3] = 1;
-	t_axis	p;
+	// t_axis	p;
 	// t_axis	p1;
 	// t_axis	p2;
 
-	p.x = 1;
-	p.y = 0;
-	p.z = 1;
+	// p.x = 1;
+	// p.y = 0;
+	// p.z = 1;
 	// p1.x = 0;
 	// p1.y = 0;
 	// p1.z = 0;
@@ -390,7 +418,7 @@ int main()
 	// a->y = 0;
 	// a->z = 1;
 	// a->w = 1;
-	t_axis *point = mult_mat_point(rotate_x(1.570796), &p);
+	// t_axis *point = mult_mat_point(rotate_x(1.570796), &p);
 	// point = mult_mat_point(rad1, point);
-	printf("-- %f -- %f -- %f  \n", point->x, point->y, point->z);
-}
+	// printf("-- %f -- %f -- %f  \n", point->x, point->y, point->z);
+// }

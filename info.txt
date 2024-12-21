@@ -82,4 +82,3 @@ shearing matrix structred :
 [0         0        0        1]
 
 chained transformation ==>  Chained transformations must be applied in reverse order.
-

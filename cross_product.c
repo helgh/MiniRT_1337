@@ -6,17 +6,17 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:49:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/11/01 23:09:32 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2024/12/17 11:26:03 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*cross_product(t_axis *vec1, t_axis *vec2)
+t_tuple	*cross_product(t_tuple *vec1, t_tuple *vec2)
 {
-	t_axis	*vec3;
+	t_tuple	*vec3;
 
-	vec3 = malloc(sizeof(t_axis));
+	vec3 = malloc(sizeof(t_tuple));
 	if (!vec3)
 		return (NULL);
 	vec3->x = (vec1->y * vec2->z) - (vec1->z * vec2->y);
