@@ -23,22 +23,3 @@ double	**translation(double x, double y, double z, double w)
 	tr[3][3] = w;
 	return (tr);
 }
-
-// int main()
-// {
-// 	double	**tr;
-// 	t_tuple	*point;
-// 	t_tuple	*new_point;
-
-// 	tr = translation(5, -3, 2, 1);
-// 	tr = inverse(tr);
-// 	point->x = -3;
-// 	point->y = 4;
-// 	point->z = 5;
-// 	point->w = 0;
-// 	new_point = mult_mat_point(tr, point);
-// 	printf("x = %2.f\n", new_point->x);
-// 	printf("y = %2.f\n", new_point->y);
-// 	printf("z = %2.f\n", new_point->z);
-// 	printf("w = %2.f\n", new_point->w);
-// }

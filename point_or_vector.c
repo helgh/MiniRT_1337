@@ -12,7 +12,7 @@
 
 #include "Minirt.h"
 
-bool	point_or_vector(t_axis *tuple)
+bool	point_or_vector(t_tuple *tuple)
 {
 	if (!tuple->w)
 		return (false);

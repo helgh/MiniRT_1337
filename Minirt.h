@@ -14,7 +14,7 @@
 # define MINIRT_H
 
 # include <unistd.h>
-# include <mlx.h>
+//include <mlx.h>
 # include <time.h>
 # include <limits.h>
 # include <stdio.h>
@@ -28,12 +28,16 @@
 # define BUFFER_SIZE 1
 #endif
 
+
 # ifndef RADIAN
 # define RADIAN 3.14159265359
 #endif
 
 # define TRANSLATING 1
 # define SCALING 2
+# define ROTATE_X 3
+# define ROTATE_Y 4
+# define ROTATE_Z 5
 # define EPSILON 0.00001
 
 # define BAD_TYPE "  Bad type of element in the scene\n"
@@ -82,6 +86,7 @@ typedef struct s_tuple
 typedef struct s_sphere
 {
 	int		id;
+	char	*type;
 	double	diameter;
 	double	radius;
 	double	**trans;
@@ -133,10 +138,16 @@ bool	campare_mat(double **arr1, double **arr2);
 double	ft_atof(char *str);
 double	dot_product(t_tuple *vec1, t_tuple *vec2);
 t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray, int flag);
-t_ray	*transform_ray(t_ray *ray, double **a, int flag);
+t_ray	*transform_ray(t_ray *ray, double **a);
+double	**transform_object(t_sphere *sp, t_tuple *tr, int flag);
 double	**translation(double x, double y, double z, double w);
 double	**identity_matrix(void);
 double	**mult_matrix(double **a, double **b);
+double	discriminant(t_sphere *sp, t_ray *ray);
+double	magnitude(t_tuple *tuple);
+t_tuple	*mult_by_scalar(t_tuple *tuple, double scalar);
+double	**trans_matrix(double **a);
+double	det_minor(double **a);
 
 
 typedef struct s_am_light

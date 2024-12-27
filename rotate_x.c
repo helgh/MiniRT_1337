@@ -46,25 +46,3 @@ double	**rotate_z(double angle)
 	rot[0][1] = -1 * sin(angle);
 	return (rot);
 }
-int main()
-{
-	double	**tr;
-	t_tuple	*point;
-	t_tuple	*new_point;
-	// void	*mlx = mlx_init();
-	// void	*window = mlx_new_window(mlx, 1000, 800, "ray tracing");
-	// void	*img = mlx_new_image(mlx, 500, 500);
-	// mlx_put_image_to_window(mlx, window, img, 200, 400);
-	// mlx_loop(mlx);
-	tr = rotate_y(degree_to_rad(90));
-	// tr = inverse(tr);
-	point->x = 0;
-	point->y = 0;
-	point->z = 1;
-	point->w = 1;
-	new_point = mult_mat_point(tr, point);
-	printf("x = %.2f\n", new_point->x);
-	printf("y = %.2f\n", new_point->y);
-	printf("z = %.2f\n", new_point->z);
-	printf("w = %.2f\n", new_point->w);
-}

@@ -12,12 +12,12 @@
 
 #include "Minirt.h"
 
-t_axis	*position(t_ray *ray, double t)
+t_tuple	*position(t_ray *ray, double t)
 {
-	t_axis	*new_point;
-	t_axis	vec;
+	t_tuple	*new_point;
+	t_tuple	vec;
 
-	new_point = malloc(sizeof(t_axis));
+	new_point = malloc(sizeof(t_tuple));
 	if (!new_point)
 		return (NULL);
 	vec.x = t * ray->direction_v->x;
@@ -31,8 +31,8 @@ t_axis	*position(t_ray *ray, double t)
 }
 // int main ()
 // {
-// 	t_axis	*point = malloc(sizeof(t_axis));
-// 	t_axis	*vec = malloc(sizeof(t_axis));
+// 	t_tuple	*point = malloc(sizeof(t_tuple));
+// 	t_tuple	*vec = malloc(sizeof(t_tuple));
 
 // 	point->x = 2;
 // 	point->y = 3;
@@ -43,11 +43,11 @@ t_axis	*position(t_ray *ray, double t)
 // 	vec->z = 0;
 // 	vec->w = 0;
 // 	t_ray *ray = malloc(sizeof(t_ray));
-// 	ray->origin_p = malloc(sizeof(t_axis));
-// 	ray->direction_v = malloc(sizeof(t_axis));
+// 	ray->origin_p = malloc(sizeof(t_tuple));
+// 	ray->direction_v = malloc(sizeof(t_tuple));
 // 	ray->origin_p = point;
 // 	ray->direction_v = vec;
-// 	t_axis	*new_point = position(ray, 0);
+// 	t_tuple	*new_point = position(ray, 0);
 // 	printf("x = %f -- y = %f -- z = %f\n", new_point->x, new_point->y, new_point->z);
 // 	new_point = position(ray, 1);
 // 	printf("x = %f -- y = %f -- z = %f\n", new_point->x, new_point->y, new_point->z);

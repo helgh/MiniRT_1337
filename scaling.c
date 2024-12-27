@@ -15,8 +15,6 @@
 double	**scaling(double x, double y, double z, double w)
 {
 	double	**scaling;
-	int		i;
-	int		s;
 
 	scaling = identity_matrix();
 	scaling[0][0] = x;
@@ -25,22 +23,3 @@ double	**scaling(double x, double y, double z, double w)
 	scaling[3][3] = w;
 	return (scaling);
 }
-
-// int main()
-// {
-// 	double	**tr;
-// 	t_tuple	*point;
-// 	t_tuple	*new_point;
-
-// 	tr = scaling(-1, 1, 1, 1);
-// 	tr = inverse(tr);
-// 	point->x = 2;
-// 	point->y = 3;
-// 	point->z = 4;
-// 	point->w = 1;
-// 	new_point = mult_mat_point(tr, point);
-// 	printf("x = %2.f\n", new_point->x);
-// 	printf("y = %2.f\n", new_point->y);
-// 	printf("z = %2.f\n", new_point->z);
-// 	printf("w = %2.f\n", new_point->w);
-// }

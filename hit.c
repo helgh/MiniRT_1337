@@ -24,7 +24,7 @@ double	hit(t_intersect *sec)
 		if (*(tmp->point_sec) >= 0)
 			t = *(tmp->point_sec);
 		if (*(tmp->point_sec + 1) >= 0)
-			if (t == -1 || *(tmp->point_sec + 1) < *(tmp->point_sec))
+			if (*(tmp->point_sec + 1) < *(tmp->point_sec))
 				t = *(tmp->point_sec + 1);
 		tmp = tmp->next;
 	}

@@ -12,7 +12,7 @@
 
 #include "Minirt.h"
 
-double	**trans_mat(double **a)
+double	**trans_matrix(double **a)
 {
 	double	**tr;
 	int		i;

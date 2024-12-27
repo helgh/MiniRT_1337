@@ -25,28 +25,3 @@ double	**shearing(double *arr)
 	shearing[2][1] = arr[5];
 	return (shearing);
 }
-int main()
-{
-	double	**tr;
-	t_tuple	*point;
-	t_tuple	*new_point;
-	double	*arr;
-	arr = malloc(sizeof(double) * 6);
-	arr[0] = 0;
-	arr[1] = 1;
-	arr[2] = 0;
-	arr[3] = 0;
-	arr[4] = 0;
-	arr[5] = 0;
-	tr = shearing(arr);
-	// tr = inverse(tr);
-	point->x = 2;
-	point->y = 3;
-	point->z = 4;
-	point->w = 1;
-	new_point = mult_mat_point(tr, point);
-	printf("x = %2.f\n", new_point->x);
-	printf("y = %2.f\n", new_point->y);
-	printf("z = %2.f\n", new_point->z);
-	printf("w = %2.f\n", new_point->w);
-}
