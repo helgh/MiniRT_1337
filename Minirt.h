@@ -104,8 +104,8 @@ typedef struct s_intersect
 
 typedef struct s_ray
 {
-	t_tuple	*origin_p;
-	t_tuple	*direction_v;
+	t_tuple	origin_p;
+	t_tuple	direction_v;
 }				t_ray;
 
 char	*get_next_line(int fd);
@@ -121,8 +121,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		count_size(double **a);
 double	**trans_mat(double **a, double det);
 double	**inverse(double **a);
-t_tuple	*mult_mat_point(double **mat, t_tuple *point);
-t_tuple	*mult_mat_vec(double **mat, t_tuple *vec);
+t_tuple	mult_mat_point(double **mat, t_tuple *point);
+t_tuple	mult_mat_vec(double **mat, t_tuple *vec);
 double	**translation(double x, double y, double z, double w);
 double	**scaling(double x, double y, double z, double w);
 double	**rotate_x(double angle);
@@ -130,22 +130,22 @@ double	**rotate_y(double angle);
 double	**rotate_z(double angle);
 double	degree_to_rad(double degree);
 double	**shearing(double *arr);
-t_tuple	*position(t_ray *ray, double t);
-t_tuple	*addition(t_tuple *ax1, t_tuple *ax2);
+t_tuple	position(t_ray *ray, double t);
+t_tuple	addition(t_tuple *ax1, t_tuple *ax2);
 double	distance_point(t_tuple *p1, t_tuple *p2);
-t_tuple	*subtract(t_tuple *ax1, t_tuple *ax2);
+t_tuple	subtract(t_tuple *ax1, t_tuple *ax2);
 bool	campare_mat(double **arr1, double **arr2);
 double	ft_atof(char *str);
 double	dot_product(t_tuple *vec1, t_tuple *vec2);
 t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray, int flag);
-t_ray	*transform_ray(t_ray *ray, double **a);
+t_ray	transform_ray(t_ray *ray, double **a);
 double	**transform_object(t_sphere *sp, t_tuple *tr, int flag);
 double	**translation(double x, double y, double z, double w);
 double	**identity_matrix(void);
 double	**mult_matrix(double **a, double **b);
 double	discriminant(t_sphere *sp, t_ray *ray);
 double	magnitude(t_tuple *tuple);
-t_tuple	*mult_by_scalar(t_tuple *tuple, double scalar);
+t_tuple	mult_by_scalar(t_tuple *tuple, double scalar);
 double	**trans_matrix(double **a);
 double	det_minor(double **a);
 

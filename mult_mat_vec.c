@@ -12,14 +12,13 @@
 
 #include "Minirt.h"
 
-t_tuple	*mult_mat_vec(double **mat, t_tuple *vec)
+t_tuple	mult_mat_vec(double **mat, t_tuple vec)
 {
-	t_tuple	*new_vec;
+	t_tuple	new_vec;
 
-	new_vec = malloc(sizeof(t_tuple));
-	new_vec->x = vec->x * mat[0][0];
-	new_vec->y = vec->y * mat[1][1];
-	new_vec->z = vec->z * mat[2][2];
-	new_vec->w = 0;
+	new_vec.x = vec.x * mat[0][0];
+	new_vec.y = vec.y * mat[1][1];
+	new_vec.z = vec.z * mat[2][2];
+	new_vec.w = 0;
 	return (new_vec);
 }

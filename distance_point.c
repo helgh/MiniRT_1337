@@ -12,10 +12,10 @@
 
 #include "Minirt.h"
 
-double	distance_point(t_tuple *p1, t_tuple *p2)
+double	distance_point(t_tuple p1, t_tuple p2)
 {
 	double	distance;
-	t_tuple	*sub;
+	t_tuple	sub;
 
 	sub = subtract(p1, p2);
 	distance = magnitude(sub);

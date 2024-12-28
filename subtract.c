@@ -16,16 +16,13 @@
 // Subtracting vector from a point is just moving backward by the given vector //
 // Subtracting two vector representing the change in direction between the two //
 
-t_tuple	*subtract(t_tuple *tuple1, t_tuple *tuple2)
+t_tuple	subtract(t_tuple p_v1, t_tuple p_v2)
 {
-	t_tuple	*new_tuple;
+	t_tuple	new_p_v;
 
-	new_tuple = malloc(sizeof(t_tuple));
-	if (!new_tuple)
-		return (NULL);
-	new_tuple->x = tuple1->x - tuple2->x;
-	new_tuple->y = tuple1->y - tuple2->y;
-	new_tuple->z = tuple1->z - tuple2->z;
-	new_tuple->w = tuple1->w - tuple2->w;
+	new_p_v.x = p_v1.x - p_v2.x
+	new_p_v.y = p_v1.y - p_v2.y
+	new_p_v.z = p_v1.z - p_v2.z
+	new_p_v.w = p_v1.w - p_v2.w
 	return (new_tuple);
 }

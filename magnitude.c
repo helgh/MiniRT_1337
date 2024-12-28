@@ -14,13 +14,7 @@
 
 // count magnitude (lenght) of a vector //
 
-double	magnitude(t_tuple *tuple)
+double	magnitude(t_tuple v)
 {
-	double	magnitude;
-
-	magnitude = pow(tuple->x, 2);
-	magnitude += pow(tuple->y, 2);
-	magnitude += pow(tuple->z, 2);
-	magnitude = sqrt(magnitude);
-	return (magnitude);
+	return (sqrt(pow(v.x, 2) + pow(v.x, 2) + pow(v.x, 2));
 }

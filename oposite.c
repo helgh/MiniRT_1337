@@ -14,16 +14,13 @@
 
 // function get oposite of some vector //
 
-t_tuple	*oposite(t_tuple *tuple)
+t_tuple	oposite(t_tuple tuple)
 {
-	t_tuple	*new_tuple;
+	t_tuple	new_tuple;
 
-	new_tuple = malloc(sizeof(t_tuple));
-	if (!new_tuple)
-		return (NULL);
-	new_tuple->x = -1 * tuple->x;
-	new_tuple->y = -1 * tuple->y;
-	new_tuple->z = -1 * tuple->z;
-	new_tuple->w = -1 * tuple->w;
+	new_tuple.x = -1 * tuple.x;
+	new_tuple.y = -1 * tuple.y;
+	new_tuple.z = -1 * tuple.z;
+	new_tuple.w = -1 * tuple.w;
 	return (new_tuple);
 }

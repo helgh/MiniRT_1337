@@ -22,15 +22,12 @@ int	count_size(double **a)
 	return (i);
 }
 
-t_ray	*transform_ray(t_ray *ray, double **a)
+t_ray	transform_ray(t_ray *ray, double **a)
 {
-	t_ray	*new_ray;
+	t_ray	new_ray;
 
-	new_ray = malloc(sizeof(t_tuple));
-	if (!new_ray)
-		return (NULL);
-	new_ray->origin_p = mult_mat_point(a, ray->origin_p);
-	new_ray->direction_v = mult_mat_point(a, ray->direction_v);
+	new_ray.origin_p = mult_mat_point(a, ray->origin_p);
+	new_ray.direction_v = mult_mat_point(a, ray->direction_v);
 	return (new_ray);
 }
 

@@ -12,16 +12,13 @@
 
 #include "Minirt.h"
 
-t_tuple	*mult_by_scalar(t_tuple *tuple, double scalar)
+t_tuple	mult_by_scalar(t_tuple tuple, double scalar)
 {
-	t_tuple	*new_tuple;
+	t_tuple	new_tuple;
 
-	new_tuple = malloc(sizeof(t_tuple));
-	if (!new_tuple)
-		return (NULL);
-	new_tuple->x = tuple->x * scalar;
-	new_tuple->y = tuple->y * scalar;
-	new_tuple->z = tuple->z * scalar;
-	new_tuple->w = tuple->w * scalar;
+	new_tuple.x = tuple.x * scalar;
+	new_tuple.y = tuple.y * scalar;
+	new_tuple.z = tuple.z * scalar;
+	new_tuple.w = tuple.w * scalar;
 	return (new_tuple);
 }

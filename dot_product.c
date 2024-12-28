@@ -15,11 +15,11 @@
 // get a scalar value //
 // use of function when start intersecting rays with objects or when compute the shading on a surface //
 
-double	dot_product(t_tuple *vec1, t_tuple *vec2)
+double	dot_product(t_tuple vec1, t_tuple vec2)
 {
 	double	result;
 
-	result = (vec1->x * vec2->x) + (vec1->y * vec2->y) + (vec1->z * vec2->z);
-	result += (vec1->w * vec2->w);
+	result = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
+	result += (vec1.w * vec2.w);
 	return (result);
 }

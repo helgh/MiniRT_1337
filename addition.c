@@ -16,16 +16,13 @@
 // or //
 // this function get new vec //
 
-t_tuple	*addition(t_tuple *start, t_tuple *vec)
+t_tuple	addition(t_tuple start, t_tuple vec)
 {
-	t_tuple	*point;
+	t_tuple	point;
 
-	point = malloc(sizeof(t_tuple));
-	if (!point)
-		return (NULL);
-	point->x = start->x + vec->x;
-	point->y = start->y + vec->y;
-	point->z = start->z + vec->z;
-	point->w = start->w + vec->w;
+	point.x = start.x + vec.x;
+	point.y = start.y + vec.y;
+	point.z = start.z + vec.z;
+	point.w = start.w + vec.w;
 	return (point);
 }

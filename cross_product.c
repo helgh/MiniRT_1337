@@ -12,16 +12,13 @@
 
 #include "Minirt.h"
 
-t_tuple	*cross_product(t_tuple *vec1, t_tuple *vec2)
+t_tuple	cross_product(t_tuple vec1, t_tuple vec2)
 {
-	t_tuple	*vec3;
+	t_tuple	vec3;
 
-	vec3 = malloc(sizeof(t_tuple));
-	if (!vec3)
-		return (NULL);
-	vec3->x = (vec1->y * vec2->z) - (vec1->z * vec2->y);
-	vec3->y = (vec1->x * vec2->z) - (vec1->z * vec2->x);
-	vec3->z = (vec1->x * vec2->y) - (vec1->y * vec2->x);
-	vec3->w = 0;
+	vec3.x = (vec1.y * vec2.z) - (vec1.z * vec2.y);
+	vec3.y = (vec1.x * vec2.z) - (vec1.z * vec2.x);
+	vec3.z = (vec1.x * vec2.y) - (vec1.y * vec2.x);
+	vec3.w = 0;
 	return (vec3);
 }
