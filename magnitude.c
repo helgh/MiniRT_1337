@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:26:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/17 15:43:56 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/01 17:23:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,5 @@
 
 double	magnitude(t_tuple v)
 {
-	return (sqrt(pow(v.x, 2) + pow(v.x, 2) + pow(v.x, 2));
+	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }

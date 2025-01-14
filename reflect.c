@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normalization.c                                    :+:      :+:    :+:   */
+/*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 18:40:52 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/14 11:43:58 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/13 10:17:33 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/13 10:38:12 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-// Normalization is the process of taking an arbitrary vector and converting it into a unit vector //
-// turn vector into a unit vector while preserving its direction //
-
-t_tuple	normal(t_tuple tuple)
+t_tuple	reflect(t_tuple in, t_tuple normal)
 {
-	t_tuple	new_tuple;
-	double	magn;
+	double	n;
 
-	magn = magnitude(tuple);
-	new_tuple.x = tuple.x / magn;
-	new_tuple.y = tuple.y / magn;
-	new_tuple.z = tuple.z / magn;
-	new_tuple.w = tuple.w;
-	return (new_tuple);
+	n = 2 * dot_product(in, normal);
+	return (subtract(in, mult_by_scalar(normal, n)));
 }

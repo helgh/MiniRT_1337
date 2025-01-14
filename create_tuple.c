@@ -6,22 +6,19 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 16:00:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/16 16:02:56 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/13 13:48:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_axis	*create_tuple(double x, double y, double z, double w)
+t_tuple	create_tuple(double x, double y, double z, double w)
 {
-	t_axis	*tuple;
+	t_tuple	tuple;
 
-	tuple = malloc (sizeof(t_axis));
-	if (!tuple)
-		return (NULL);
-	tuple->x = x;
-	tuple->y = y;
-	tuple->z = z;
-	tuple->w = w;
+	tuple.x = x;
+	tuple.y = y;
+	tuple.z = z;
+	tuple.w = w;
 	return (tuple);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 21:45:37 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/16 17:02:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/14 11:46:28 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ t_tuple	oposite(t_tuple tuple)
 	new_tuple.x = -1 * tuple.x;
 	new_tuple.y = -1 * tuple.y;
 	new_tuple.z = -1 * tuple.z;
-	new_tuple.w = -1 * tuple.w;
+	new_tuple.w = tuple.w;
 	return (new_tuple);
 }

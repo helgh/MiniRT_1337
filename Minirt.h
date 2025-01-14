@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/20 19:44:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/13 17:23:09 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINIRT_H
 
 # include <unistd.h>
-//include <mlx.h>
+#include <mlx.h>
 # include <time.h>
 # include <limits.h>
 # include <stdio.h>
@@ -32,6 +32,9 @@
 # ifndef RADIAN
 # define RADIAN 3.14159265359
 #endif
+
+# define OBJ_TO_WORLD 1
+# define WORLD_TO_OBJ 2
 
 # define TRANSLATING 1
 # define SCALING 2
@@ -68,12 +71,29 @@
 # define ERR_C "  Invalid information for element 'A' in the scene\n"
 # define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
 
+typedef struct s_mlx
+{
+	int		bpp;
+	int		size_line;
+	int		endian;
+	char	*pixels;
+}				t_mlx;
+
 typedef struct s_color
 {
-	unsigned char	r;
-	unsigned char	g;
-	unsigned char	b;
+	double	r;
+	double	g;
+	double	b;
 }				t_color;
+
+typedef struct s_material
+{
+	double	ambient;
+	double	diffuse;
+	double	specular;
+	double	shininess;
+	t_color	color;
+}				t_material;
 
 typedef struct s_tuple
 {
@@ -90,8 +110,9 @@ typedef struct s_sphere
 	double	diameter;
 	double	radius;
 	double	**trans;
-	t_tuple	*cord;
-	t_color	*color;
+	t_material	m;
+	t_tuple	cord;
+	t_color	color;
 }				t_sphere;
 
 typedef struct s_intersect
@@ -108,6 +129,29 @@ typedef struct s_ray
 	t_tuple	direction_v;
 }				t_ray;
 
+typedef struct s_light
+{
+	char	L;
+	double	brightness;
+	t_tuple	cord;
+	t_color	color;
+}				t_light;
+
+typedef struct s_am_light
+{
+	char	A;
+	bool	am_light;
+	t_color	color;
+}				t_am_light;
+
+typedef struct s_camera
+{
+	char	C;
+	int		FOV;
+	t_tuple	cord;
+	t_tuple	norm_vector;
+}				t_camera;
+
 char	*get_next_line(int fd);
 char	*find_leak(char *all);
 char	*mul_str(char *all, char *str);
@@ -121,8 +165,8 @@ int		ft_strcmp(char *s1, char *s2);
 int		count_size(double **a);
 double	**trans_mat(double **a, double det);
 double	**inverse(double **a);
-t_tuple	mult_mat_point(double **mat, t_tuple *point);
-t_tuple	mult_mat_vec(double **mat, t_tuple *vec);
+t_tuple	mult_mat_point(double **mat, t_tuple point);
+t_tuple	mult_mat_vec(double **mat, t_tuple vec);
 double	**translation(double x, double y, double z, double w);
 double	**scaling(double x, double y, double z, double w);
 double	**rotate_x(double angle);
@@ -131,55 +175,42 @@ double	**rotate_z(double angle);
 double	degree_to_rad(double degree);
 double	**shearing(double *arr);
 t_tuple	position(t_ray *ray, double t);
-t_tuple	addition(t_tuple *ax1, t_tuple *ax2);
-double	distance_point(t_tuple *p1, t_tuple *p2);
-t_tuple	subtract(t_tuple *ax1, t_tuple *ax2);
+t_tuple	addition(t_tuple start, t_tuple vec);
+double	distance_point(t_tuple p1, t_tuple p2);
+t_tuple	subtract(t_tuple ax1, t_tuple ax2);
 bool	campare_mat(double **arr1, double **arr2);
 double	ft_atof(char *str);
-double	dot_product(t_tuple *vec1, t_tuple *vec2);
-t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray, int flag);
+double	dot_product(t_tuple vec1, t_tuple vec2);
+t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray);
 t_ray	transform_ray(t_ray *ray, double **a);
-double	**transform_object(t_sphere *sp, t_tuple *tr, int flag);
+double	**transform_sphere(t_sphere *sp, t_tuple *trans);
+double	det(double **a);
+double	cofactor(double **a, int row, int col);
 double	**translation(double x, double y, double z, double w);
 double	**identity_matrix(void);
 double	**mult_matrix(double **a, double **b);
 double	discriminant(t_sphere *sp, t_ray *ray);
-double	magnitude(t_tuple *tuple);
-t_tuple	mult_by_scalar(t_tuple *tuple, double scalar);
-double	**trans_matrix(double **a);
+double	magnitude(t_tuple tuple);
+t_tuple	mult_by_scalar(t_tuple tuple, double scalar);
+double	**transpose(double **a);
 double	det_minor(double **a);
-
-
-typedef struct s_am_light
-{
-	char	A;
-	bool	am_light;
-	t_color	*color;
-}				t_am_light;
-
-typedef struct s_camera
-{
-	char	C;
-	int		FOV;
-	t_tuple	*cord;
-	t_tuple	*norm_vector;
-}				t_camera;
-
-typedef struct s_light
-{
-	char	L;
-	bool	brightness;
-	t_tuple	*cord;
-	t_color	*color;
-}				t_light;
-
+t_tuple	normal(t_tuple tuple);
+void	free_sub_matrix(double **sub);
+t_tuple	reflect(t_tuple in, t_tuple normal);
+t_tuple	oposite(t_tuple tuple);
+t_color	set_color(double r, double g, double b);
+t_tuple	create_tuple(double x, double y, double z, double w);
+t_tuple	cord_point_sec(t_ray cam, double t);
+double	hit(t_intersect *sec);
+t_tuple	normal_at(t_sphere sp, t_tuple point);
+t_color	lighting(t_material m, t_light light, t_ray eye, t_tuple point, t_tuple vec);
 
 typedef struct s_plane
 {
 	char	*pl;
-	t_tuple	*cord;
-	t_tuple	*norm_vector;
-	t_color	*color;
+	t_tuple	cord;
+	t_tuple	norm_vector;
+	t_color	color;
 }				t_plane;
 
 typedef struct s_cylinder

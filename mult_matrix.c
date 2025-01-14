@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 19:42:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/20 16:57:39 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/11 19:59:13 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ double	**mult_matrix(double **a, double **b)
 			new_mat[i][s] = find_new_value(a, b, i, s);
 	}
 	new_mat[i] = NULL;
+	free_sub_matrix(a);
+	free_sub_matrix(b);
 	return (new_mat);
 }

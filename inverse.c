@@ -1,31 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   inverse.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/31 15:54:39 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/11 19:00:42 by hael-ghd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	transpose_matrix(double **a2)
-{
-	double	tmp[4][4];
-	int		i;
-	int		s;
-
-	i = -1;
-	while (++i < 4)
-	{
-		s = -1;
-		while (++s < 4)
-			tmp[i][s] = a2[i][s];
-	}
-	i = -1;
-	while (++i < 4)
-	{
-		s = -1;
-		while (++s < 4)
-			a2[s][i] = tmp[i][s];
-	}
-}
+#include "Minirt.h"
 
 double	**inverse(double **a)
 {
 	int		row;
 	int		col;
 	double	**a2;
+	double	**a3;
 	double	determinant;
 
 	determinant = det(a);
@@ -43,6 +35,7 @@ double	**inverse(double **a)
 			a2[row][col] = cofactor(a, row, col) / determinant;
 	}
 	a2[row] = NULL;
-	transpose_matrix(a2);
-	return (a2);
+	a3 = transpose(a2);
+	free_sub_matrix(a2);
+	return (a3);
 }
