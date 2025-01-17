@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/31 15:54:39 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/11 19:00:42 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:06:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ double	**inverse(double **a)
 	determinant = det(a);
 	if (determinant == 0)
 		return (NULL);
-	a2 = malloc(sizeof(double *) * count_size(a) + 1);
+	a2 = malloc(sizeof(double *) * 5);
 	if (!a2)
 		return (NULL);
 	row = -1;

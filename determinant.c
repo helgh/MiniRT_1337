@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 18:25:09 by hael-ghd          #+#    #+#             */
-/*   Updated: 2024/12/18 18:31:27 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/16 12:06:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,9 @@ void	free_sub_matrix(double **sub)
 	free (sub);
 }
 
-double	**submatrix(double **a, int row, int col)
+static double	**submatrix(double **a, int row, int col, int size)
 {
 	double	**sub;
-	int		size;
 	int		i;
 	int		s;
 	int		l;
@@ -38,10 +37,7 @@ double	**submatrix(double **a, int row, int col)
 
 	i = -1;
 	b = -1;
-	size = count_size(a);
 	sub = malloc(sizeof(double *) * size);
-	if (!sub)
-		return (NULL);
 	while (++i < size)
 	{
 		if (i == row)
@@ -60,15 +56,15 @@ double	**submatrix(double **a, int row, int col)
 	return (sub);
 }
 
-double	minor(double **a, int row, int col)
+static double	minor(double **a, int row, int col, int size)
 {
 	double	res;
 	double	**sub;
 
 	sub = NULL;
-	if (count_size(a) == 3)
+	if (size == 3)
 	{
-		sub = submatrix(a, row, col);
+		sub = submatrix(a, row, col, 3);
 		res = (sub[0][0] * sub[1][1]) - (sub[0][1] * sub[1][0]);
 		if (sub)
 			free_sub_matrix(sub);
@@ -78,19 +74,17 @@ double	minor(double **a, int row, int col)
 	return (res);
 }
 
-double	det_minor(double **a)
+static double	det_minor(double **a)
 {
 	double	det_m;
 	int		i;
-	int		size;
 
 	i = -1;
 	det_m = 0;
-	size = count_size(a);
-	while (++i < size)
+	while (++i < 3)
 	{
 		a[0][i] *= pow(-1, i);
-		det_m += a[0][i] * minor(a, 0, i);
+		det_m += a[0][i] * minor(a, 0, i, 3);
 	}
 	return (det_m);
 }
@@ -102,7 +96,7 @@ double	cofactor(double **a, int row, int col)
 
 	sub = NULL;
 	factor = 0;
-	sub = submatrix(a, row, col);
+	sub = submatrix(a, row, col, 4);
 	factor = pow(-1, row + col) * det_minor(sub);
 	if (sub)
 		free_sub_matrix(sub);
@@ -113,17 +107,10 @@ double	det(double **a)
 {
 	double	det;
 	int		i;
-	int		size;
 
 	det = 0;
-	size = count_size(a);
-	if (size == 2)
-		return (det = minor(a, 0, 0));
-	else
-	{
-		i = -1;
-		while (++i < size)
-			det += (a[0][i] * cofactor(a, 0, i));
-	}
+	i = -1;
+	while (++i < 4)
+		det += (a[0][i] * cofactor(a, 0, i));
 	return (det);
 }

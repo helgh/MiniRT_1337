@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/13 17:23:09 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:51:27 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ typedef struct s_sphere
 
 typedef struct s_intersect
 {
-	int					nbr_sec;
-	double				*point_sec;
+	bool				hit;
+	double				point_sec[2];
 	void				*object;
 	struct s_intersect	*next;
 }				t_intersect;
@@ -147,7 +147,7 @@ typedef struct s_am_light
 typedef struct s_camera
 {
 	char	C;
-	int		FOV;
+	double	FOV;
 	t_tuple	cord;
 	t_tuple	norm_vector;
 }				t_camera;
@@ -167,11 +167,9 @@ double	**trans_mat(double **a, double det);
 double	**inverse(double **a);
 t_tuple	mult_mat_point(double **mat, t_tuple point);
 t_tuple	mult_mat_vec(double **mat, t_tuple vec);
-double	**translation(double x, double y, double z, double w);
-double	**scaling(double x, double y, double z, double w);
-double	**rotate_x(double angle);
-double	**rotate_y(double angle);
-double	**rotate_z(double angle);
+double	**translation(double x, double y, double z);
+double	**scaling(double x, double y, double z);
+double	**rotation(double angle, char axis);
 double	degree_to_rad(double degree);
 double	**shearing(double *arr);
 t_tuple	position(t_ray *ray, double t);
@@ -184,26 +182,29 @@ double	dot_product(t_tuple vec1, t_tuple vec2);
 t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray);
 t_ray	transform_ray(t_ray *ray, double **a);
 double	**transform_sphere(t_sphere *sp, t_tuple *trans);
+// double	minor(double **a, int row, int col);
+// double	det_minor(double **a);
 double	det(double **a);
 double	cofactor(double **a, int row, int col);
-double	**translation(double x, double y, double z, double w);
 double	**identity_matrix(void);
 double	**mult_matrix(double **a, double **b);
 double	discriminant(t_sphere *sp, t_ray *ray);
 double	magnitude(t_tuple tuple);
-t_tuple	mult_by_scalar(t_tuple tuple, double scalar);
+t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, char operator, double scalar);
 double	**transpose(double **a);
-double	det_minor(double **a);
 t_tuple	normal(t_tuple tuple);
 void	free_sub_matrix(double **sub);
 t_tuple	reflect(t_tuple in, t_tuple normal);
 t_tuple	oposite(t_tuple tuple);
 t_color	set_color(double r, double g, double b);
 t_tuple	create_tuple(double x, double y, double z, double w);
-t_tuple	cord_point_sec(t_ray cam, double t);
+t_tuple	point_sec(t_ray cam, double t);
 double	hit(t_intersect *sec);
 t_tuple	normal_at(t_sphere sp, t_tuple point);
 t_color	lighting(t_material m, t_light light, t_ray eye, t_tuple point, t_tuple vec);
+t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
+t_color	rgb_to_hex(double r, double g, double b);
+t_color	check_col(t_color color);
 
 typedef struct s_plane
 {
