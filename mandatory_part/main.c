@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normal_at.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/11 17:52:15 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/19 17:29:12 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/21 12:45:09 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minirt.h"
+#include "minirt.h"
 
-t_tuple	normal_at(t_sphere sp, t_tuple point)
+int main()
 {
-	t_tuple	obj_vec;
-	t_tuple	obj_p;
-	t_tuple	world_vec;
-
-	obj_p = mult_mat_point(sp.inv_trans, point);
-	obj_vec = op_tuple(obj_p, create_tuple(0, 0, 0, 1), '-', 1);
-	world_vec = mult_mat_point(sp.transpose_inv_matrix, obj_vec);
-	world_vec.w = 0;
-	return (normal(world_vec));
+	
 }

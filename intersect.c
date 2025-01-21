@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 18:48:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/17 14:21:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:25:13 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,20 +35,21 @@ t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray)
 	double		b;
 	double		a;
 
-	new_ray = transform_ray(ray, inverse(sp->trans));
-	sec = malloc(sizeof(t_intersect));
-	sec->object = sp;
-	sec->next = NULL;
-	sec->hit = true;
+	new_ray = transform_ray(ray, sp->inv_trans);
 	dis = discriminant(sp, &new_ray);
 	if (dis < 0)
-		return (sec->hit = false, sec);
+		return (NULL);
+	sec = malloc(sizeof(t_intersect));
+	sec->object = sp;
+	sec->type = SPHERE;
+	sec->id = sp->id;
+	sec->next = NULL;
 	a = dot_product(new_ray.direction_v, new_ray.direction_v);
 	tuple = op_tuple(new_ray.origin_p, sp->cord, '-', 1);
 	b = 2 * dot_product(new_ray.direction_v, tuple);
 	sec->point_sec[0] = (-(b) - sqrt(dis)) / (2 * a);
 	sec->point_sec[1] = (-(b) + sqrt(dis)) / (2 * a);
 	if (sec->point_sec[0] < EPSILON && sec->point_sec[1] < EPSILON)
-		return (sec->hit = false, sec);
+		return (free(sec), NULL);
 	return (sec);
 }
