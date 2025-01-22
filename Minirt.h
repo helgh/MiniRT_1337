@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 15:56:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/20 16:32:09 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:32:34 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ typedef struct s_obj_draw
 	double		t;
 	void		*object;
 	bool		inside;
+	bool		shadow;
 	t_tuple		position;
 	t_tuple		eye_v;
 	t_tuple		normal_v;
@@ -274,12 +275,12 @@ t_tuple	create_tuple(double x, double y, double z, double w);
 t_tuple	point_sec(t_ray cam, double t);
 t_intersect	*hit(t_intersect *sec);
 t_tuple	normal_at(t_sphere sp, t_tuple point);
-t_color	lighting(t_material m, t_light light, t_tuple eye, t_tuple point, t_tuple vec);
+t_color	lighting(t_material m, t_light light, t_tuple eye, t_tuple point, t_tuple vec, t_obj_draw sp);
 t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
-t_color	rgb_to_hex(double r, double g, double b);
+double	rgb_to_hex(double r, double g, double b);
 t_color	check_col(t_color color);
 t_color	shad_hit(t_world *world, t_ray *ray);
-t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray);
+t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray, t_light *light, t_world *world);
 double	**view_transform(t_tuple from, t_tuple to, t_tuple up);
 t_camera	_camera(double fov, double width, double height);
 t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y);

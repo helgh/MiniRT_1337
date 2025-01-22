@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:30:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/20 17:06:39 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/22 15:32:18 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,13 @@ t_intersect	*intersect_world(t_world *world, t_ray *ray)
 	t_intersect	*tmp;
 	t_intersect	*send;
 	int			i;
-	int			s;
 
 	head = NULL;
+	send = NULL;
 	i = -1;
-	s = -1;
 	while (++i < world->obj_count)
 	{
-		if (++s < world->sp_count)
-			tmp = intersect_sphere(&world->sp[i], ray);
+		tmp = intersect_sphere(&world->sp[i], ray);
 		// else if (world->pl[i].id != -1)
 		// 	tmp = intersect_plane(&world->pl[i], ray);
 		// else if (world->cy[i].id != -1)
@@ -93,7 +91,7 @@ t_intersect	*intersect_world(t_world *world, t_ray *ray)
 	return (send);
 }
 
-t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray)
+t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray, t_light *light, t_world *world)
 {
 	t_obj_draw	*obj;
 
@@ -108,11 +106,19 @@ t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray)
 	obj->eye_v = oposite(ray->direction_v);
 	obj->normal_v = normal_at(*(t_sphere *)intersect->object, obj->position);
 	obj->inside = true;
+	obj->shadow = false;
 	obj->type = intersect->type;
 	if (dot_product(obj->normal_v, obj->eye_v) < EPSILON)
 		obj->normal_v = oposite(obj->normal_v);
 	else
 		obj->inside = false;
+	t_ray	ray2;
+	ray2.origin_p = obj->position;
+	ray2.direction_v = normal(op_tuple(light[0].cord, obj->position, '-', 1));
+	double	magn = magnitude(ray2.direction_v);
+	t_intersect *shad = intersect_world(world, &ray2);
+	if (shad && shad->t < magn)
+		obj->shadow = true;
 	return (obj);
 }
 
@@ -125,13 +131,20 @@ t_color	shad_hit(t_world *world, t_ray *ray)
 
 	intersect = intersect_world(world, ray);
 	color = set_color(0, 0, 0);
-	obj = get_obj(intersect, ray);
+	obj = get_obj(intersect, ray, &world->light[0], world);
 	if (!obj)
 		return (set_color(0, 0, 0));
 	if (obj->type == SPHERE)
 	{
 		sp = *(t_sphere*) obj->object;
-		color = lighting(sp.ma, world->light[0], obj->eye_v, obj->position, obj->normal_v);
+		// printf("sp.id: %d\n", sp.id);
+		// printf("sp.ma.color: %f %f %f\n", sp.ma.color.r, sp.ma.color.g, sp.ma.color.b);
+		// printf("sp.ma.ambient: %f\n", sp.ma.ambient);
+		// printf("sp.ma.diffuse: %f\n", sp.ma.diffuse);
+		// printf("sp.ma.specular: %f\n", sp.ma.specular);
+		// printf("sp.ma.shininess: %f\n", sp.ma.shininess);
+		// exit(0);
+		color = lighting(sp.ma, world->light[0], obj->eye_v, obj->position, obj->normal_v, *obj);
 	}
 	return (color);
 }

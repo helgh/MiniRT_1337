@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 15:00:20 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/17 14:58:32 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/22 11:21:07 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static t_color	color_by_scalar(t_color color, double scalar)
 	new_color.r = color.r * scalar;
 	new_color.g = color.g * scalar;
 	new_color.b = color.b * scalar;
-	return (new_color);
+	return (check_col(new_color));
 }
 
 t_color	op_color(t_color col1, t_color col2, char operator, double scalar)
@@ -44,21 +44,21 @@ t_color	op_color(t_color col1, t_color col2, char operator, double scalar)
 		new_color.r = col1.r * col2.r;
 		new_color.g = col1.g * col2.g;
 		new_color.b = col1.b * col2.b;
-		return (new_color);
+		return (check_col(new_color));
 	}
 	else if (operator == '+')
 	{
 		new_color.r = col1.r + col2.r;
 		new_color.g = col1.g + col2.g;
 		new_color.b = col1.b + col2.b;
-		return (new_color);
+		return (check_col(new_color));
 	}
 	else if (operator == '-')
 	{
 		new_color.r = col1.r - col2.r;
 		new_color.g = col1.g - col2.g;
 		new_color.b = col1.b - col2.b;
-		return (new_color);
+		return (check_col(new_color));
 	}
 	return (color_by_scalar(col1, scalar));
 }

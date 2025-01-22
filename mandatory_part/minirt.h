@@ -6,17 +6,15 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/21 12:44:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/22 18:11:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minirt.h"
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
 # include <unistd.h>
-#include <mlx.h>
+# include <mlx.h>
 # include <time.h>
 # include <limits.h>
 # include <stdio.h>
@@ -34,6 +32,9 @@
 # ifndef RADIAN
 # define RADIAN 3.14159265359
 #endif
+
+# define ALL 1
+# define PART 2
 
 # define OBJ_TO_WORLD 1
 # define WORLD_TO_OBJ 2
@@ -63,7 +64,7 @@
 
 /*------------------------- err Ambient lightning ---------------------------*/
 
-# define ERR_A "  Invalid information for element 'A' in the scene\n"
+# define ERR_A "  Declared more then one element 'A' in the scene\n"
 # define ERR_A_1 "  Bad identifier information for element 'A' in the scene\n"
 # define ERR_A_2 "  ambient lighting of element 'A' in the scene out of range [0.0,1.0]\n"
 # define ERR_A_3 "  R.G.B for element 'A' in the scene out of range [0-255]\n"
@@ -72,6 +73,7 @@
 
 # define ERR_C "  Invalid information for element 'A' in the scene\n"
 # define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
+# define OPEN_FILE_ERR "  Failed to open file\n"
 
 typedef struct s_mlx
 {
@@ -80,6 +82,14 @@ typedef struct s_mlx
 	int		endian;
 	char	*pixels;
 }				t_mlx;
+
+typedef struct s_leaks
+{
+	void			*address;
+	void			*_struct;
+	bool			is_free;
+	struct s_leaks	*next;
+}					t_leaks;
 
 typedef struct s_color
 {
@@ -156,7 +166,7 @@ typedef struct s_light
 typedef struct s_am_light
 {
 	char	A;
-	bool	am_light;
+	bool	am_ratio;
 	t_color	color;
 }			t_am_light;
 
@@ -203,6 +213,7 @@ typedef struct s_scene
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	t_leaks		*heap;
 }				t_scene;
 
 typedef struct s_world
@@ -228,63 +239,78 @@ typedef struct s_obj_draw
 	t_tuple		normal_v;
 }				t_obj_draw;
 
+// ----------------------------  mandatory  --------------------------------
+
+void	__ft_free(t_scene *scene, int flag, int exit_status);
+char	**ft_split(t_scene *scene, char const *s, char c);
+void	*ft_malloc(t_scene *scene, size_t size, bool flag);
+int		ft_atoi(const char *str);
+double	ft_atof(char *str);
 char	*get_next_line(int fd);
 char	*find_leak(char *all);
-char	*mul_str(char *all, char *str);
-char	*copy_line(char *str);
 char	*save_free(char *str, char *p);
-int		leng(char *str);
-int		lengh(char **str);
-char	**ft_split(char const *s, char c);
-int		ft_atoi(const char *str);
-int		ft_strcmp(char *s1, char *s2);
-int		count_size(double **a);
-double	**trans_mat(double **a, double det);
-double	**inverse(double **a);
-t_tuple	mult_mat_point(double **mat, t_tuple point);
-t_tuple	mult_mat_vec(double **mat, t_tuple vec);
-double	**translation(double x, double y, double z);
-double	**scaling(double x, double y, double z);
-double	**rotation(double angle, char axis);
-double	degree_to_rad(double degree);
-double	**shearing(double *arr);
-t_tuple	position(t_ray *ray, double t);
-t_tuple	addition(t_tuple start, t_tuple vec);
-double	distance_point(t_tuple p1, t_tuple p2);
-t_tuple	subtract(t_tuple ax1, t_tuple ax2);
-bool	campare_mat(double **arr1, double **arr2);
-double	ft_atof(char *str);
-double	dot_product(t_tuple vec1, t_tuple vec2);
-t_tuple	cross_product(t_tuple vec1, t_tuple vec2);
-t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray);
-t_ray	transform_ray(t_ray *ray, double **a);
-double	**transform_sphere(t_sphere *sp, t_tuple *trans);
-double	det(double **a);
-double	cofactor(double **a, int row, int col);
-double	**identity_matrix(void);
-double	**mult_matrix(double **a, double **b);
-double	discriminant(t_sphere *sp, t_ray *ray);
-double	magnitude(t_tuple tuple);
-t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, char operator, double scalar);
-double	**transpose(double **a);
-t_tuple	normal(t_tuple tuple);
-void	free_sub_matrix(double **sub);
-t_tuple	reflect(t_tuple in, t_tuple normal);
-t_tuple	oposite(t_tuple tuple);
-t_color	set_color(double r, double g, double b);
-t_tuple	create_tuple(double x, double y, double z, double w);
-t_tuple	point_sec(t_ray cam, double t);
-t_intersect	*hit(t_intersect *sec);
-t_tuple	normal_at(t_sphere sp, t_tuple point);
-t_color	lighting(t_material m, t_light light, t_tuple eye, t_tuple point, t_tuple vec);
-t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
-t_color	rgb_to_hex(double r, double g, double b);
-t_color	check_col(t_color color);
-t_color	shad_hit(t_world *world, t_ray *ray);
-t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray);
-double	**view_transform(t_tuple from, t_tuple to, t_tuple up);
-t_camera	_camera(double fov, double width, double height);
-t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y);
-int	ft_strlen(char *str);
+char	*copy_line(char *str);
+char	*mul_str(char *all, char *str);
+int		ft_isdigit(int c);
+
+// ----------------------------  end_mandatory  --------------------------------
+// char	*get_next_line(int fd);
+// char	*find_leak(char *all);
+// char	*mul_str(char *all, char *str);
+// char	*copy_line(char *str);
+// char	*save_free(char *str, char *p);
+// int		leng(char *str);
+// int		lengh(char **str);
+// char	**ft_split(t_leaks *heap, char const *s, char c);
+// int		ft_atoi(const char *str);
+// int		ft_strcmp(char *s1, char *s2);
+// int		count_size(double **a);
+// double	**trans_mat(double **a, double det);
+// double	**inverse(double **a);
+// t_tuple	mult_mat_point(double **mat, t_tuple point);
+// t_tuple	mult_mat_vec(double **mat, t_tuple vec);
+// double	**translation(double x, double y, double z);
+// double	**scaling(double x, double y, double z);
+// double	**rotation(double angle, char axis);
+// double	degree_to_rad(double degree);
+// double	**shearing(double *arr);
+// t_tuple	position(t_ray *ray, double t);
+// t_tuple	addition(t_tuple start, t_tuple vec);
+// double	distance_point(t_tuple p1, t_tuple p2);
+// t_tuple	subtract(t_tuple ax1, t_tuple ax2);
+// bool	campare_mat(double **arr1, double **arr2);
+// double	ft_atof(char *str);
+// double	dot_product(t_tuple vec1, t_tuple vec2);
+// t_tuple	cross_product(t_tuple vec1, t_tuple vec2);
+// t_intersect	*intersect_sphere(t_sphere *sp, t_ray *ray);
+// t_ray	transform_ray(t_ray *ray, double **a);
+// double	**transform_sphere(t_sphere *sp, t_tuple *trans);
+// double	det(double **a);
+// double	cofactor(double **a, int row, int col);
+// double	**identity_matrix(void);
+// double	**mult_matrix(double **a, double **b);
+// double	discriminant(t_sphere *sp, t_ray *ray);
+// double	magnitude(t_tuple tuple);
+// t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, char operator, double scalar);
+// double	**transpose(double **a);
+// t_tuple	normal(t_tuple tuple);
+// void	free_sub_matrix(double **sub);
+// t_tuple	reflect(t_tuple in, t_tuple normal);
+// t_tuple	oposite(t_tuple tuple);
+// t_color	set_color(double r, double g, double b);
+// t_tuple	create_tuple(double x, double y, double z, double w);
+// t_tuple	point_sec(t_ray cam, double t);
+// t_intersect	*hit(t_intersect *sec);
+// t_tuple	normal_at(t_sphere sp, t_tuple point);
+// t_color	lighting(t_material m, t_light light, t_tuple eye, t_tuple point, t_tuple vec);
+// t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
+// t_color	rgb_to_hex(double r, double g, double b);
+// t_color	check_col(t_color color);
+// t_color	shad_hit(t_world *world, t_ray *ray);
+// t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray);
+// double	**view_transform(t_tuple from, t_tuple to, t_tuple up);
+// t_camera	_camera(double fov, double width, double height);
+// t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y);
+// int	ft_strlen(char *str);
 
 #endif
