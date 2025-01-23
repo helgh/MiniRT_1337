@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:26:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 18:12:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/23 11:59:20 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	endstr(char const *str, char c)
 	return (l);
 }
 
-static char	*coppy(t_scene *scene, char const *str, int l, char **all, int h)
+static char	*coppy(t_scene *scene, char const *str, int l)
 {
 	int		i;
 	char	*s1;
@@ -59,16 +59,7 @@ static char	*coppy(t_scene *scene, char const *str, int l, char **all, int h)
 	i = 0;
 	s1 = (char *) ft_malloc(scene, sizeof(char) * l + 1, true);
 	if (s1 == NULL)
-	{
-		while (h > 0)
-		{
-			h--;
-			free (all[h]);
-		}
-		free (all);
-		all = NULL;
-		return (NULL);
-	}
+		return (__ft_free(scene, ALL, 1), NULL);
 	while (i < l)
 	{
 		s1[i] = str[i];
@@ -93,12 +84,12 @@ char	**ft_split(t_scene *scene, char const *s, char c)
 	len = count_str(s, c);
 	all = (char **)ft_malloc(scene, sizeof(char *) * (len + 1), true);
 	if (all == NULL)
-		return (NULL);
+		return (__ft_free(scene, ALL, 1), NULL);
 	while (i < len)
 	{
 		size += start(s + size, c);
 		end = endstr(s + size, c);
-		all[i] = coppy(scene, s + size, end, all, i);
+		all[i] = coppy(scene, s + size, end);
 		size += end;
 		i++;
 	}

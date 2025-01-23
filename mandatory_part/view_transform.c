@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_transformation.c                              :+:      :+:    :+:   */
+/*   view_transform.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/19 14:58:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 19:27:49 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/23 19:28:03 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/23 20:02:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y)
 }
 
 
-double	**view_transform(t_tuple from, t_tuple to, t_tuple up)
+double	**view_transform(t_scene *scene, t_tuple from, t_tuple to)
 {
 	t_tuple	forward;
 	t_tuple	left;
@@ -42,9 +42,9 @@ double	**view_transform(t_tuple from, t_tuple to, t_tuple up)
 	double	**orientation;
 
 	forward = normal(op_tuple(to, from, '-', 1));
-	left = cross_product(forward, normal(up));
+	left = cross_product(forward, normal(create_tuple(0, 1, 0, 0)));
 	true_up = cross_product(left, forward);
-	view = identity_matrix();
+	view = identity_matrix(scene);
 	view[0][0] = left.x;
 	view[0][1] = left.y;
 	view[0][2] = left.z;
@@ -54,9 +54,10 @@ double	**view_transform(t_tuple from, t_tuple to, t_tuple up)
 	view[2][0] = -forward.x;
 	view[2][1] = -forward.y;
 	view[2][2] = -forward.z;
-	trans = translation(-from.x, -from.y, -from.z);
-	orientation = mult_matrix(view, trans);
-	return (free(view), free(trans), orientation);
+	trans = translation(scene, -from.x, -from.y, -from.z);
+	orientation = mult_matrix(scene, view, trans);
+	__ft_free(scene, PART, 0);
+	return (orientation);
 }
 
 t_camera	_camera(double fov, double width, double height)

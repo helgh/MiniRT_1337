@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 17:10:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/21 16:01:33 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/23 16:17:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ int		parse_A(char **spl, int len)
 	n = ft_atof(spl[1]);
 	if (n > 1 || n < 0)
 		return (print_scene_err(ERR_A_2), 1);
-	nb = check_color(spl[2]);
+	nb = check_color(spl[2], ERR_A_1, ERR_A_3);
 	if (nb)
 	{
 		if (nb == -1)

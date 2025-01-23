@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transpose_mat.c                                    :+:      :+:    :+:   */
+/*   transpose_matrix.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 23:54:38 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:19:57 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/23 20:20:29 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/23 20:21:09 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ double	**transpose(t_scene *scene, double **a)
 	int		s;
 
 	i = -1;
-	tr = malloc(sizeof(double *) * (5));
+	tr = ft_malloc(scene, sizeof(double *) * (5), false);
 	while (++i < 4)
 	{
 		s = -1;
-		tr[i] = malloc(sizeof(double) * 4);
+		tr[i] = ft_malloc(scene, sizeof(double) * 4, false);
 		while (++s < 4)
 			tr[i][s] = a[s][i];
 	}

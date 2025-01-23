@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 19:42:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:00:09 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/23 20:00:18 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/23 20:01:31 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static double	find_new_value(double **a, double **b, int i, int s)
 	return (value);
 }
 
-double	**mult_matrix(double **a, double **b)
+double	**mult_matrix(t_scene *scene, double **a, double **b)
 {
 	int		i;
 	int		s;
@@ -35,9 +35,9 @@ double	**mult_matrix(double **a, double **b)
 
 	i = -1;
 	size = count_size(a);
-	new_mat = malloc(sizeof(double *) * (size + 1));
+	new_mat = ft_malloc(scene, sizeof(double *) * (size + 1), false);
 	while (++i < size)
-		new_mat[i] = malloc(sizeof(double) * size);
+		new_mat[i] = ft_malloc(scene, sizeof(double) * size, false);
 	i = -1;
 	while (++i < size)
 	{

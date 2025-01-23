@@ -124,7 +124,7 @@ int main()
 	light.color = set_color(1, 1, 1);
 	light.cord = create_tuple(-10, 10, -10, 1);
 
-	camera = _camera(M_PI / 3, 900, 500);
+	camera = _camera(M_PI / 3, 2200, 1200);
 
 	world.light[0] = light;
 	world.obj_count = 6;
@@ -150,8 +150,8 @@ int main()
 	m = malloc(sizeof(t_mlx));
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 900, 500, "rendering sphere");
-	mlx_img = mlx_new_image(mlx, 900, 500);
+	mlx_win = mlx_new_window(mlx, 2200, 1200, "rendering sphere");
+	mlx_img = mlx_new_image(mlx, 2200, 1200);
 	m->pixels = mlx_get_data_addr(mlx_img, &m->bpp, &m->size_line, &m->endian);
 	int pix;
 	int	y = -1;

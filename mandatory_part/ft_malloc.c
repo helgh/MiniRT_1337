@@ -6,33 +6,58 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 18:27:19 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/23 19:48:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-static void	_ft_free_part(t_leaks *heap)
+t_leaks	*ft_lstlast(t_leaks *lst)
+{
+	if (lst != NULL)
+	{
+		while (lst->next != NULL)
+			lst = lst -> next;
+		return (lst); 
+	}
+	return (NULL); 
+}
+
+void	ft_lstadd_back(t_leaks **lst, t_leaks *new)
+{
+	t_leaks	*temp;
+
+	if (new != NULL)
+	{
+		if (*lst != NULL)
+		{
+			temp = ft_lstlast((*lst));
+			temp -> next = new;
+		}
+		else
+			(*lst) = new;
+	}
+}
+
+static void	_ft_free_part(t_leaks **heap)
 {
 	t_leaks	*tmp;
+	t_leaks	*prev;
 
-	while(heap && heap->next)
+	tmp = *heap;
+	while (tmp && tmp->is_free == false)
 	{
-		tmp = heap;
-		heap = heap->next;
-		if (tmp->address && tmp->is_free == true)
-		{
-			free (tmp->address);
-			free (tmp->_struct);
-			tmp->address = NULL;
-		}
+		prev = tmp;
+		tmp = tmp->next;
 	}
-	tmp = heap;
-	if (tmp && tmp->is_free == true)
+	if (!tmp)
+		prev->next = NULL;
+	while (tmp && tmp->is_free == true)
 	{
+		prev->next = tmp->next;
 		free (tmp->address);
 		free (tmp->_struct);
-		heap->address = NULL;
+		tmp = prev->next;
 	}
 }
 
@@ -40,20 +65,12 @@ static void	_ft_free_all(t_leaks *heap)
 {
 	t_leaks	*tmp;
 
-	while (heap && heap->next)
+	while (heap)
 	{
 		tmp = heap;
 		heap = heap->next;
-		if (tmp->address)
-		{
-			free (tmp->address);
-			free (tmp->_struct);
-		}
-	}
-	if (heap)
-	{
-		free (heap->address);
-		free (heap->_struct);
+		free (tmp->address);
+		free (tmp->_struct);
 	}
 }
 
@@ -62,7 +79,6 @@ static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
 	t_leaks	*tmp;
 	t_leaks	*new;
 
-	tmp = *heap;
 	new = malloc(sizeof(t_leaks));
 	if (!new)
 		return (NULL);
@@ -72,6 +88,7 @@ static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
 	new->is_free = flag;
 	if (!*heap)
 		return (*heap = new);
+	tmp = *heap;
 	while (tmp->next)
 		tmp = tmp->next;
 	tmp->next = new;
@@ -84,10 +101,11 @@ void	__ft_free(t_scene *scene, int flag, int exit_status)
 	if (flag == ALL)
 	{
 		_ft_free_all(scene->heap);
+		free(scene);
 		exit(exit_status);
 	}
 	else
-		_ft_free_part(scene->heap);
+		_ft_free_part(&scene->heap);
 }
 
 

@@ -1,32 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   transpose_mat.c                                    :+:      :+:    :+:   */
+/*   identity_matrix.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 23:54:38 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:19:57 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/23 19:30:08 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/23 19:53:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	**transpose(t_scene *scene, double **a)
+double	**identity_matrix(t_scene *scene)
 {
-	double	**tr;
-	int		i;
-	int		s;
+	double	**matrix;
+	int	i;
 
+	matrix = ft_malloc(scene, sizeof(double *) * 5, true);
+	if (!matrix)
+		return (NULL);
 	i = -1;
-	tr = malloc(sizeof(double *) * (5));
 	while (++i < 4)
 	{
-		s = -1;
-		tr[i] = malloc(sizeof(double) * 4);
-		while (++s < 4)
-			tr[i][s] = a[s][i];
+		matrix[i] = ft_malloc(scene, sizeof(double) * 4, true);
+		if (!matrix[i])
+			return (NULL);
+		matrix[i][i] = 1;
 	}
-	tr[i] = NULL;
-	return (tr);
+	matrix[i] = NULL;
+	return (matrix);
 }

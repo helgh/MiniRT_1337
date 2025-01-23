@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   Minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 18:11:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/23 20:28:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 # include <math.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 40
 #endif
 
+# define WIDTH 800
+# define HEIGHT 600
 
 # ifndef RADIAN
 # define RADIAN 3.14159265359
@@ -69,11 +71,37 @@
 # define ERR_A_2 "  ambient lighting of element 'A' in the scene out of range [0.0,1.0]\n"
 # define ERR_A_3 "  R.G.B for element 'A' in the scene out of range [0-255]\n"
 
-/*------------------------- err Ambient lightning ---------------------------*/
+/*------------------------- err camera ---------------------------*/
 
-# define ERR_C "  Invalid information for element 'A' in the scene\n"
-# define ERR_C_1 "  Cannot convert string to vector for element 'C' in the scene\n"
+# define ERR_C "  Declared more then one element 'C' in the scene\n"
+# define ERR_C_1 "  Bad identifier information for element 'C' in the scene\n"
+# define ERR_C_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
+# define ERR_C_3 "  FOV of element 'A' in the scene out of range [0-180]\n"
 # define OPEN_FILE_ERR "  Failed to open file\n"
+
+/*------------------------- err light ---------------------------*/
+
+# define ERR_L "  Declared more then one element 'L' in the scene\n"
+# define ERR_L_1 "  Bad identifier information for element 'L' in the scene\n"
+# define ERR_L_2 "  Light brightness of element 'L' in the scene out of range [0.0,1.0]\n"
+
+/*------------------------- err sphere ---------------------------*/
+
+# define ERR_SP_1 "  Bad identifier information for element 'sp' in the scene\n"
+# define ERR_SP_2 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+
+/*------------------------- err plane ---------------------------*/
+
+# define ERR_PL_1 "  Bad identifier information for element 'sp' in the scene\n"
+# define ERR_PL_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
+# define ERR_PL_3 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+
+/*------------------------- err cylinder ---------------------------*/
+
+# define ERR_CY_1 "  Bad identifier information for element 'sp' in the scene\n"
+# define ERR_CY_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
+# define ERR_CY_3 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+
 
 typedef struct s_mlx
 {
@@ -125,17 +153,18 @@ typedef	enum e_type
 
 typedef struct s_sphere
 {
-	double		diameter;
-	double		radius;
-	double		**trans;
-	double		**inv_trans;
-	double		**transpose_matrix;
-	double		**transpose_inv_matrix;
-	void		*object;
-	int			id;
-	t_material	ma;
-	t_tuple		cord;
-	t_color		color;
+	double			diameter;
+	double			radius;
+	double			**trans;
+	double			**inv_trans;
+	double			**transpose_matrix;
+	double			**transpose_inv_matrix;
+	void			*object;
+	int				id;
+	t_material		ma;
+	t_tuple			cord;
+	t_color			color;
+	struct s_sphere	*next;
 }				t_sphere;
 
 typedef struct s_intersect
@@ -158,16 +187,17 @@ typedef struct s_light
 {
 	char	L;
 	double	brightness;
-	int			id;
-	t_tuple	cord;
+	t_tuple	pos;
 	t_color	color;
+	t_color	f_color;
 }			t_light;
 
 typedef struct s_am_light
 {
 	char	A;
-	bool	am_ratio;
+	double	am_ratio;
 	t_color	color;
+	t_color	f_color;
 }			t_am_light;
 
 typedef struct s_camera
@@ -181,32 +211,36 @@ typedef struct s_camera
 	double	pixel_size;
 	double	**transform;
 	double	**inv_transform;
-	t_tuple	cord;
-	t_tuple	norm_vector;
+	t_tuple	pos;
+	t_tuple	normal_v;
 }			t_camera;
 
 typedef struct s_plane
 {
-	int		id;
-	void	*object;
-	t_tuple	cord;
-	t_tuple	norm_vector;
-	t_color	color;
+	int				id;
+	void			*object;
+	t_tuple			cord;
+	t_tuple			normal_v;
+	t_color			color;
+	struct s_plane	*next;
 }			t_plane;
 
 typedef struct s_cylinder
 {
-	int		id;
-	void	*object;
-	bool	diameter;
-	bool	height;
-	t_tuple	*cord;
-	t_tuple	*norm_vector;
-	t_color	*color;
+	int					id;
+	void				*object;
+	bool				diameter;
+	bool				height;
+	t_tuple				cord;
+	t_tuple				normal_v;
+	t_color				color;
+	struct s_cylinder	*next;
 }			t_cylinder;
 
 typedef struct s_scene
 {
+	char		*line;
+	int			fd;
 	t_am_light	*Ambient;
 	t_camera	*camera;
 	t_light		*light;
@@ -252,6 +286,15 @@ char	*save_free(char *str, char *p);
 char	*copy_line(char *str);
 char	*mul_str(char *all, char *str);
 int		ft_isdigit(int c);
+t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
+double	**view_transform(t_scene *scene, t_tuple from, t_tuple to);
+double	**identity_matrix(t_scene *scene);
+double	**rotation(t_scene *scene, double angle, char axis);
+double	**scaling(t_scene *scene, double x, double y, double z);
+double	**translation(t_scene *scene, double x, double y, double z);
+double	**mult_matrix(t_scene *scene, double **a, double **b);
+double	**inverse(t_scene *scene, double **a);
+double	**transpose(t_scene *scene, double **a);
 
 // ----------------------------  end_mandatory  --------------------------------
 // char	*get_next_line(int fd);
