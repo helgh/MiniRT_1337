@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 15:54:00 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 16:00:07 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -456,18 +456,18 @@ t_scene	*init_struct(void)
 	return (scene);
 }
 
-void	am_light_compenent(t_scene *scene)
+void	am_light_compenent(t_am_light *am_light)
 {
 	t_color		color;
 	double		ratio;
 
-	ratio = scene->Ambient->am_ratio;
-	color = scene->Ambient->color;
+	ratio = am_light->am_ratio;
+	color = am_light->color;
 	color = op_color(color, color, 0, ratio);
 	color.r /= 255;
 	color.g /= 255;
 	color.b /= 255;
-	scene->Ambient->f_color = color;
+	am_light->f_color = color;
 }
 
 void	camera_compenent(t_scene *scene)
@@ -491,27 +491,27 @@ void	camera_compenent(t_scene *scene)
 	camera->pixel_size = (camera->half_width * 2) / WIDTH;
 }
 
-void	light_compenent(t_scene *scene)
+void	light_compenent(t_light *light)
 {
 	t_color		color;
 	double		ratio;
 
-	ratio = scene->light->brightness;
-	color = scene->light->color;
+	ratio = light->brightness;
+	color = light->color;
 	color = op_color(color, color, 0, ratio);
 	color.r /= 255;
 	color.g /= 255;
 	color.b /= 255;
-	scene->light->f_color = color;
+	light->f_color = color;
 }
 
 void	parse_part(t_scene *scene, char *str)
 {
 	parse_scene(scene, str);
 	important_element(scene);
-	am_light_compenent(scene);
+	am_light_compenent(scene->Ambient);
 	camera_compenent(scene);
-	light_compenent(scene);
+	light_compenent(scene->light);
 }
 
 void	leaks(void)
