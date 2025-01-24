@@ -6,11 +6,171 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 16:00:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 19:43:54 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
+
+// t_tuple	reflect(t_tuple in, t_tuple normal)
+// {
+// 	double	n;
+
+// 	n = 2 * dot_product(in, normal);
+// 	return (op_tuple(in, op_tuple(normal, normal, 0, n), '-', 1));
+// }
+
+// count magnitude (lenght) of a vector //
+
+// t_tuple	create_tuple(double x, double y, double z, double w)
+// {
+// 	t_tuple	tuple;
+
+// 	tuple.x = x;
+// 	tuple.y = y;
+// 	tuple.z = z;
+// 	tuple.w = w;
+// 	return (tuple);
+// }
+
+// double	magnitude(t_tuple v)
+// {
+// 	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
+// }
+
+// // get a scalar value //
+// // use of function when start intersecting rays with objects or when compute the shading on a surface //
+
+double	dot_product(t_tuple vec1, t_tuple vec2)
+{
+	double	result;
+
+	result = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
+	return (result);
+}
+
+t_tuple	normal_at(t_sphere sp, t_tuple point)
+{
+	t_tuple	obj_vec;
+	t_tuple	obj_p;
+	t_tuple	world_vec;
+
+	obj_p = mult_mat_point(sp.inv_trans, point);
+	obj_vec = op_tuple(obj_p, create_tuple(0, 0, 0, 1), '-', 1);
+	world_vec = mult_mat_point(sp.transpose_inv_matrix, obj_vec);
+	world_vec.w = 0;
+	return (normal(world_vec));
+}
+
+// function get oposite of some vector //
+
+t_tuple	opposite(t_tuple tuple)
+{
+	t_tuple	new_tuple;
+
+	new_tuple.x = -1 * tuple.x;
+	new_tuple.y = -1 * tuple.y;
+	new_tuple.z = -1 * tuple.z;
+	new_tuple.w = tuple.w;
+	return (new_tuple);
+}
+
+t_tuple	point_sec(t_ray cam, double t)
+{
+	return (op_tuple(cam.origin_p, op_tuple(cam.direction_v, cam.direction_v, 0, t), '+', 1));
+}
+
+t_color	set_color(double r, double g, double b)
+{
+	t_color	color;
+
+	color.r = r;
+	color.g = g;
+	color.b = b;
+	return (color);
+}
+
+double	choise_point(t_intersect *sec)
+{
+	t_intersect	tmp;
+
+	tmp = *sec;
+	if (sec->point_sec[0] < EPSILON)
+		return (sec->t = sec->point_sec[1], sec->point_sec[1]);
+	else if (sec->point_sec[1] < EPSILON)
+		return (sec->t = sec->point_sec[0], sec->point_sec[0]);
+	else if (sec->point_sec[0] < sec->point_sec[1])
+		return (sec->t = sec->point_sec[0], sec->point_sec[0]);
+	return (sec->t = sec->point_sec[1], sec->point_sec[1]);
+}
+
+t_intersect	*hit(t_intersect *sec)
+{
+	t_intersect	*tmp;
+	t_intersect	*send;
+	double point_sec;
+	double		t;
+
+	send = NULL;
+	tmp = sec;
+	t = -1;
+	while (tmp)
+	{
+		point_sec = choise_point(tmp);
+		if (t < EPSILON)
+		{
+			t = point_sec;
+			send = tmp;
+		}
+		else if (point_sec < t)
+		{
+			t = point_sec;
+			send = tmp;
+		}
+		tmp = tmp->next;
+	}
+	return (send);
+}
+
+void	add_intersect(t_intersect **head, t_intersect *new)
+{
+	t_intersect	*tmp;
+
+	if (!new)
+		return ;
+	if (!*head)
+	{
+		*head = new;
+		return ;
+	}
+	tmp = *head;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new;
+}
+
+double rgb_to_hex(double r, double g, double b)
+{
+	double min;
+	double max;
+
+	max = 1.0;
+	min = 0.0;
+    if (r < min) r = min; if (r > max) r = max;
+    if (g < min) g = min; if (g > max) g = max;
+    if (b < min) b = min; if (b > max) b = max;
+	r *= 255.0;
+	g *= 255.0;
+	b *= 255.0;
+    return ((u_int64_t)r << 16 | (u_int64_t)g << 8 | (u_int64_t)b);
+}
+
+int	handle_event(int keycode, t_scene *scene)
+{
+	if (keycode == 53)
+		__ft_free(scene, ALL, 0);
+	return (0);
+}
 
 void	add_to_list(t_scene *scene, void *obj, int type)
 {
@@ -140,7 +300,7 @@ int		valid_float(char *str, bool checker)
 		i++;
 	while (str[++i])
 	{
-		if (!ft_isdigit(str[0]))
+		if (!ft_isdigit(str[0]) && checker == false)
 			return (1);
 		if (!ft_isdigit(str[i]) && str[i] != 10)
 			if (str[i] != 46 || flag == 1)
@@ -496,6 +656,7 @@ void	light_compenent(t_light *light)
 	t_color		color;
 	double		ratio;
 
+	light->color = set_color(255, 255, 255);
 	ratio = light->brightness;
 	color = light->color;
 	color = op_color(color, color, 0, ratio);
@@ -505,6 +666,31 @@ void	light_compenent(t_light *light)
 	light->f_color = color;
 }
 
+void	sphere_compenent(t_scene *scene)
+{
+	t_sphere	*sphere;
+	double		**tr;
+	double		**scal;
+	int			i;
+
+	i = 0;
+	sphere = scene->sphere;
+	while (sphere)
+	{
+		sphere->id = i;
+		sphere->radius = sphere->diameter / 2;
+		tr = translation(scene, sphere->pos.x, sphere->pos.y, sphere->pos.z);
+		scal = scaling(scene, sphere->radius, sphere->radius, sphere->radius);
+		sphere->trans = mult_matrix(scene, tr, scal);
+		__ft_free(scene, PART, 0);
+		sphere->inv_trans = inverse(scene, sphere->trans);
+		sphere->transpose_matrix = transpose(scene, sphere->trans);
+		sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
+		sphere = sphere->next;
+		i++;
+	}
+}
+
 void	parse_part(t_scene *scene, char *str)
 {
 	parse_scene(scene, str);
@@ -512,11 +698,174 @@ void	parse_part(t_scene *scene, char *str)
 	am_light_compenent(scene->Ambient);
 	camera_compenent(scene);
 	light_compenent(scene->light);
+	sphere_compenent(scene);
+	// plane_compenent(scene);
+	// cylinder_compenent(scene);
+}
+
+t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
+{
+	t_intersect	*tmp;
+	t_intersect	*send;
+	t_sphere	*sp;
+
+	sp = scene->sphere;
+	if (!sp)
+		return (NULL);
+	send = NULL;
+	while (sp)
+	{
+		tmp = intersect_sphere(scene, sp, ray);
+		sp = sp->next;
+		add_intersect(&send, tmp);
+	}
+	send = hit(send);
+	return (send);
+}
+
+t_intersect	*intersect_world(t_scene *scene, t_ray *ray)
+{
+	t_intersect	*tmp;
+	t_intersect	*send;
+
+	send = NULL;
+	tmp = NULL;
+	while (1)
+	{
+		tmp = sec_spheres(scene, ray);
+		if (tmp)
+			add_intersect(&send, tmp);
+		// tmp = sec_planes(scene, ray);
+		// if (tmp.id != -1)
+		// 	add_intersect(&send, &tmp);
+		// tmp = sec_cylinders(scene, ray);
+		// if (tmp.id != -1)
+		// 	add_intersect(&send, &tmp);
+		break ;
+	}
+	send = hit(send);
+	return (send);
+}
+
+t_sphere	get_node(t_sphere *sp, int id)
+{
+	while (sp)
+	{
+		if (sp->id == id)
+			break;
+		sp = sp->next;
+	}
+	return (*sp);
+}
+
+t_color	lighting(t_light light, t_obj_draw obj, t_am_light am_light)
+{
+	t_color	ambient;
+	t_color	difusse;
+	t_tuple	light_v;
+	double	light_normal;
+
+	difusse = set_color(0, 0, 0);
+	ambient = op_color(am_light.f_color, light.color, '*', 1);
+	light_v = normal(op_tuple(light.pos, obj.position, '-', 1));
+	light_normal = dot_product(light_v, obj.normal_v);
+	if (obj.shadow)
+		return (ambient);
+	if (light_normal >= EPSILON)
+		difusse = op_color(ambient, ambient, 0, light_normal);
+	t_color result = op_color(ambient, difusse, '+', 1);
+	return (result);
+}
+
+t_color	_get_sphere_color(t_scene *scene, t_intersect *sec, t_ray ray)
+{
+	t_sphere	sp;
+	t_obj_draw	obj;
+	t_intersect	*shad;
+	t_ray		ray_shad;
+	t_tuple		light;
+
+	light = scene->light->pos;
+	sp = get_node(scene->sphere, sec->id);
+	obj.position = point_sec(ray, sec->t);
+	obj.eye_v = opposite(ray.direction_v);
+	obj.normal_v = normal_at(sp, obj.position);
+	obj.inside = true;
+	obj.shadow = false;
+	if (dot_product(obj.normal_v, obj.eye_v) < EPSILON)
+		obj.normal_v = opposite(obj.normal_v);
+	else
+		obj.inside = false;
+	ray_shad.origin_p = obj.position;
+	ray_shad.direction_v = normal(op_tuple(light, obj.position, '-', 1));
+	shad = intersect_world(scene, &ray);
+	if (shad && shad->t < magnitude(ray_shad.direction_v))
+		obj.shadow = true;
+	__ft_free(scene, PART, 0);
+	return (lighting(*scene->light, obj, *scene->Ambient));
+}
+
+t_color	color_pixel(t_scene *scene, t_ray *ray)
+{
+	t_intersect	*inter;
+
+	inter = intersect_world(scene, ray);
+	if (!inter)
+		return (scene->Ambient->f_color);
+	else if (inter->type == SPHERE)
+		return (_get_sphere_color(scene, inter, *ray));
+	// else if (inter.type == PLANE)
+	// 	return (_get_plane_color(scene, &inter));
+	// _get_cylinder_color(scene, &inter);
+	return (set_color(0, 0, 0));
+}
+
+void	draw(t_scene *scene)
+{
+	t_camera	*camera;
+	t_color		color;
+	t_ray		ray;
+	double		col;
+	int			pix;
+	int			x;
+	int			y;
+
+	camera = scene->camera;
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+		{
+			ray = ray_for_pixel(*camera, x, y);
+			pix = (y * scene->mlx->s_line + x * (scene->mlx->bpp / 8));
+			color = color_pixel(scene, &ray);
+			col = rgb_to_hex(color.r, color.g, color.b);
+			*(int *)(scene->mlx->pixels + pix) = col;
+		}
+	}
+	
 }
 
 void	leaks(void)
 {
 	system("leaks -q miniRT");
+}
+
+void	render(t_scene *scene)
+{
+	t_mlx	*m;
+
+	m = ft_malloc(scene, sizeof(t_mlx), false);
+	scene->mlx = m;
+	m->mlx = mlx_init();
+	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "SCENE");
+	m->mlx_img = mlx_new_image(m->mlx, 2200, 1200);
+	m->pixels = mlx_get_data_addr(m->mlx_img, &m->bpp, &m->s_line, &m->endian);
+	draw(scene);
+	mlx_put_image_to_window(m->mlx, m->mlx_win, m->mlx_img, 0, 0);
+	mlx_key_hook(m->mlx_win, &handle_event, &scene);
+	mlx_loop(m->mlx);
 }
 
 int main(int ac, char **av)
@@ -532,6 +881,7 @@ int main(int ac, char **av)
 	if (check_extention(av[1]))
 		return (free(scene), 1);
 	parse_part(scene, av[1]);
+	render(scene);
 	// printf("scene->ambient->am_ratio: %f\n", scene->Ambient->am_ratio);
 	// printf("scene->ambient->color.r: %f\n", scene->Ambient->color.r);
 	// printf("scene->ambient->color.g: %f\n", scene->Ambient->color.g);
@@ -539,5 +889,5 @@ int main(int ac, char **av)
 	// printf("scene->camera->pos.x: %f\n", scene->camera->pos.x);
 	// printf("scene->camera->pos.y: %f\n", scene->camera->pos.y);
 	// printf("scene->camera->pos.z: %f\n", scene->camera->pos.z);
-	__ft_free(scene, ALL, 0);
+	// __ft_free(scene, ALL, 0);
 }
