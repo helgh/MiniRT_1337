@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:30:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 15:32:18 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:04:31 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray, t_light *light, t_world 
 
 	if (!intersect)
 		return (NULL);
-	
 	obj = malloc(sizeof(t_obj_draw));
 	obj->t = intersect->t;
 	obj->id = intersect->id;

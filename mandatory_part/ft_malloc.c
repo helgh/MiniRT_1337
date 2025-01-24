@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 19:48:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:59:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,19 +45,32 @@ static void	_ft_free_part(t_leaks **heap)
 	t_leaks	*prev;
 
 	tmp = *heap;
+	prev = NULL;
 	while (tmp && tmp->is_free == false)
 	{
 		prev = tmp;
 		tmp = tmp->next;
 	}
-	if (!tmp)
-		prev->next = NULL;
-	while (tmp && tmp->is_free == true)
+	if (!prev)
 	{
-		prev->next = tmp->next;
-		free (tmp->address);
-		free (tmp->_struct);
-		tmp = prev->next;
+		while (tmp && tmp->is_free == true)
+		{
+			prev = tmp->next;
+			free (tmp->address);
+			free (tmp->_struct);
+			tmp = prev;
+		}
+		*heap = prev;
+	}
+	else
+	{
+		while (tmp && tmp->is_free == true)
+		{
+			prev->next = tmp->next;
+			free (tmp->address);
+			free (tmp->_struct);
+			tmp = prev->next;
+		}
 	}
 }
 

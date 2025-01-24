@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 23:54:38 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:19:57 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 14:07:27 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	**transpose(t_scene *scene, double **a)
+double	**transpose(double **a)
 {
 	double	**tr;
 	int		i;

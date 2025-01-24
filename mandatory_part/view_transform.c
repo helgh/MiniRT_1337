@@ -6,30 +6,30 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:28:03 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:02:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:20:45 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y)
-{
-	t_ray	ray;
-	t_tuple	pixel;
-	double	x_offset;
-	double	y_offset;
-	double	world_x;
-	double	world_y;
+// t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y)
+// {
+// 	t_ray	ray;
+// 	t_tuple	pixel;
+// 	double	x_offset;
+// 	double	y_offset;
+// 	double	world_x;
+// 	double	world_y;
 
-	x_offset = (pos_x + 0.5) * camera.pixel_size;
-	y_offset = (pos_y + 0.5) * camera.pixel_size;
-	world_x = camera.half_width - x_offset;
-	world_y = camera.half_height - y_offset;
-	pixel = mult_mat_point(camera.inv_transform, create_tuple(world_x, world_y, -1, 1));
-	ray.origin_p = mult_mat_point(camera.inv_transform, create_tuple(0, 0, 0, 1));
-	ray.direction_v = normal(op_tuple(pixel, ray.origin_p, '-', 1));
-	return (ray);
-}
+// 	x_offset = (pos_x + 0.5) * camera.pixel_size;
+// 	y_offset = (pos_y + 0.5) * camera.pixel_size;
+// 	world_x = camera.half_width - x_offset;
+// 	world_y = camera.half_height - y_offset;
+// 	pixel = mult_mat_point(camera.inv_transform, create_tuple(world_x, world_y, -1, 1));
+// 	ray.origin_p = mult_mat_point(camera.inv_transform, create_tuple(0, 0, 0, 1));
+// 	ray.direction_v = normal(op_tuple(pixel, ray.origin_p, '-', 1));
+// 	return (ray);
+// }
 
 
 double	**view_transform(t_scene *scene, t_tuple from, t_tuple to)
@@ -60,31 +60,31 @@ double	**view_transform(t_scene *scene, t_tuple from, t_tuple to)
 	return (orientation);
 }
 
-t_camera	_camera(double fov, double width, double height)
-{
-	t_camera	cam;
-	t_tuple		to;
-	t_tuple		up;
+// t_camera	_camera(double fov, double width, double height)
+// {
+// 	t_camera	cam;
+// 	t_tuple		to;
+// 	t_tuple		up;
 
-	to = create_tuple(0, 1, 0, 1);
-	up = create_tuple(0, 1, 0, 0);
-	cam.hor_size = width;
-	cam.ver_size = height;
-	cam.FOV = fov;
-	cam.cord = create_tuple(0, 1.5, -5, 1);
-	cam.transform = view_transform(cam.cord, to, up);
-	cam.inv_transform = inverse(cam.transform);
-	cam.aspect = cam.hor_size / cam.ver_size;
-	if (cam.aspect >= 1.0)
-	{
-		cam.half_width = tan(fov / 2);
-		cam.half_height = cam.half_width / cam.aspect;
-	}
-	else
-	{
-		cam.half_height = tan(fov / 2);
-		cam.half_width = cam.half_height * cam.aspect;
-	}
-	cam.pixel_size = (cam.half_width * 2) / cam.hor_size;
-	return (cam);
-}
+// 	to = create_tuple(0, 1, 0, 1);
+// 	up = create_tuple(0, 1, 0, 0);
+// 	cam.hor_size = width;
+// 	cam.ver_size = height;
+// 	cam.FOV = fov;
+// 	cam.pos = create_tuple(0, 1.5, -5, 1);
+// 	cam.transform = view_transform(cam.pos, to, up);
+// 	cam.inv_transform = inverse(cam.transform);
+// 	cam.aspect = cam.hor_size / cam.ver_size;
+// 	if (cam.aspect >= 1.0)
+// 	{
+// 		cam.half_width = tan(fov / 2);
+// 		cam.half_height = cam.half_width / cam.aspect;
+// 	}
+// 	else
+// 	{
+// 		cam.half_height = tan(fov / 2);
+// 		cam.half_width = cam.half_height * cam.aspect;
+// 	}
+// 	cam.pixel_size = (cam.half_width * 2) / cam.hor_size;
+// 	return (cam);
+// }

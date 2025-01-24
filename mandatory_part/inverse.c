@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:04:02 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:21:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:23:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static double	det_minor(t_scene *scene, double **a)
 	while (++i < 3)
 	{
 		a[0][i] *= pow(-1, i);
-		det_m += a[0][i] * minor(a, 0, i, 3);
+		det_m += a[0][i] * minor(scene, a, 0, i, 3);
 	}
 	return (det_m);
 }

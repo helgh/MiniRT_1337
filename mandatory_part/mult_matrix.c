@@ -6,11 +6,21 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:00:18 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:01:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 13:22:34 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
+
+int	count_size(double **a)
+{
+	int	i;
+
+	i = -1;
+	while (a[++i])
+		;
+	return (i);
+}
 
 static double	find_new_value(double **a, double **b, int i, int s)
 {

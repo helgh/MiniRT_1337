@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:29:06 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:54:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-void	add_to_list(t_scene *scene, int type)
+void	add_to_list(t_scene *scene, void *obj, int type)
 {
 	t_sphere	*sphere;
 	t_plane		*plane;
@@ -20,24 +20,24 @@ void	add_to_list(t_scene *scene, int type)
 
 	if (type == SPHERE)
 	{
-		while (scene->sphere)
-			scene->sphere = scene->sphere->next;
-		sphere = ft_malloc(scene, sizeof(t_sphere), false);
-		scene->sphere = sphere;
+		sphere = scene->sphere;
+		while (sphere->next)
+			sphere = sphere->next;
+		sphere->next = obj;
 	}
 	else if (type == PLANE)
 	{
-		while (scene->plane)
-			scene->plane = scene->plane->next;
-		plane = ft_malloc(scene, sizeof(t_plane), false);
-		scene->plane = plane;
+		plane = scene->plane;
+		while (plane->next)
+			plane = plane->next;
+		plane->next = obj;
 	}
 	else if (type == CYLINDER)
 	{
-		while (scene->cylinder)
-			scene->cylinder = scene->cylinder->next;
-		cylinder = ft_malloc(scene, sizeof(t_cylinder), false);
-		scene->cylinder = cylinder;
+		cylinder = scene->cylinder;
+		while (cylinder->next)
+			cylinder = cylinder->next;
+		cylinder->next = obj;
 	}
 }
 
@@ -58,15 +58,6 @@ int		lengh(char **str)
 	while (str[++i])
 		;
 	return (i);
-}
-
-static void	ft_printf(char *str, int fd)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-		write(fd, &str[i], 1);
 }
 
 static int	check_extention(const char *str)
@@ -151,7 +142,7 @@ int		valid_float(char *str, bool checker)
 	{
 		if (!ft_isdigit(str[0]))
 			return (1);
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit(str[i]) && str[i] != 10)
 			if (str[i] != 46 || flag == 1)
 				return (1);
 		if (str[i] == 46)
@@ -236,9 +227,7 @@ void	parse_cylinder(t_scene *scene, char **line)
 	int			len;
 
 	len = lengh(line);
-	if (len != 6 && len != 7)
-		print_scene_err(scene, ERR_CY_1);
-	if (len == 7 && strcmp(line[len - 1], "\n"))
+	if ((len != 6 && len != 7) || (len == 7 && strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_CY_1);
 	pos = _get_position(scene, line[1], ERR_CY_1);
 	normal_v = _get_normal_v(scene, line[2], ERR_CY_1, ERR_CY_2);
@@ -246,13 +235,17 @@ void	parse_cylinder(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_CY_1);
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
 	color = _get_color(scene, line[5]);
-	add_to_list(scene, CYLINDER);
-	cylinder->cord = pos;
+	cylinder = ft_malloc(scene, sizeof(t_cylinder), false);
+	cylinder->pos = pos;
 	cylinder->normal_v = normal_v;
 	cylinder->diameter = ft_atof(line[3]);
 	cylinder->height = ft_atof(line[4]);
 	cylinder->color = color;
 	cylinder->next = NULL;
+	if (!scene->cylinder)
+		scene->cylinder = cylinder;
+	else
+		add_to_list(scene, cylinder, CYLINDER);
 }
 
 void	parse_plane(t_scene *scene, char **line)
@@ -272,11 +265,15 @@ void	parse_plane(t_scene *scene, char **line)
 	normal_v = _get_normal_v(scene, line[2], ERR_PL_1, ERR_PL_2);
 	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
 	color = _get_color(scene, line[3]);
-	add_to_list(scene, PLANE);
-	plane->cord = pos;
+	plane = ft_malloc(scene, sizeof(t_plane), false);
+	plane->pos = pos;
 	plane->normal_v = normal_v;
 	plane->color = color;
 	plane->next = NULL;
+	if (!scene->plane)
+		scene->plane = plane;
+	else
+		add_to_list(scene, plane, PLANE);
 }
 
 void	parse_sphere(t_scene *scene, char **line)
@@ -296,11 +293,15 @@ void	parse_sphere(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_SP_1);
 	check_color(scene, line[3], ERR_SP_1, ERR_SP_2);
 	color = _get_color(scene, line[3]);
-	add_to_list(scene, SPHERE);
-	sphere->cord = pos;
+	sphere = ft_malloc(scene, sizeof(t_sphere), false);
+	sphere->pos = pos;
 	sphere->color = color;
 	sphere->diameter = ft_atof(line[2]);
 	sphere->next = NULL;
+	if (!scene->sphere)
+		scene->sphere = sphere;
+	else
+		add_to_list(scene, sphere, SPHERE);
 }
 
 void	parse_light(t_scene *scene, char **line)
@@ -390,9 +391,10 @@ void	important_element(t_scene *scene)
 		print_scene_err(scene, "  No light found\n");
 }
 
-
 void	parse_element(t_scene *scene, char **line)
 {
+	if (!line[0])
+		return ;
 	if (!strcmp(line[0], "A"))
 		parse_ab_light(scene, line);
 	else if (!strcmp(line[0], "C"))
@@ -486,7 +488,7 @@ void	camera_compenent(t_scene *scene)
 		camera->half_height = tan(camera->FOV / 2);
 		camera->half_width = camera->half_height * camera->aspect;
 	}
-	camera->pixel_size = (camera->half_width * 2) / camera->hor_size;
+	camera->pixel_size = (camera->half_width * 2) / WIDTH;
 }
 
 void	light_compenent(t_scene *scene)
@@ -538,5 +540,4 @@ int main(int ac, char **av)
 	// printf("scene->camera->pos.y: %f\n", scene->camera->pos.y);
 	// printf("scene->camera->pos.z: %f\n", scene->camera->pos.z);
 	__ft_free(scene, ALL, 0);
-	free(scene);
 }

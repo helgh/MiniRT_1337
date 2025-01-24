@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:28:40 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/24 15:40:41 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,7 @@ typedef struct s_sphere
 	void			*object;
 	int				id;
 	t_material		ma;
-	t_tuple			cord;
+	t_tuple			pos;
 	t_color			color;
 	struct s_sphere	*next;
 }				t_sphere;
@@ -203,8 +203,6 @@ typedef struct s_am_light
 typedef struct s_camera
 {
 	double	FOV;
-	double	hor_size;
-	double	ver_size;
 	double	aspect;
 	double	half_width;
 	double	half_height;
@@ -219,7 +217,7 @@ typedef struct s_plane
 {
 	int				id;
 	void			*object;
-	t_tuple			cord;
+	t_tuple			pos;
 	t_tuple			normal_v;
 	t_color			color;
 	struct s_plane	*next;
@@ -231,7 +229,7 @@ typedef struct s_cylinder
 	void				*object;
 	bool				diameter;
 	bool				height;
-	t_tuple				cord;
+	t_tuple				pos;
 	t_tuple				normal_v;
 	t_color				color;
 	struct s_cylinder	*next;
@@ -295,6 +293,10 @@ double	**translation(t_scene *scene, double x, double y, double z);
 double	**mult_matrix(t_scene *scene, double **a, double **b);
 double	**inverse(t_scene *scene, double **a);
 double	**transpose(t_scene *scene, double **a);
+t_tuple	normal(t_tuple tuple);
+t_tuple	create_tuple(double x, double y, double z, double w);
+t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, char operator, double scalar);
+t_tuple	cross_product(t_tuple vec1, t_tuple vec2);
 
 // ----------------------------  end_mandatory  --------------------------------
 // char	*get_next_line(int fd);
