@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:20:29 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 20:21:09 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/26 14:36:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ double	**transpose(t_scene *scene, double **a)
 	int		s;
 
 	i = -1;
-	tr = ft_malloc(scene, sizeof(double *) * (5), false);
+	tr = ft_malloc(scene, sizeof(double *) * 5, false);
 	while (++i < 4)
 	{
 		s = -1;

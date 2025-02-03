@@ -22,8 +22,6 @@ double rgb_to_hex(double r, double g, double b)
 	g *= 255.0;
 	b *= 255.0;
     return ((u_int64_t)r << 16 | (u_int64_t)g << 8 | (u_int64_t)b);
-	// t_color color = set_color(r, g, b);
-	// return(color);
 }
 
 int main()
@@ -85,8 +83,8 @@ int main()
 	// midlle = sp;
 	midlle.cord = create_tuple(0, 0, 0, 1);
 	midlle.id = 3;
-	midlle.radius = 1;
-	midlle.trans = translation(-0.5, 1, 0.5);
+	midlle.radius = 0.5;
+	midlle.trans = mult_matrix(translation(-0.5, 1, 0.5), scaling(0.5, 0.5, 0.5));
 	midlle.inv_trans = inverse(midlle.trans);
 	midlle.transpose_matrix = transpose(midlle.trans);
 	midlle.transpose_inv_matrix = transpose(midlle.inv_trans);
@@ -99,12 +97,12 @@ int main()
 	right.cord = create_tuple(0, 0, 0, 1);
 	right.id = 4;
 	right.radius = 1;
-	right.trans = mult_matrix(translation(1.5, 0.5, -0.5), scaling(0.5, 0.5, 0.5));
+	right.trans = mult_matrix(translation(1.5, 1, -0.5), scaling(0.5, 0.5, 0.5));
 	right.inv_trans = inverse(right.trans);
 	right.transpose_matrix = transpose(right.trans);
 	right.transpose_inv_matrix = transpose(right.inv_trans);
 	right.ma = ma[4];
-	right.ma.color = set_color(0.5, 1, 0.1);
+	right.ma.color = set_color(1, 0.08, 0);
 	right.ma.diffuse = 0.7;
 	right.ma.specular = 0.3;
 
@@ -124,7 +122,7 @@ int main()
 	light.color = set_color(1, 1, 1);
 	light.cord = create_tuple(-10, 10, -10, 1);
 
-	camera = _camera(M_PI / 3, 2200, 1200);
+	camera = _camera(M_PI / 3, 1600, 900);
 
 	world.light[0] = light;
 	world.obj_count = 6;
@@ -150,8 +148,8 @@ int main()
 	m = malloc(sizeof(t_mlx));
 
 	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 2200, 1200, "rendering sphere");
-	mlx_img = mlx_new_image(mlx, 2200, 1200);
+	mlx_win = mlx_new_window(mlx, 1600, 900, "rendering sphere");
+	mlx_img = mlx_new_image(mlx, 1600, 900);
 	m->pixels = mlx_get_data_addr(mlx_img, &m->bpp, &m->size_line, &m->endian);
 	int pix;
 	int	y = -1;

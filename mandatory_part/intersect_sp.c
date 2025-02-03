@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 17:07:52 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 18:57:41 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/03 17:11:12 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,20 @@
 t_ray	transform_ray(t_ray *ray, double **a)
 {
 	t_ray	new_ray;
+
 	new_ray.origin_p = mult_mat_point(a, ray->origin_p);
 	new_ray.direction_v = mult_mat_point(a, ray->direction_v);
 	return (new_ray);
 }
 
-double	discriminant(t_sphere *sp, t_ray *ray)
+double	discriminant(t_ray *ray, double *arr)
 {
-	double	a;
-	double	b;
-	double	c;
 	double	discriminant;
 
-	a = dot_product(ray->direction_v, ray->direction_v);
-	b = 2 * dot_product(ray->direction_v, ray->origin_p);
-	c = dot_product(ray->origin_p, ray->origin_p) - pow(sp->radius, 2);
-	discriminant = pow(b, 2) - (4 * a * c);
+	arr[0] = dot_product(ray->direction_v, ray->direction_v);
+	arr[1] = 2.0 * dot_product(ray->direction_v, ray->origin_p);
+	arr[2] = dot_product(ray->origin_p, ray->origin_p) - 1.0;
+	discriminant = pow(arr[1], 2.0) - (4.0 * arr[0] * arr[2]);
 	return (discriminant);
 }
 
@@ -38,25 +36,21 @@ t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray)
 {
 	t_intersect	*sec;
 	t_ray		new_ray;
-	t_tuple		tuple;
 	double		dis;
-	double		b;
-	double		a;
+	double		arr[3];
 
 	new_ray = transform_ray(ray, sp->inv_trans);
-	dis = discriminant(sp, &new_ray);
+	dis = discriminant(&new_ray, arr);
 	if (dis < 0)
 		return (NULL);
 	sec = ft_malloc(scene, sizeof(t_intersect), true);
 	sec->type = SPHERE;
 	sec->id = sp->id;
 	sec->next = NULL;
-	a = dot_product(new_ray.direction_v, new_ray.direction_v);
-	tuple = op_tuple(new_ray.origin_p, sp->pos, '-', 1);
-	b = 2 * dot_product(new_ray.direction_v, tuple);
-	sec->point_sec[0] = (-(b) - sqrt(dis)) / (2 * a);
-	sec->point_sec[1] = (-(b) + sqrt(dis)) / (2 * a);
-	if (sec->point_sec[0] < EPSILON && sec->point_sec[1] < EPSILON)
+	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
+	sec->point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
+	if (sec->point_sec_1 < EPSILON && sec->point_sec_2 < EPSILON)
 		return (NULL);
+	choise_point(sec);
 	return (sec);
 }

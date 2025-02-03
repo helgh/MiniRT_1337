@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 12:45:05 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 15:25:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:06:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_color	lighting(t_material m, t_light light, t_tuple eye_v, t_tuple point, t_tu
 		return (ambient);
 	if (light_normal >= EPSILON)
 	{	
-		difusse = op_color(effe_color, effe_color, 0, m.diffuse * light_normal);
+		difusse = op_color(effe_color, effe_color, 0, light_normal);
 		t_tuple new_ref = reflect(oposite(light_v), normal_v);
 		ref_dot_eye = dot_product(new_ref, eye_v);
 		if (ref_dot_eye > EPSILON)

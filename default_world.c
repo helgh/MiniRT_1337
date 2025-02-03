@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/17 15:30:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 15:04:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/28 19:28:58 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,8 @@ t_obj_draw	*get_obj(t_intersect *intersect, t_ray *ray, t_light *light, t_world 
 		obj->inside = false;
 	t_ray	ray2;
 	ray2.origin_p = obj->position;
+	double	magn = magnitude(op_tuple(light[0].cord, obj->position, '-', 1));
 	ray2.direction_v = normal(op_tuple(light[0].cord, obj->position, '-', 1));
-	double	magn = magnitude(ray2.direction_v);
 	t_intersect *shad = intersect_world(world, &ray2);
 	if (shad && shad->t < magn)
 		obj->shadow = true;

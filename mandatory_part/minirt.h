@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 15:40:41 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:57:10 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,11 @@
 # define BUFFER_SIZE 40
 #endif
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1600
+# define HEIGHT 900
 
 # ifndef RADIAN
-# define RADIAN 3.14159265359
+# define RADIAN 3.14159265358
 #endif
 
 # define ALL 1
@@ -48,6 +48,14 @@
 # define ROTATE_Z 5
 # define EPSILON 0.00001
 
+# define MULT 1
+# define ADD 2
+# define SUB 3
+# define DIV 4
+# define OPP 5
+
+# define F_MALL "  Allocation failed\n"
+# define NORMAL "  Vector not normalized\n"
 # define BAD_TYPE "  Bad type of element in the scene\n"
 # define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
 # define ERR_l "  Forget information for element 'l' in the scene\n"
@@ -92,21 +100,24 @@
 
 /*------------------------- err plane ---------------------------*/
 
-# define ERR_PL_1 "  Bad identifier information for element 'sp' in the scene\n"
-# define ERR_PL_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
-# define ERR_PL_3 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+# define ERR_PL_1 "  Bad identifier information for element 'pl' in the scene\n"
+# define ERR_PL_2 "  Normalized vector of element 'pl' in the scene out of range [-1.0,1.0]\n"
+# define ERR_PL_3 "  R.G.B for element 'pl' in the scene out of range [0-255]\n"
 
 /*------------------------- err cylinder ---------------------------*/
 
-# define ERR_CY_1 "  Bad identifier information for element 'sp' in the scene\n"
-# define ERR_CY_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
-# define ERR_CY_3 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+# define ERR_CY_1 "  Bad identifier information for element 'cy' in the scene\n"
+# define ERR_CY_2 "  Normalized vector of element 'cy' in the scene out of range [-1.0,1.0]\n"
+# define ERR_CY_3 "  R.G.B for element 'cy' in the scene out of range [0-255]\n"
 
 
 typedef struct s_mlx
 {
+	void	*mlx;
+	void	*mlx_win;
+	void	*mlx_img;
 	int		bpp;
-	int		size_line;
+	int		s_line;
 	int		endian;
 	char	*pixels;
 }				t_mlx;
@@ -118,6 +129,17 @@ typedef struct s_leaks
 	bool			is_free;
 	struct s_leaks	*next;
 }					t_leaks;
+
+typedef struct s_tmp_heap
+{
+	int		fd;
+	char	*line;
+	char	**spl;
+	char	**split;
+	double	**trans;
+	double	**scal;
+	double	**rot;
+}				t_tmp_heap;
 
 typedef struct s_color
 {
@@ -153,23 +175,22 @@ typedef	enum e_type
 
 typedef struct s_sphere
 {
+	int				id;
 	double			diameter;
 	double			radius;
 	double			**trans;
 	double			**inv_trans;
 	double			**transpose_matrix;
 	double			**transpose_inv_matrix;
-	void			*object;
-	int				id;
-	t_material		ma;
-	t_tuple			pos;
-	t_color			color;
+	t_tuple			*pos;
+	t_color			*color;
 	struct s_sphere	*next;
 }				t_sphere;
 
 typedef struct s_intersect
 {
-	double				point_sec[2];
+	double				point_sec_1;
+	double				point_sec_2;
 	void				*object;
 	double				t;
 	int					type;
@@ -186,18 +207,17 @@ typedef struct s_ray
 typedef struct s_light
 {
 	char	L;
-	double	brightness;
-	t_tuple	pos;
-	t_color	color;
-	t_color	f_color;
+	double	intensity;
+	t_tuple	*pos;
+	t_color	*f_color;
 }			t_light;
 
 typedef struct s_am_light
 {
 	char	A;
 	double	am_ratio;
-	t_color	color;
-	t_color	f_color;
+	t_color	*color;
+	t_color	*f_color;
 }			t_am_light;
 
 typedef struct s_camera
@@ -209,17 +229,20 @@ typedef struct s_camera
 	double	pixel_size;
 	double	**transform;
 	double	**inv_transform;
-	t_tuple	pos;
-	t_tuple	normal_v;
+	t_tuple	*pos;
+	t_tuple	*normal_v;
 }			t_camera;
 
 typedef struct s_plane
 {
 	int				id;
 	void			*object;
-	t_tuple			pos;
-	t_tuple			normal_v;
-	t_color			color;
+	double			**trans;
+	double			**inv_trans;
+	double			**transpose_inv_matrix;
+	t_tuple			*pos;
+	t_tuple			*normal_v;
+	t_color			*color;
 	struct s_plane	*next;
 }			t_plane;
 
@@ -227,45 +250,40 @@ typedef struct s_cylinder
 {
 	int					id;
 	void				*object;
-	bool				diameter;
-	bool				height;
-	t_tuple				pos;
-	t_tuple				normal_v;
-	t_color				color;
+	double				diameter;
+	double				radius;
+	double				height;
+	double				**trans;
+	double				**inv_trans;
+	double				**transpose_inv_matrix;
+	bool				closed;
+	t_tuple				*pos;
+	t_tuple				*normal_v;
+	t_color				*color;
 	struct s_cylinder	*next;
 }			t_cylinder;
 
 typedef struct s_scene
 {
-	char		*line;
-	int			fd;
+	t_tmp_heap	*tmp_heap;
 	t_am_light	*Ambient;
 	t_camera	*camera;
 	t_light		*light;
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	t_intersect	*sect;
 	t_leaks		*heap;
 }				t_scene;
 
-typedef struct s_world
-{
-	t_ray		ray;
-	int			obj_count;
-	int 		sp_count;
-	t_sphere	sp[100];
-	t_plane		pl[100];
-	t_cylinder	cy[100];
-	t_light		light[100];
-}				t_world;
-
 typedef struct s_obj_draw
 {
-	int			type;
-	int			id;
-	double		t;
-	void		*object;
+	int			render;
+	bool		shadow;
 	bool		inside;
+	t_sphere	*sp;
+	t_plane		*pl;
+	t_cylinder	*cy;
 	t_tuple		position;
 	t_tuple		eye_v;
 	t_tuple		normal_v;
@@ -273,6 +291,9 @@ typedef struct s_obj_draw
 
 // ----------------------------  mandatory  --------------------------------
 
+void	print_scene_err(t_scene *scene, char *msg);
+double	**free_matrix(double **matrix);
+char	**free_split(char **split);
 void	__ft_free(t_scene *scene, int flag, int exit_status);
 char	**ft_split(t_scene *scene, char const *s, char c);
 void	*ft_malloc(t_scene *scene, size_t size, bool flag);
@@ -284,8 +305,7 @@ char	*save_free(char *str, char *p);
 char	*copy_line(char *str);
 char	*mul_str(char *all, char *str);
 int		ft_isdigit(int c);
-t_color	op_color(t_color col1, t_color col2, char operator, double scalar);
-double	**view_transform(t_scene *scene, t_tuple from, t_tuple to);
+double	**view_transform(t_scene *scene, t_tuple from, t_tuple to, t_tuple up);
 double	**identity_matrix(t_scene *scene);
 double	**rotation(t_scene *scene, double angle, char axis);
 double	**scaling(t_scene *scene, double x, double y, double z);
@@ -293,10 +313,50 @@ double	**translation(t_scene *scene, double x, double y, double z);
 double	**mult_matrix(t_scene *scene, double **a, double **b);
 double	**inverse(t_scene *scene, double **a);
 double	**transpose(t_scene *scene, double **a);
+t_tuple	mult_mat_point(double **mat, t_tuple point);
+t_ray	ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
+t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
+double	choise_point(t_intersect *sec);
+
+
+
+
+//--------------------- op_vector ---------------------//
+
+double	magnitude(t_tuple v);
 t_tuple	normal(t_tuple tuple);
-t_tuple	create_tuple(double x, double y, double z, double w);
-t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, char operator, double scalar);
+t_tuple	reflect(t_tuple in, t_tuple normal);
+double	dot_product(t_tuple vec1, t_tuple vec2);
 t_tuple	cross_product(t_tuple vec1, t_tuple vec2);
+
+//--------------------- tuple_scal ---------------------//
+
+t_tuple	tuple_scal(t_tuple tuple, double scal, int operator);
+
+//--------------------- color_scal ---------------------//
+
+t_color	color_scal(t_color col, double scal, int operator);
+
+//--------------------- op_tuple ---------------------//
+
+t_tuple	op_tuple(t_tuple tuple1, t_tuple tuple2, int operator);
+
+//--------------------- op_color ---------------------//
+
+t_color	op_color(t_color col1, t_color col2, char operator);
+
+//--------------------- set_get ---------------------//
+
+t_tuple	vector(double x, double y, double z);
+t_tuple	point(double x, double y, double z);
+t_color	color(double r, double g, double b);
+
+t_tuple	point_sec(t_ray cam, double t);
+t_ray	transform_ray(t_ray *ray, double **a);
+
+
+t_intersect *intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
+t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
 
 // ----------------------------  end_mandatory  --------------------------------
 // char	*get_next_line(int fd);
@@ -344,7 +404,6 @@ t_tuple	cross_product(t_tuple vec1, t_tuple vec2);
 // t_tuple	oposite(t_tuple tuple);
 // t_color	set_color(double r, double g, double b);
 // t_tuple	create_tuple(double x, double y, double z, double w);
-// t_tuple	point_sec(t_ray cam, double t);
 // t_intersect	*hit(t_intersect *sec);
 // t_tuple	normal_at(t_sphere sp, t_tuple point);
 // t_color	lighting(t_material m, t_light light, t_tuple eye, t_tuple point, t_tuple vec);

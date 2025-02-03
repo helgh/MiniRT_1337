@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 16:46:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 16:46:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/03 18:37:35 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ t_tuple	mult_mat_point(double **mat, t_tuple point)
 {
 	t_tuple	new_point;
 
+	if (!mat)
+		return (point);
 	new_point.x = (point.x * mat[0][0]) + (point.y * mat[0][1]) + (point.z * mat[0][2]);
 	new_point.x += (point.w * mat[0][3]);
 	new_point.y = (point.x * mat[1][0]) + (point.y * mat[1][1]) + (point.z * mat[1][2]);

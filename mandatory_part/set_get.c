@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atof.c                                          :+:      :+:    :+:   */
+/*   set_get.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 16:38:52 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/26 14:15:50 by hael-ghd         ###   ########.fr       */
+/*   Created: 2025/01/29 13:57:13 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/01/29 15:13:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-double	ft_atof(char *str)
+t_tuple	vector(double x, double y, double z)
 {
-	double	int_part;
-	double	div_part;
-	double	sign;
-	int		i;
+	t_tuple	tuple;
 
-	int_part = 0.0;
-	div_part = 0.0;
-	sign = 1.0;
-	if (*str == '-')
-	{
-		sign = -1.0;
-		str++;
-	}
-	while (ft_isdigit(*str))
-		int_part = int_part * 10 + (*str++ - '0');
-	i = -1;
-	if (*str == '.' && *str++)
-	{
-		while (ft_isdigit(*str))
-			div_part += (pow(10, i--) * (*str++ - '0'));
-	}
-	return (sign * (int_part + div_part));
+	return (tuple.x = x,
+		tuple.y = y,
+		tuple.z = z,
+		tuple.w = 0.0, tuple);
+}
+
+t_tuple	point(double x, double y, double z)
+{
+	t_tuple	tuple;
+
+	return (tuple.x = x,
+		tuple.y = y,
+		tuple.z = z,
+		tuple.w = 1.0, tuple);
+}
+
+t_color	color(double r, double g, double b)
+{
+	t_color	color;
+
+	return (color.r = r,
+		color.g = g,
+		color.b = b, color);
 }

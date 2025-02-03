@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/19 14:58:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/23 19:27:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:41:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ double	**view_transform(t_tuple from, t_tuple to, t_tuple up)
 	double	**orientation;
 
 	forward = normal(op_tuple(to, from, '-', 1));
-	left = cross_product(forward, normal(up));
-	true_up = cross_product(left, forward);
+	left = normal(cross_product(forward, normal(up)));
+	true_up = normal(cross_product(left, forward));
 	view = identity_matrix();
 	view[0][0] = left.x;
 	view[0][1] = left.y;

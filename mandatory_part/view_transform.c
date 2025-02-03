@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:28:03 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 16:46:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:50:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y)
+t_ray	ray_for_pixel(t_camera *camera, int pos_x, int pos_y)
 {
 	t_ray	ray;
 	t_tuple	pixel;
@@ -21,70 +21,41 @@ t_ray	ray_for_pixel(t_camera camera, double pos_x, double pos_y)
 	double	world_x;
 	double	world_y;
 
-	x_offset = (pos_x + 0.5) * camera.pixel_size;
-	y_offset = (pos_y + 0.5) * camera.pixel_size;
-	world_x = camera.half_width - x_offset;
-	world_y = camera.half_height - y_offset;
-	pixel = mult_mat_point(camera.inv_transform, create_tuple(world_x, world_y, -1, 1));
-	ray.origin_p = mult_mat_point(camera.inv_transform, create_tuple(0, 0, 0, 1));
-	ray.direction_v = normal(op_tuple(pixel, ray.origin_p, '-', 1));
+	x_offset = (pos_x + 0.5) * camera->pixel_size;
+	y_offset = (pos_y + 0.5) * camera->pixel_size;
+	world_x = camera->half_width - x_offset;
+	world_y = camera->half_height - y_offset;
+	pixel = mult_mat_point(camera->inv_transform, point(world_x, world_y, -1.0));
+	ray.origin_p = mult_mat_point(camera->inv_transform, point(0.0, 0.0, 0.0));
+	ray.direction_v = normal(op_tuple(pixel, ray.origin_p, SUB));
 	return (ray);
 }
 
-
-double	**view_transform(t_scene *scene, t_tuple from, t_tuple to)
+double	**view_transform(t_scene *scene, t_tuple from, t_tuple to, t_tuple up)
 {
-	t_tuple	forward;
-	t_tuple	left;
-	t_tuple	true_up;
-	double	**trans;
-	double	**view;
+	t_tuple		forward;
+	t_tuple		left;
+	t_tuple		true_up;
+	t_tmp_heap	*tmp;
 	double	**orientation;
 
-	forward = normal(op_tuple(to, from, '-', 1));
-	left = cross_product(forward, normal(create_tuple(0, 1, 0, 0)));
+	tmp = scene->tmp_heap;
+	forward = vector(to.x, to.y, to.z);
+	left = cross_product(forward, normal(up));
 	true_up = cross_product(left, forward);
-	view = identity_matrix(scene);
-	view[0][0] = left.x;
-	view[0][1] = left.y;
-	view[0][2] = left.z;
-	view[1][0] = true_up.x;
-	view[1][1] = true_up.y;
-	view[1][2] = true_up.z;
-	view[2][0] = -forward.x;
-	view[2][1] = -forward.y;
-	view[2][2] = -forward.z;
-	trans = translation(scene, -from.x, -from.y, -from.z);
-	orientation = mult_matrix(scene, view, trans);
-	__ft_free(scene, PART, 0);
+	tmp->scal = identity_matrix(scene);
+	tmp->scal[0][0] = left.x;
+	tmp->scal[0][1] = left.y;
+	tmp->scal[0][2] = left.z;
+	tmp->scal[1][0] = true_up.x;
+	tmp->scal[1][1] = true_up.y;
+	tmp->scal[1][2] = true_up.z;
+	tmp->scal[2][0] = -forward.x;
+	tmp->scal[2][1] = -forward.y;
+	tmp->scal[2][2] = -forward.z;
+	tmp->trans = translation(scene, -from.x, -from.y, -from.z);
+	orientation = mult_matrix(scene, tmp->scal, tmp->trans);
+	scene->tmp_heap->trans = free_matrix(tmp->trans);
+	scene->tmp_heap->scal = free_matrix(tmp->scal);
 	return (orientation);
 }
-
-// t_camera	_camera(double fov, double width, double height)
-// {
-// 	t_camera	cam;
-// 	t_tuple		to;
-// 	t_tuple		up;
-
-// 	to = create_tuple(0, 1, 0, 1);
-// 	up = create_tuple(0, 1, 0, 0);
-// 	cam.hor_size = width;
-// 	cam.ver_size = height;
-// 	cam.FOV = fov;
-// 	cam.pos = create_tuple(0, 1.5, -5, 1);
-// 	cam.transform = view_transform(cam.pos, to, up);
-// 	cam.inv_transform = inverse(cam.transform);
-// 	cam.aspect = cam.hor_size / cam.ver_size;
-// 	if (cam.aspect >= 1.0)
-// 	{
-// 		cam.half_width = tan(fov / 2);
-// 		cam.half_height = cam.half_width / cam.aspect;
-// 	}
-// 	else
-// 	{
-// 		cam.half_height = tan(fov / 2);
-// 		cam.half_width = cam.half_height * cam.aspect;
-// 	}
-// 	cam.pixel_size = (cam.half_width * 2) / cam.hor_size;
-// 	return (cam);
-// }

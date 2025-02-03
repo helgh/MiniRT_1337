@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotaion.c                                          :+:      :+:    :+:   */
+/*   rotation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:54:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 13:21:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/01 14:57:43 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static double	**rotate_z(t_scene *scene, double angle)
 
 double	**rotation(t_scene *scene, double angle, char axis)
 {
-	if (axis == 'x')
+	if (axis == ROTATE_X)
 		return (rotate_x(scene, angle));
-	else if (axis == 'y')
+	else if (axis == ROTATE_Y)
 		return (rotate_y(scene, angle));
-	else if (axis == 'z')
+	else if (axis == ROTATE_Z)
 		return (rotate_z(scene, angle));
 	return (NULL);
 }

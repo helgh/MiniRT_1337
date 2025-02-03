@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:04:02 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 13:23:17 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/27 18:52:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static double	det_minor(t_scene *scene, double **a)
 	int		i;
 
 	i = -1;
-	det_m = 0;
+	det_m = 0.0;
 	while (++i < 3)
 	{
 		a[0][i] *= pow(-1, i);
@@ -78,7 +78,7 @@ double	cofactor(t_scene *scene, double **a, int row, int col)
 	double	**sub;
 
 	sub = NULL;
-	factor = 0;
+	factor = 0.0;
 	sub = submatrix(scene, a, row, col, 4);
 	factor = pow(-1, row + col) * det_minor(scene, sub);
 	return (factor);
@@ -106,7 +106,7 @@ double	**inverse(t_scene *scene, double **a)
 	double	determinant;
 
 	determinant = det(scene, a);
-	if (determinant == 0)
+	if (determinant == 0.0)
 		return (NULL);
 	a2 = ft_malloc(scene, sizeof(double *) * 5, true);
 	if (!a2)
@@ -121,6 +121,5 @@ double	**inverse(t_scene *scene, double **a)
 	}
 	a2[row] = NULL;
 	a3 = transpose(scene, a2);
-	__ft_free(scene, PART, 0);
 	return (a3);
 }

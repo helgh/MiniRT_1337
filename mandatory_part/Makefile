@@ -7,8 +7,10 @@ FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 MLX = -framework OpenGL -framework AppKit libmlx.a
 
 SOURCE = main.c ft_split.c ft_malloc.c get_next_line.c get_next_line_utils.c ft_atof.c ft_atoi.c ft_strcmp.c \
-			operator_color.c identity_matrix.c view_transform.c transformation.c rotation.c mult_matrix.c \
-				inverse.c transpose_matrix.c create_tuple.c mult_mat_point.c intersect_sp.c \
+			 identity_matrix.c view_transform.c transformation.c rotation.c mult_matrix.c \
+				inverse.c transpose_matrix.c mult_mat_point.c intersect_sp.c intersect_pl.c \
+					intersect_cy.c op_tuple.c tuple_scal.c color_scal.c op_vector.c op_color.c \
+						set_get.c \
 					
 OBJ_SRC = $(SOURCE:.c=.o)
 

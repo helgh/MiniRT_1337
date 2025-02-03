@@ -6,88 +6,54 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 19:43:54 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/03 20:11:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Minirt.h"
 
-// t_tuple	reflect(t_tuple in, t_tuple normal)
-// {
-// 	double	n;
+double	degree_to_rad(double degree)
+{
+	double	value;
 
-// 	n = 2 * dot_product(in, normal);
-// 	return (op_tuple(in, op_tuple(normal, normal, 0, n), '-', 1));
-// }
-
-// count magnitude (lenght) of a vector //
-
-// t_tuple	create_tuple(double x, double y, double z, double w)
-// {
-// 	t_tuple	tuple;
-
-// 	tuple.x = x;
-// 	tuple.y = y;
-// 	tuple.z = z;
-// 	tuple.w = w;
-// 	return (tuple);
-// }
-
-// double	magnitude(t_tuple v)
-// {
-// 	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
-// }
+	value = (degree * (double) RADIAN) / 180.0;
+	return (value);
+}
 
 // // get a scalar value //
 // // use of function when start intersecting rays with objects or when compute the shading on a surface //
 
-double	dot_product(t_tuple vec1, t_tuple vec2)
+t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 {
-	double	result;
-
-	result = (vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z);
-	return (result);
-}
-
-t_tuple	normal_at(t_sphere sp, t_tuple point)
-{
-	t_tuple	obj_vec;
 	t_tuple	obj_p;
 	t_tuple	world_vec;
+	double	dis;
 
-	obj_p = mult_mat_point(sp.inv_trans, point);
-	obj_vec = op_tuple(obj_p, create_tuple(0, 0, 0, 1), '-', 1);
-	world_vec = mult_mat_point(sp.transpose_inv_matrix, obj_vec);
-	world_vec.w = 0;
-	return (normal(world_vec));
+	if (op == SPHERE)
+	{
+		obj_p = mult_mat_point(obj.sp->inv_trans, poin);
+		world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, obj_p);
+		world_vec.w = 0.0;
+		return (normal(world_vec));
+	}
+	else if (op == PLANE)
+		return (obj.normal_v);
+	dis = pow (poin.x, 2) + pow(poin.z, 2);
+	if (dis < 1 && poin.y >= (obj.cy->height / 2) - EPSILON)
+		return (vector(0.0,1.0,0.0));
+	else if (dis < 1 && poin.y <= (-(obj.cy->height) / 2) + EPSILON)
+		return (vector(0.0,-1.0,0.0));
+	return (vector(poin.x, 0.0, poin.z));
 }
 
 // function get oposite of some vector //
 
-t_tuple	opposite(t_tuple tuple)
-{
-	t_tuple	new_tuple;
-
-	new_tuple.x = -1 * tuple.x;
-	new_tuple.y = -1 * tuple.y;
-	new_tuple.z = -1 * tuple.z;
-	new_tuple.w = tuple.w;
-	return (new_tuple);
-}
-
 t_tuple	point_sec(t_ray cam, double t)
 {
-	return (op_tuple(cam.origin_p, op_tuple(cam.direction_v, cam.direction_v, 0, t), '+', 1));
-}
+	t_tuple	direction;
 
-t_color	set_color(double r, double g, double b)
-{
-	t_color	color;
-
-	color.r = r;
-	color.g = g;
-	color.b = b;
-	return (color);
+	direction = tuple_scal(cam.direction_v, t, MULT);
+	return (op_tuple(cam.origin_p, direction, ADD));
 }
 
 double	choise_point(t_intersect *sec)
@@ -95,13 +61,13 @@ double	choise_point(t_intersect *sec)
 	t_intersect	tmp;
 
 	tmp = *sec;
-	if (sec->point_sec[0] < EPSILON)
-		return (sec->t = sec->point_sec[1], sec->point_sec[1]);
-	else if (sec->point_sec[1] < EPSILON)
-		return (sec->t = sec->point_sec[0], sec->point_sec[0]);
-	else if (sec->point_sec[0] < sec->point_sec[1])
-		return (sec->t = sec->point_sec[0], sec->point_sec[0]);
-	return (sec->t = sec->point_sec[1], sec->point_sec[1]);
+	if (sec->point_sec_1 < EPSILON)
+		return (sec->t = sec->point_sec_2, sec->point_sec_2);
+	else if (sec->point_sec_2 < EPSILON)
+		return (sec->t = sec->point_sec_1, sec->point_sec_1);
+	else if (sec->point_sec_1 < sec->point_sec_2)
+		return (sec->t = sec->point_sec_1, sec->point_sec_1);
+	return (sec->t = sec->point_sec_2, sec->point_sec_2);
 }
 
 t_intersect	*hit(t_intersect *sec)
@@ -113,16 +79,11 @@ t_intersect	*hit(t_intersect *sec)
 
 	send = NULL;
 	tmp = sec;
-	t = -1;
+	t = -1.0;
 	while (tmp)
 	{
-		point_sec = choise_point(tmp);
-		if (t < EPSILON)
-		{
-			t = point_sec;
-			send = tmp;
-		}
-		else if (point_sec < t)
+		point_sec = tmp->t;
+		if (t < 0.0 || point_sec < t)
 		{
 			t = point_sec;
 			send = tmp;
@@ -151,14 +112,6 @@ void	add_intersect(t_intersect **head, t_intersect *new)
 
 double rgb_to_hex(double r, double g, double b)
 {
-	double min;
-	double max;
-
-	max = 1.0;
-	min = 0.0;
-    if (r < min) r = min; if (r > max) r = max;
-    if (g < min) g = min; if (g > max) g = max;
-    if (b < min) b = min; if (b > max) b = max;
 	r *= 255.0;
 	g *= 255.0;
 	b *= 255.0;
@@ -238,7 +191,7 @@ static int	check_extention(const char *str)
 	return (close(fd), write(2, "invalid extention\n", 19), EXIT_FAILURE);
 }
 
-static void	print_scene_err(t_scene *scene, char *msg)
+void	print_scene_err(t_scene *scene, char *msg)
 {
 	int	i;
 
@@ -246,47 +199,49 @@ static void	print_scene_err(t_scene *scene, char *msg)
 	write(2, "Error\n", 7);
 	while (msg[++i])
 		write(2, &msg[i], 1);
-	free(scene->line);
-	if (scene->fd >= 0)
-		close(scene->fd);
 	__ft_free(scene, ALL, EXIT_FAILURE);
 }
 
-t_color	_get_color(t_scene *scene, char *line)
+t_color	*_get_color(t_scene *scene, char *line)
 {
-	t_color	color;
-	char	**tmp;
+	t_color		*color;
+	t_tmp_heap	*tmp;
 
-	tmp = ft_split(scene, line, ',');
-	color.r = ft_atoi(tmp[0]);
-	color.g = ft_atoi(tmp[1]);
-	color.b = ft_atoi(tmp[2]);
+	tmp = scene->tmp_heap;
+	tmp->split = ft_split(scene, line, ',');
+	color = ft_malloc(scene, sizeof(t_color), false);
+	color->r = ft_atof(tmp->split[0]) / 255.0;
+	color->g = ft_atof(tmp->split[1]) / 255.0;
+	color->b = ft_atof(tmp->split[2]) / 255.0;
+	scene->tmp_heap->split = free_split(tmp->split);
 	return (color);
 }
 
 void	check_color(t_scene *scene, char *str, char *err1, char *err2)
 {
-	char	**tmp;
-	int		i;
-	int		s;
-	int		len;
+	t_tmp_heap	*tmp;
+	int			i;
+	int			s;
+	int			len;
 
 	s = -1;
 	i = -1;
-	tmp = ft_split(scene, str, ',');
-	len = lengh(tmp);
+	tmp = scene->tmp_heap;
+	tmp->split = ft_split(scene, str, ',');
+	len = lengh(tmp->split);
 	if (len != 3 && len != 4)
 		print_scene_err(scene, err1);
-	while (tmp[++s])
+	while (tmp->split[++s])
 	{
 		i = -1;
-		while (ft_isdigit(tmp[s][++i]))
+		while (ft_isdigit(tmp->split[s][++i]))
 			;
-		if (tmp[s][i] && tmp[s][i] != 10)
+		if (tmp->split[s][i] && tmp->split[s][i] != 10)
 			print_scene_err(scene, err1);
-		if (ft_atoi(tmp[s]) > 255)
+		if (ft_atof(tmp->split[s]) > 255.0)
 			print_scene_err(scene, err2);
 	}
+	scene->tmp_heap->split = free_split(tmp->split);
 }
 
 int		valid_float(char *str, bool checker)
@@ -311,55 +266,59 @@ int		valid_float(char *str, bool checker)
 	return (0);
 }
 
-t_tuple	_get_normal_v(t_scene *scene, char *line, char *err1, char *err2)
+t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1)
 {
-	t_tuple	normal_v;
-	double	cord[3];
-	char	**tmp;
+	t_tmp_heap	*tmp;
+	t_tuple		*normal_v;
+	double		cord[3];
 	int		i;
 
 	i = -1;
-	tmp = ft_split(scene, line, ',');
-	while (tmp[++i])
+	tmp = scene->tmp_heap;
+	tmp->split = ft_split(scene, line, ',');
+	while (tmp->split[++i])
 	{
-		if (valid_float(tmp[i], true))
+		if (valid_float(tmp->split[i], true))
 			print_scene_err(scene, err1);
-		cord[i] = ft_atof(tmp[i]);
-		if (cord[i] < -1.0 || cord[i] > 1.0)
-			print_scene_err(scene, err2);
+		cord[i] = ft_atof(tmp->split[i]);
 	}
-	normal_v.x = cord[0];
-	normal_v.y = cord[1];
-	normal_v.z = cord[2];
-	normal_v.w = 0;
+	normal_v = ft_malloc(scene, sizeof(t_tuple), true);
+	normal_v->x = cord[0];
+	normal_v->y = cord[1];
+	normal_v->z = cord[2];
+	normal_v->w = 0.0;
+	scene->tmp_heap->split = free_split(tmp->split);
 	return (normal_v);
 }
 
-t_tuple	_get_position(t_scene *scene, char *line, char *error)
+t_tuple	*_get_position(t_scene *scene, char *line, char *error)
 {
-	t_tuple	pos;
-	double	cord[3];
-	char	**tmp;
+	t_tuple		*pos;
+	double		cord[3];
+	t_tmp_heap	*tmp;
 	int		i;
 
 	i = -1;
-	tmp = ft_split(scene, line, ',');
-	while (tmp[++i])
+	tmp = scene->tmp_heap;
+	tmp->split = ft_split(scene, line, ',');
+	while (tmp->split[++i])
 	{
-		if (valid_float(tmp[i], true))
+		if (valid_float(tmp->split[i], true))
 			print_scene_err(scene, error);
-		cord[i] = ft_atof(tmp[i]);
+		cord[i] = ft_atof(tmp->split[i]);
 	}
-	pos.x = cord[0];
-	pos.y = cord[1];
-	pos.z = cord[2];
-	pos.w = 1;
+	pos = ft_malloc(scene, sizeof(t_tuple), true);
+	pos->x = cord[0];
+	pos->y = cord[1];
+	pos->z = cord[2];
+	pos->w = 1.0;
+	scene->tmp_heap->split = free_split(tmp->split);
 	return (pos);
 }
 
-int		_get_fov(t_scene *scene, char *line)
+double	_get_fov(t_scene *scene, char *line)
 {
-	int		fov;
+	double	fov;
 	int		i;
 
 	i = -1;
@@ -372,8 +331,8 @@ int		_get_fov(t_scene *scene, char *line)
 			print_scene_err(scene, ERR_C_1);
 		}
 	}
-	fov = ft_atoi(line);
-	if (fov < 0 || fov > 180)
+	fov = ft_atof(line);
+	if (fov < 0.0 || fov > 180.0)
 		print_scene_err(scene, ERR_C_3);
 	return (fov);
 }
@@ -381,26 +340,20 @@ int		_get_fov(t_scene *scene, char *line)
 void	parse_cylinder(t_scene *scene, char **line)
 {
 	t_cylinder	*cylinder;
-	t_tuple		pos;
-	t_tuple		normal_v;
-	t_color		color;
 	int			len;
 
 	len = lengh(line);
 	if ((len != 6 && len != 7) || (len == 7 && strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_CY_1);
-	pos = _get_position(scene, line[1], ERR_CY_1);
-	normal_v = _get_normal_v(scene, line[2], ERR_CY_1, ERR_CY_2);
 	if (valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);
-	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
-	color = _get_color(scene, line[5]);
 	cylinder = ft_malloc(scene, sizeof(t_cylinder), false);
-	cylinder->pos = pos;
-	cylinder->normal_v = normal_v;
+	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);
+	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
+	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
+	cylinder->color = _get_color(scene, line[5]);
 	cylinder->diameter = ft_atof(line[3]);
 	cylinder->height = ft_atof(line[4]);
-	cylinder->color = color;
 	cylinder->next = NULL;
 	if (!scene->cylinder)
 		scene->cylinder = cylinder;
@@ -411,9 +364,6 @@ void	parse_cylinder(t_scene *scene, char **line)
 void	parse_plane(t_scene *scene, char **line)
 {
 	t_plane	*plane;
-	t_tuple	pos;
-	t_tuple	normal_v;
-	t_color	color;
 	int		len;
 
 	len = lengh(line);
@@ -421,14 +371,11 @@ void	parse_plane(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_PL_1);
 	if (len == 5 && strcmp(line[len - 1], "\n"))
 		print_scene_err(scene, ERR_PL_1);
-	pos = _get_position(scene, line[1], ERR_PL_1);
-	normal_v = _get_normal_v(scene, line[2], ERR_PL_1, ERR_PL_2);
-	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
-	color = _get_color(scene, line[3]);
 	plane = ft_malloc(scene, sizeof(t_plane), false);
-	plane->pos = pos;
-	plane->normal_v = normal_v;
-	plane->color = color;
+	plane->pos = _get_position(scene, line[1], ERR_PL_1);
+	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
+	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
+	plane->color = _get_color(scene, line[3]);
 	plane->next = NULL;
 	if (!scene->plane)
 		scene->plane = plane;
@@ -439,8 +386,6 @@ void	parse_plane(t_scene *scene, char **line)
 void	parse_sphere(t_scene *scene, char **line)
 {
 	t_sphere	*sphere;
-	t_tuple		pos;
-	t_color		color;
 	int			len;
 
 	len = lengh(line);
@@ -448,14 +393,12 @@ void	parse_sphere(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_SP_1);
 	if (len == 5 && strcmp(line[len - 1], "\n"))
 		print_scene_err(scene, ERR_SP_1);
-	pos = _get_position(scene, line[1], ERR_SP_1);
 	if (valid_float(line[2], false))
 		print_scene_err(scene, ERR_SP_1);
-	check_color(scene, line[3], ERR_SP_1, ERR_SP_2);
-	color = _get_color(scene, line[3]);
 	sphere = ft_malloc(scene, sizeof(t_sphere), false);
-	sphere->pos = pos;
-	sphere->color = color;
+	sphere->pos = _get_position(scene, line[1], ERR_SP_1);
+	check_color(scene, line[3], ERR_SP_1, ERR_SP_2);
+	sphere->color = _get_color(scene, line[3]);
 	sphere->diameter = ft_atof(line[2]);
 	sphere->next = NULL;
 	if (!scene->sphere)
@@ -467,8 +410,6 @@ void	parse_sphere(t_scene *scene, char **line)
 void	parse_light(t_scene *scene, char **line)
 {
 	t_light		*light;
-	t_tuple		pos;
-	double		ratio;
 	int			len;
 
 	len = lengh(line);
@@ -478,25 +419,20 @@ void	parse_light(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_L_1);
 	if ((len == 4 && strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_L_1);
-	pos = _get_position(scene, line[1], ERR_L_1);
 	if (valid_float(line[2], false))
 		print_scene_err(scene, ERR_L_1);
-	ratio = ft_atof(line[2]);
-	if (ratio < 0 || ratio > 1)
-		print_scene_err(scene, ERR_L_2);
 	light = ft_malloc(scene, sizeof(t_light), false);
-	light->pos = pos;
-	light->brightness = ratio;
+	light->pos = _get_position(scene, line[1], ERR_L_1);
+	light->intensity = ft_atof(line[2]);
+	if (light->intensity < 0.0 || light->intensity > 1.0)
+		print_scene_err(scene, ERR_L_2);
 	scene->light = light;
 }
 
 void	parse_camera(t_scene *scene, char **line)
 {
 	t_camera	*camera;
-	t_tuple		pos;
-	t_tuple		normal_v;
 	int			len;
-	int			fov;
 
 	len = lengh(line);
 	if (scene->camera)
@@ -505,21 +441,15 @@ void	parse_camera(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_C_1);
 	if ((len == 5 && strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_C_1);
-	pos = _get_position(scene, line[1], ERR_C_1);
-	normal_v = _get_normal_v(scene, line[2], ERR_C_1, ERR_C_2);
-	fov = _get_fov(scene, line[3]);
 	camera = ft_malloc(scene, sizeof(t_camera), false);
+	camera->FOV = degree_to_rad(_get_fov(scene, line[3]));
+	camera->pos = _get_position(scene, line[1], ERR_C_1);
+	camera->normal_v = _get_normal_v(scene, line[2], ERR_C_1);
 	scene->camera = camera;
-	scene->camera->pos = pos;
-	scene->camera->normal_v = normal_v;
-	scene->camera->FOV = fov;
 }
 
 void	parse_ab_light(t_scene *scene, char **line)
 {
-	t_am_light	*ab_light;
-	t_color		color;
-	double		n;
 	int			len;
 
 	len = lengh(line);
@@ -530,15 +460,12 @@ void	parse_ab_light(t_scene *scene, char **line)
 	if ((len == 4 && strcmp(line[len - 1], "\n"))
 			|| valid_float(line[1], false))
 		print_scene_err(scene, ERR_A_1);
-	n = ft_atof(line[1]);
-	if (n > 1 || n < EPSILON)
+	scene->Ambient = ft_malloc(scene, sizeof(t_am_light), false);
+	scene->Ambient->am_ratio = ft_atof(line[1]);
+	if (scene->Ambient->am_ratio > 1 || scene->Ambient->am_ratio < EPSILON)
 		print_scene_err(scene, ERR_A_2);
 	check_color(scene, line[2], ERR_A_1, ERR_A_3);
-	color = _get_color(scene, line[2]);
-	ab_light = ft_malloc(scene, sizeof(t_am_light), false);
-	scene->Ambient = ab_light;
-	ab_light->am_ratio = n;
-	ab_light->color = _get_color(scene, line[2]);
+	scene->Ambient->color = _get_color(scene, line[2]);
 }
 
 void	important_element(t_scene *scene)
@@ -573,28 +500,27 @@ void	parse_element(t_scene *scene, char **line)
 
 void	parse_scene(t_scene *scene, char *str)
 {
-	char	**spl;
-
-	scene->fd = open(str, O_RDONLY);
-	if (scene->fd < 0)
+	scene->tmp_heap->fd = open(str, O_RDONLY);
+	if (scene->tmp_heap->fd < 0)
 		print_scene_err(scene, OPEN_FILE_ERR);
 	while (1)
 	{
-		scene->line = get_next_line(scene->fd);
-		if (!scene->line)
+		scene->tmp_heap->line = get_next_line(scene->tmp_heap->fd);
+		if (!scene->tmp_heap->line)
 			break ;
-		if (strcmp(scene->line, "\n"))
+		if (strcmp(scene->tmp_heap->line, "\n"))
 		{
-			spl = ft_split(scene, scene->line, 32);
-			parse_element(scene, spl);
-			__ft_free(scene, PART, 0);
-			free(scene->line);
+			scene->tmp_heap->spl = ft_split(scene, scene->tmp_heap->line, 32);
+			parse_element(scene, scene->tmp_heap->spl);
+			scene->tmp_heap->spl = free_split(scene->tmp_heap->spl);
+			free(scene->tmp_heap->line);
+			scene->tmp_heap->line = NULL;
 		}
 		else
-			free(scene->line);
+			free(scene->tmp_heap->line);
 	}
-	close(scene->fd);
-	scene->fd = -1;
+	close(scene->tmp_heap->fd);
+	scene->tmp_heap->fd = -1;
 }
 
 t_scene	*init_struct(void)
@@ -604,85 +530,95 @@ t_scene	*init_struct(void)
 	scene = malloc(sizeof(t_scene));
 	if (!scene)
 		return (NULL);
-	scene->fd = 0;
-	scene->line = NULL;
+	scene->tmp_heap = malloc(sizeof(t_tmp_heap));
+	if (!scene->tmp_heap)
+		return (free(scene), NULL);
+	scene->tmp_heap->fd = -1;
+	scene->tmp_heap->line = NULL;
+	scene->tmp_heap->spl = NULL;
+	scene->tmp_heap->split = NULL;
+	scene->tmp_heap->trans = NULL;
+	scene->tmp_heap->scal = NULL;
+	scene->tmp_heap->rot = NULL;
 	scene->Ambient = NULL;
 	scene->camera = NULL;
 	scene->light = NULL;
 	scene->sphere = NULL;
 	scene->plane = NULL;
 	scene->cylinder = NULL;
+	scene->sect = NULL;
 	scene->heap = NULL;
 	return (scene);
 }
 
-void	am_light_compenent(t_am_light *am_light)
+void	am_light_compenent(t_scene *scene, t_am_light *am_light)
 {
 	t_color		color;
 	double		ratio;
 
+	am_light->f_color = ft_malloc(scene, sizeof(t_color), false);
 	ratio = am_light->am_ratio;
-	color = am_light->color;
-	color = op_color(color, color, 0, ratio);
-	color.r /= 255;
-	color.g /= 255;
-	color.b /= 255;
-	am_light->f_color = color;
+	color = *am_light->color;
+	color = color_scal(color, ratio, MULT);
+	am_light->f_color->r = color.r;
+	am_light->f_color->g = color.g;
+	am_light->f_color->b = color.b;
 }
 
 void	camera_compenent(t_scene *scene)
 {
-	t_camera	*camera;
+	t_camera	*cam;
+	t_tuple		up;
 
-	camera = scene->camera;
-	camera->transform = view_transform(scene, camera->pos, camera->normal_v);
-	camera->inv_transform = inverse(scene, camera->transform);
-	camera->aspect = WIDTH / HEIGHT;
-	if (camera->aspect >= 1)
+	up = vector(0.0, 1.0, 0.0);
+	cam = scene->camera;
+	if (fabs(magnitude(*cam->normal_v) - 1.0) >= EPSILON)
+		*cam->normal_v = normal(*cam->normal_v);
+	cam->transform = view_transform(scene, *cam->pos, *cam->normal_v, up);
+	cam->inv_transform = inverse(scene, cam->transform);
+	cam->aspect = (double) WIDTH / (double) HEIGHT;
+	if (cam->aspect >= 1.0)
 	{
-		camera->half_width = tan(camera->FOV / 2);
-		camera->half_height = camera->half_width / camera->aspect;
+		cam->half_width = tan(cam->FOV / 2.0);
+		cam->half_height = cam->half_width / cam->aspect;
 	}
 	else
 	{
-		camera->half_height = tan(camera->FOV / 2);
-		camera->half_width = camera->half_height * camera->aspect;
+		cam->half_height = tan(cam->FOV / 2.0);
+		cam->half_width = cam->half_height * cam->aspect;
 	}
-	camera->pixel_size = (camera->half_width * 2) / WIDTH;
+	cam->pixel_size = (cam->half_width * 2.0) / (double) WIDTH;
 }
 
-void	light_compenent(t_light *light)
+void	light_compenent(t_scene *scene, t_light *light)
 {
-	t_color		color;
 	double		ratio;
 
-	light->color = set_color(255, 255, 255);
-	ratio = light->brightness;
-	color = light->color;
-	color = op_color(color, color, 0, ratio);
-	color.r /= 255;
-	color.g /= 255;
-	color.b /= 255;
-	light->f_color = color;
+	light->f_color = ft_malloc(scene, sizeof(t_color), false);
+	ratio = light->intensity;
+	light->f_color->r = ratio;
+	light->f_color->g = ratio;
+	light->f_color->b = ratio;
 }
 
 void	sphere_compenent(t_scene *scene)
 {
 	t_sphere	*sphere;
-	double		**tr;
-	double		**scal;
+	t_tmp_heap	*tmp;
 	int			i;
 
 	i = 0;
+	tmp = scene->tmp_heap;
 	sphere = scene->sphere;
 	while (sphere)
 	{
 		sphere->id = i;
-		sphere->radius = sphere->diameter / 2;
-		tr = translation(scene, sphere->pos.x, sphere->pos.y, sphere->pos.z);
-		scal = scaling(scene, sphere->radius, sphere->radius, sphere->radius);
-		sphere->trans = mult_matrix(scene, tr, scal);
-		__ft_free(scene, PART, 0);
+		sphere->radius = sphere->diameter / 2.0;
+		tmp->trans = translation(scene, sphere->pos->x, sphere->pos->y, sphere->pos->z);
+		tmp->scal = scaling(scene, sphere->radius, sphere->radius, sphere->radius);
+		sphere->trans = mult_matrix(scene, tmp->trans, tmp->scal);
+		tmp->trans = free_matrix(tmp->trans);
+		tmp->scal = free_matrix(tmp->scal);
 		sphere->inv_trans = inverse(scene, sphere->trans);
 		sphere->transpose_matrix = transpose(scene, sphere->trans);
 		sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
@@ -691,63 +627,198 @@ void	sphere_compenent(t_scene *scene)
 	}
 }
 
+double	**get_rot(t_scene *scene, t_tmp_heap *tmp, double beta)
+{
+	int	i;
+    int	j;
+
+	i = -1;
+    tmp->rot = identity_matrix(scene);
+    while (++i < 4)
+	{
+        j  = -1;
+        while (++j < 4)
+		{
+            tmp->trans[i][j] = (1- cos(beta)) * tmp->trans[i][j];
+            tmp->rot[i][j] = tmp->rot[i][j] + tmp->trans[i][j] + tmp->scal[i][j];
+        }
+    }
+	tmp->scal = free_matrix(tmp->scal);
+	tmp->trans = free_matrix(tmp->trans);
+	return (tmp->rot);
+}
+
+double **_get_trans_rot(t_scene *scene, t_tuple target)
+{
+	t_tmp_heap	tmp;
+    t_tuple 	init;
+	t_tuple 	new_vec;
+	double 		beta;
+
+	init = vector(0.0, 1.0, 0.0);
+	new_vec = normal(cross_product(init, target));
+    beta = acos(dot_product(init, target));
+    tmp.scal = identity_matrix(scene);
+    tmp.scal[0][1] = (-new_vec.z);
+    tmp.scal[1][0] = new_vec.z;
+    tmp.scal[1][2] = -new_vec.x;
+    tmp.scal[2][1] = new_vec.x;
+    tmp.scal[0][0] = 0;
+    tmp.scal[1][1] = 0;
+    tmp.scal[2][2] = 0;
+    tmp.scal[3][3] = 0;
+    tmp.trans  = mult_matrix(scene, tmp.scal, tmp.scal);
+    tmp.scal[0][1] = sin(beta) * (-new_vec.z);
+    tmp.scal[1][0] = sin(beta) * new_vec.z;
+    tmp.scal[1][2] = sin(beta) * -new_vec.x;
+    tmp.scal[2][1] = sin(beta) * new_vec.x;
+    return (get_rot(scene, &tmp, beta));
+}
+
+void	plane_compenent(t_scene *scene)
+{
+	t_plane		*pl;
+	t_tmp_heap	tmp;
+	int		i;
+
+	pl = scene->plane;
+	i = 0;
+	while (pl)
+	{
+		pl->id = i;
+		if (fabs(magnitude(*pl->normal_v) - 1.0) >= EPSILON)
+			*pl->normal_v = normal(*pl->normal_v);
+		tmp.scal = _get_trans_rot(scene, *pl->normal_v);
+		tmp.trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
+		pl->trans = mult_matrix(scene, tmp.trans, tmp.scal);
+		tmp.scal = free_matrix(tmp.scal);
+		tmp.trans = free_matrix(tmp.trans);
+		pl->inv_trans = inverse(scene, pl->trans);
+		pl->transpose_inv_matrix = transpose(scene, pl->inv_trans);
+		pl = pl->next;
+		i++;
+	}
+}
+
+void	cylinder_compenent(t_scene *scene)
+{
+	t_cylinder	*cy;
+	t_tmp_heap	tmp;
+	int			i;
+
+	cy = scene->cylinder;
+	i = 0;
+	while (cy)
+	{
+		cy->id = i;
+		cy->radius = cy->diameter / 2.0;
+		if (fabs(magnitude(*cy->normal_v) - 1.0) >= EPSILON)
+			*cy->normal_v = normal(*cy->normal_v);
+		tmp.scal = scaling(scene, cy->radius, cy->radius, cy->radius);
+		tmp.trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
+		cy->trans = mult_matrix(scene, tmp.trans, tmp.scal);
+		tmp.scal = free_matrix(tmp.scal);
+		tmp.trans = free_matrix(tmp.trans);
+		cy->inv_trans = inverse(scene, cy->trans);
+		cy->transpose_inv_matrix = transpose(scene, cy->inv_trans);
+		cy = cy->next;
+		i++;
+	}
+}
+
 void	parse_part(t_scene *scene, char *str)
 {
 	parse_scene(scene, str);
 	important_element(scene);
-	am_light_compenent(scene->Ambient);
+	am_light_compenent(scene, scene->Ambient);
 	camera_compenent(scene);
-	light_compenent(scene->light);
+	light_compenent(scene, scene->light);
 	sphere_compenent(scene);
-	// plane_compenent(scene);
-	// cylinder_compenent(scene);
+	plane_compenent(scene);
+	cylinder_compenent(scene);
 }
 
-t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
+void	sec_spheres(t_scene *scene, t_ray *ray)
 {
 	t_intersect	*tmp;
-	t_intersect	*send;
 	t_sphere	*sp;
 
 	sp = scene->sphere;
-	if (!sp)
-		return (NULL);
-	send = NULL;
 	while (sp)
 	{
 		tmp = intersect_sphere(scene, sp, ray);
+		if (tmp)
+			add_intersect(&scene->sect, tmp);
 		sp = sp->next;
-		add_intersect(&send, tmp);
 	}
-	send = hit(send);
-	return (send);
 }
 
-t_intersect	*intersect_world(t_scene *scene, t_ray *ray)
+void	sec_planes(t_scene *scene, t_ray *ray)
 {
 	t_intersect	*tmp;
-	t_intersect	*send;
+	t_plane		*pl;
 
-	send = NULL;
-	tmp = NULL;
-	while (1)
+	pl = scene->plane;
+	while (pl)
 	{
-		tmp = sec_spheres(scene, ray);
+		tmp = intersect_plane(scene, pl, ray);
 		if (tmp)
-			add_intersect(&send, tmp);
-		// tmp = sec_planes(scene, ray);
-		// if (tmp.id != -1)
-		// 	add_intersect(&send, &tmp);
-		// tmp = sec_cylinders(scene, ray);
-		// if (tmp.id != -1)
-		// 	add_intersect(&send, &tmp);
-		break ;
+			add_intersect(&scene->sect, tmp);
+		pl = pl->next;
 	}
-	send = hit(send);
-	return (send);
 }
 
-t_sphere	get_node(t_sphere *sp, int id)
+void	sec_cylinders(t_scene *scene, t_ray *ray)
+{
+	t_intersect	*tmp;
+	t_cylinder	*cy;
+
+	cy = scene->cylinder;
+	while (cy)
+	{
+		tmp = intersect_cylinder(scene, cy, ray);
+		if (tmp)
+			add_intersect(&scene->sect, tmp);
+		cy = cy->next;
+	}
+}
+
+void	intersect_world(t_scene *scene, t_ray *ray)
+{
+	scene->sect = NULL;
+	if (scene->sphere)
+		sec_spheres(scene, ray);
+	if (scene->plane)
+		sec_planes(scene, ray);
+	if (scene->cylinder)
+		sec_cylinders(scene, ray);
+	if (scene->sect)
+		scene->sect = hit(scene->sect);
+}
+
+t_cylinder	*get_cylinder(t_cylinder *cy, int id)
+{
+	while (cy)
+	{
+		if (cy->id == id)
+			break;
+		cy = cy->next;
+	}
+	return (cy);
+}
+
+t_plane	*get_plane(t_plane *pl, int id)
+{
+	while (pl)
+	{
+		if (pl->id == id)
+			break;
+		pl = pl->next;
+	}
+	return (pl);
+}
+
+t_sphere	*get_sphere(t_sphere *sp, int id)
 {
 	while (sp)
 	{
@@ -755,72 +826,111 @@ t_sphere	get_node(t_sphere *sp, int id)
 			break;
 		sp = sp->next;
 	}
-	return (*sp);
+	return (sp);
 }
 
-t_color	lighting(t_light light, t_obj_draw obj, t_am_light am_light)
+t_color	lighting(t_light *light, t_obj_draw *obj, t_am_light *am_light)
 {
 	t_color	ambient;
 	t_color	difusse;
+	t_color	object;
 	t_tuple	light_v;
 	double	light_normal;
 
-	difusse = set_color(0, 0, 0);
-	ambient = op_color(am_light.f_color, light.color, '*', 1);
-	light_v = normal(op_tuple(light.pos, obj.position, '-', 1));
-	light_normal = dot_product(light_v, obj.normal_v);
-	if (obj.shadow)
+	if (obj->render == SPHERE)
+		object = *obj->sp->color;
+	else if (obj->render == PLANE)
+		object = *obj->pl->color;
+	else
+		object = *obj->cy->color;
+	difusse = color(0.0, 0.0, 0.0);
+	ambient = op_color(*am_light->f_color, object, MULT);
+	light_v = normal(op_tuple(*light->pos, obj->position, SUB));
+	light_normal = dot_product(light_v, obj->normal_v);
+	if (obj->shadow == true)
 		return (ambient);
-	if (light_normal >= EPSILON)
-		difusse = op_color(ambient, ambient, 0, light_normal);
-	t_color result = op_color(ambient, difusse, '+', 1);
+	if (light_normal >= 0)
+	{
+		difusse = op_color(*light->f_color, object, MULT);
+		difusse = color_scal(difusse, light_normal, MULT);
+	}
+	t_color result = op_color(ambient, difusse, ADD);
 	return (result);
 }
 
-t_color	_get_sphere_color(t_scene *scene, t_intersect *sec, t_ray ray)
+void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 {
-	t_sphere	sp;
-	t_obj_draw	obj;
-	t_intersect	*shad;
-	t_ray		ray_shad;
-	t_tuple		light;
+	t_tuple		*light;
 
 	light = scene->light->pos;
-	sp = get_node(scene->sphere, sec->id);
-	obj.position = point_sec(ray, sec->t);
-	obj.eye_v = opposite(ray.direction_v);
-	obj.normal_v = normal_at(sp, obj.position);
-	obj.inside = true;
-	obj.shadow = false;
-	if (dot_product(obj.normal_v, obj.eye_v) < EPSILON)
-		obj.normal_v = opposite(obj.normal_v);
+	if (op == SPHERE)
+		obj->sp = get_sphere(scene->sphere, scene->sect->id);
+	else if (op == PLANE)
+	{
+		obj->pl = get_plane(scene->plane, scene->sect->id);
+		obj->normal_v = *obj->pl->normal_v;
+	}
 	else
-		obj.inside = false;
-	ray_shad.origin_p = obj.position;
-	ray_shad.direction_v = normal(op_tuple(light, obj.position, '-', 1));
-	shad = intersect_world(scene, &ray);
-	if (shad && shad->t < magnitude(ray_shad.direction_v))
-		obj.shadow = true;
-	__ft_free(scene, PART, 0);
-	return (lighting(*scene->light, obj, *scene->Ambient));
+		obj->cy = get_cylinder(scene->cylinder, scene->sect->id);
+	obj->position = point_sec(ray, scene->sect->t);
+	obj->eye_v = tuple_scal(ray.direction_v, -1, OPP);
+	obj->normal_v = normal_at(*obj, obj->position, op);
+	obj->inside = true;
+	obj->shadow = false;
+	if (dot_product(obj->normal_v, obj->eye_v) < 0.0)
+		obj->normal_v = tuple_scal(obj->normal_v, 1, OPP);
+	else
+		obj->inside = false;
+}
+
+void	check_shadow(t_scene *scene, t_obj_draw *obj)
+{
+	t_ray		ray;
+	t_tuple		v;
+	t_tuple		direction;
+	double		magn;
+
+	v = op_tuple(*scene->light->pos, obj->position, SUB);
+	magn = magnitude(v);
+	direction = normal(v);
+	ray.origin_p = obj->position;
+	ray.direction_v = direction;
+	intersect_world(scene, &ray);
+	if (scene->sect && scene->sect->t < magn)
+		obj->shadow = true;
+}
+
+t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
+{
+	t_obj_draw	*obj;
+
+	obj = ft_malloc(scene, sizeof(t_obj_draw), true);
+	if (object == SPHERE)
+		prepare_compute(scene, obj, ray, SPHERE);
+	else if (object == PLANE)
+		prepare_compute(scene, obj, ray, PLANE);
+	else
+		prepare_compute(scene, obj, ray, CYLINDER);
+	check_shadow(scene, obj);
+	obj->render = object;
+	return (lighting(scene->light, obj, scene->Ambient));
 }
 
 t_color	color_pixel(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*inter;
-
-	inter = intersect_world(scene, ray);
-	if (!inter)
-		return (scene->Ambient->f_color);
-	else if (inter->type == SPHERE)
-		return (_get_sphere_color(scene, inter, *ray));
-	// else if (inter.type == PLANE)
-	// 	return (_get_plane_color(scene, &inter));
-	// _get_cylinder_color(scene, &inter);
-	return (set_color(0, 0, 0));
+	intersect_world(scene, ray);
+	if (!scene->sect)
+		return (color(0.0, 0.0, 0.0));
+	else if (scene->sect->type == SPHERE)
+		return (_get_final_color(scene, *ray, SPHERE));
+	else if (scene->sect->type == PLANE)
+		return (_get_final_color(scene, *ray, PLANE));
+	else if (scene->sect->type == CYLINDER)
+		return (_get_final_color(scene, *ray, CYLINDER));
+	return (color(0.0, 0.0, 0.0));
 }
 
-void	draw(t_scene *scene)
+void	draw(t_scene *scene, t_mlx *mlx)
 {
 	t_camera	*camera;
 	t_color		color;
@@ -837,35 +947,34 @@ void	draw(t_scene *scene)
 		x = -1;
 		while (++x < WIDTH)
 		{
-			ray = ray_for_pixel(*camera, x, y);
-			pix = (y * scene->mlx->s_line + x * (scene->mlx->bpp / 8));
+			ray = ray_for_pixel(camera, x, y);
+			pix = (y * mlx->s_line + x * (mlx->bpp / 8));
 			color = color_pixel(scene, &ray);
 			col = rgb_to_hex(color.r, color.g, color.b);
-			*(int *)(scene->mlx->pixels + pix) = col;
+			*(int *)(mlx->pixels + pix) = col;
 		}
 	}
 	
-}
-
-void	leaks(void)
-{
-	system("leaks -q miniRT");
 }
 
 void	render(t_scene *scene)
 {
 	t_mlx	*m;
 
-	m = ft_malloc(scene, sizeof(t_mlx), false);
-	scene->mlx = m;
+	m = malloc(sizeof(t_mlx));
 	m->mlx = mlx_init();
 	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "SCENE");
-	m->mlx_img = mlx_new_image(m->mlx, 2200, 1200);
+	m->mlx_img = mlx_new_image(m->mlx, WIDTH, HEIGHT);
 	m->pixels = mlx_get_data_addr(m->mlx_img, &m->bpp, &m->s_line, &m->endian);
-	draw(scene);
+	draw(scene, m);
 	mlx_put_image_to_window(m->mlx, m->mlx_win, m->mlx_img, 0, 0);
 	mlx_key_hook(m->mlx_win, &handle_event, &scene);
 	mlx_loop(m->mlx);
+}
+
+void	leaks(void)
+{
+	system("leaks -q miniRT");
 }
 
 int main(int ac, char **av)
@@ -879,15 +988,10 @@ int main(int ac, char **av)
 	if (ac != 2)
 		return (free(scene), write(2, "Invalid argument\n", strlen("Invalid argument\n")), 1);
 	if (check_extention(av[1]))
-		return (free(scene), 1);
+		return (free(scene->tmp_heap), free(scene), 1);
 	parse_part(scene, av[1]);
 	render(scene);
-	// printf("scene->ambient->am_ratio: %f\n", scene->Ambient->am_ratio);
-	// printf("scene->ambient->color.r: %f\n", scene->Ambient->color.r);
-	// printf("scene->ambient->color.g: %f\n", scene->Ambient->color.g);
-	// printf("scene->ambient->color.b: %f\n", scene->Ambient->color.b);
-	// printf("scene->camera->pos.x: %f\n", scene->camera->pos.x);
-	// printf("scene->camera->pos.y: %f\n", scene->camera->pos.y);
-	// printf("scene->camera->pos.z: %f\n", scene->camera->pos.z);
+	free(scene);
+	free(scene->tmp_heap);
 	// __ft_free(scene, ALL, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 20:58:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/22 16:25:29 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/01/25 18:56:28 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	**ft_split(t_leaks *heap, char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	len = count_str(s, c);
-	all = (char **)ft_malloc(heap, sizeof(char *) * (len + 1), true);
+	all = (char **)ft_malloc(heap, sizeof(char *) * (len + 1));
 	if (all == NULL)
 		return (NULL);
 	while (i < len)
