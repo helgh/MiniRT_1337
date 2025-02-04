@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/03 20:11:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/04 19:19:50 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,15 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 	}
 	else if (op == PLANE)
 		return (obj.normal_v);
-	dis = pow (poin.x, 2) + pow(poin.z, 2);
-	if (dis < 1 && poin.y >= (obj.cy->height / 2) - EPSILON)
+	dis = (poin.x * poin.x) + (poin.z * poin.z);
+	if (dis < 1 && poin.y >= obj.cy->max_min - EPSILON)
 		return (vector(0.0,1.0,0.0));
-	else if (dis < 1 && poin.y <= (-(obj.cy->height) / 2) + EPSILON)
+	else if (dis < 1 && poin.y <= -obj.cy->max_min + EPSILON)
 		return (vector(0.0,-1.0,0.0));
-	return (vector(poin.x, 0.0, poin.z));
+	obj_p = mult_mat_point(obj.cy->inv_trans, poin);
+	obj_p.y = 0;
+	world_vec = mult_mat_point(obj.cy->transpose_inv_matrix, obj_p);
+	return (world_vec.w = 0, normal(world_vec));
 }
 
 // function get oposite of some vector //
@@ -61,9 +64,9 @@ double	choise_point(t_intersect *sec)
 	t_intersect	tmp;
 
 	tmp = *sec;
-	if (sec->point_sec_1 < EPSILON)
+	if (sec->point_sec_1 < 0)
 		return (sec->t = sec->point_sec_2, sec->point_sec_2);
-	else if (sec->point_sec_2 < EPSILON)
+	else if (sec->point_sec_2 < 0)
 		return (sec->t = sec->point_sec_1, sec->point_sec_1);
 	else if (sec->point_sec_1 < sec->point_sec_2)
 		return (sec->t = sec->point_sec_1, sec->point_sec_1);
@@ -712,9 +715,10 @@ void	cylinder_compenent(t_scene *scene)
 	{
 		cy->id = i;
 		cy->radius = cy->diameter / 2.0;
+		cy->max_min = cy->height / 2.0;
 		if (fabs(magnitude(*cy->normal_v) - 1.0) >= EPSILON)
 			*cy->normal_v = normal(*cy->normal_v);
-		tmp.scal = scaling(scene, cy->radius, cy->radius, cy->radius);
+		tmp.scal = scaling(scene, cy->radius, 1, cy->radius);
 		tmp.trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
 		cy->trans = mult_matrix(scene, tmp.trans, tmp.scal);
 		tmp.scal = free_matrix(tmp.scal);
@@ -911,7 +915,7 @@ t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 		prepare_compute(scene, obj, ray, PLANE);
 	else
 		prepare_compute(scene, obj, ray, CYLINDER);
-	check_shadow(scene, obj);
+	// check_shadow(scene, obj);
 	obj->render = object;
 	return (lighting(scene->light, obj, scene->Ambient));
 }
