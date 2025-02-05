@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 12:57:57 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/29 15:19:03 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:19:21 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_tuple	div_by_scal(t_tuple tuple, double scalar)
 	return (new_tuple.x = tuple.x / scalar,
 		new_tuple.y = tuple.y / scalar,
 		new_tuple.z = tuple.z / scalar,
-		new_tuple.w = tuple.w / scalar,
+		new_tuple.w = tuple.w,
 		new_tuple);
 }
 

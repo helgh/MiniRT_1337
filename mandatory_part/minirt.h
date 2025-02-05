@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/04 15:53:12 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:45:02 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct s_tmp_heap
 	double	**trans;
 	double	**scal;
 	double	**rot;
+	double	**all;
 }				t_tmp_heap;
 
 typedef struct s_color
@@ -176,11 +177,8 @@ typedef	enum e_type
 typedef struct s_sphere
 {
 	int				id;
-	double			diameter;
 	double			radius;
-	double			**trans;
 	double			**inv_trans;
-	double			**transpose_matrix;
 	double			**transpose_inv_matrix;
 	t_tuple			*pos;
 	t_color			*color;
@@ -206,7 +204,6 @@ typedef struct s_ray
 
 typedef struct s_light
 {
-	char	L;
 	double	intensity;
 	t_tuple	*pos;
 	t_color	*f_color;
@@ -214,9 +211,7 @@ typedef struct s_light
 
 typedef struct s_am_light
 {
-	char	A;
 	double	am_ratio;
-	t_color	*color;
 	t_color	*f_color;
 }			t_am_light;
 
@@ -227,7 +222,6 @@ typedef struct s_camera
 	double	half_width;
 	double	half_height;
 	double	pixel_size;
-	double	**transform;
 	double	**inv_transform;
 	t_tuple	*pos;
 	t_tuple	*normal_v;
@@ -237,7 +231,6 @@ typedef struct s_plane
 {
 	int				id;
 	void			*object;
-	double			**trans;
 	double			**inv_trans;
 	double			**transpose_inv_matrix;
 	t_tuple			*pos;
@@ -250,10 +243,7 @@ typedef struct s_cylinder
 {
 	int					id;
 	void				*object;
-	double				diameter;
 	double				radius;
-	double				height;
-	double				**trans;
 	double				**inv_trans;
 	double				**transpose_inv_matrix;
 	double				max_min;
@@ -285,6 +275,7 @@ typedef struct s_obj_draw
 	t_plane		*pl;
 	t_cylinder	*cy;
 	t_tuple		position;
+	t_tuple		ov_p;
 	t_tuple		eye_v;
 	t_tuple		normal_v;
 }				t_obj_draw;

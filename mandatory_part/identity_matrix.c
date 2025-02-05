@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:30:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/27 16:16:36 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/04 20:20:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 double	**identity_matrix(t_scene *scene)
 {
 	double	**matrix;
-	int	i;
-	int	s;
+	int		i;
+	int		s;
 
 	matrix = malloc(sizeof(double *) * 5);
 	if (matrix == NULL)

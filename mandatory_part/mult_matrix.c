@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:00:18 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/24 13:22:34 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:17:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,15 @@ double	**mult_matrix(t_scene *scene, double **a, double **b)
 
 	i = -1;
 	size = count_size(a);
-	new_mat = ft_malloc(scene, sizeof(double *) * (size + 1), false);
+	new_mat = malloc(sizeof(double *) * (size + 1));
+	if (!new_mat)
+		print_scene_err(scene, F_MALL);
 	while (++i < size)
-		new_mat[i] = ft_malloc(scene, sizeof(double) * size, false);
+	{
+		new_mat[i] = malloc(sizeof(double) * size);
+		if (!new_mat[i])
+			print_scene_err(scene, F_MALL);
+	}
 	i = -1;
 	while (++i < size)
 	{

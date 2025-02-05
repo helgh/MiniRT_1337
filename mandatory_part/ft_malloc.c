@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/02 15:04:00 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:12:13 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	_ft_free_part(t_scene *scene)
 		free_matrix(scene->tmp_heap->scal);
 	if (scene->tmp_heap->rot)
 		free_matrix(scene->tmp_heap->rot);
+	if (scene->tmp_heap->all)
+		free_matrix(scene->tmp_heap->all);
 }
 
 static void	_ft_free_all(t_leaks *heap)
@@ -133,6 +135,7 @@ void	__ft_free(t_scene *scene, int flag, int exit_status)
 {
 
 	(void) flag;
+	(void) exit_status;
 	_ft_free_part(scene);
 	_ft_free_all(scene->heap);
 	if (scene->tmp_heap->fd >= 0)

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/04 19:19:50 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 20:12:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 	}
 	else if (op == PLANE)
 		return (obj.normal_v);
-	dis = (poin.x * poin.x) + (poin.z * poin.z);
-	if (dis < 1 && poin.y >= obj.cy->max_min - EPSILON)
-		return (vector(0.0,1.0,0.0));
-	else if (dis < 1 && poin.y <= -obj.cy->max_min + EPSILON)
-		return (vector(0.0,-1.0,0.0));
 	obj_p = mult_mat_point(obj.cy->inv_trans, poin);
+	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
+	if (dis < 1 && obj_p.y >= obj.cy->max_min - EPSILON)
+		return (vector(0.0,1.0,0.0));
+	else if (dis < 1 && obj_p.y <= -obj.cy->max_min + EPSILON)
+		return (vector(0.0,-1.0,0.0));
 	obj_p.y = 0;
 	world_vec = mult_mat_point(obj.cy->transpose_inv_matrix, obj_p);
 	return (world_vec.w = 0, normal(world_vec));
@@ -353,10 +353,12 @@ void	parse_cylinder(t_scene *scene, char **line)
 	cylinder = ft_malloc(scene, sizeof(t_cylinder), false);
 	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);
 	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
+	if (magnitude(*cylinder->normal_v) != 1.0)
+		*cylinder->normal_v = normal(*cylinder->normal_v);
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
 	cylinder->color = _get_color(scene, line[5]);
-	cylinder->diameter = ft_atof(line[3]);
-	cylinder->height = ft_atof(line[4]);
+	cylinder->radius = ft_atof(line[3]) / 2.0;
+	cylinder->max_min = ft_atof(line[4]) / 2.0;
 	cylinder->next = NULL;
 	if (!scene->cylinder)
 		scene->cylinder = cylinder;
@@ -402,7 +404,7 @@ void	parse_sphere(t_scene *scene, char **line)
 	sphere->pos = _get_position(scene, line[1], ERR_SP_1);
 	check_color(scene, line[3], ERR_SP_1, ERR_SP_2);
 	sphere->color = _get_color(scene, line[3]);
-	sphere->diameter = ft_atof(line[2]);
+	sphere->radius = ft_atof(line[2]) / 2.0;
 	sphere->next = NULL;
 	if (!scene->sphere)
 		scene->sphere = sphere;
@@ -465,10 +467,10 @@ void	parse_ab_light(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_A_1);
 	scene->Ambient = ft_malloc(scene, sizeof(t_am_light), false);
 	scene->Ambient->am_ratio = ft_atof(line[1]);
-	if (scene->Ambient->am_ratio > 1 || scene->Ambient->am_ratio < EPSILON)
+	if (scene->Ambient->am_ratio > 1 || scene->Ambient->am_ratio < 0.0)
 		print_scene_err(scene, ERR_A_2);
 	check_color(scene, line[2], ERR_A_1, ERR_A_3);
-	scene->Ambient->color = _get_color(scene, line[2]);
+	scene->Ambient->f_color = _get_color(scene, line[2]);
 }
 
 void	important_element(t_scene *scene)
@@ -543,6 +545,7 @@ t_scene	*init_struct(void)
 	scene->tmp_heap->trans = NULL;
 	scene->tmp_heap->scal = NULL;
 	scene->tmp_heap->rot = NULL;
+	scene->tmp_heap->all = NULL;
 	scene->Ambient = NULL;
 	scene->camera = NULL;
 	scene->light = NULL;
@@ -559,9 +562,9 @@ void	am_light_compenent(t_scene *scene, t_am_light *am_light)
 	t_color		color;
 	double		ratio;
 
-	am_light->f_color = ft_malloc(scene, sizeof(t_color), false);
+	(void) scene;
 	ratio = am_light->am_ratio;
-	color = *am_light->color;
+	color = *am_light->f_color;
 	color = color_scal(color, ratio, MULT);
 	am_light->f_color->r = color.r;
 	am_light->f_color->g = color.g;
@@ -570,15 +573,18 @@ void	am_light_compenent(t_scene *scene, t_am_light *am_light)
 
 void	camera_compenent(t_scene *scene)
 {
+	t_tmp_heap	*tmp;
 	t_camera	*cam;
 	t_tuple		up;
 
 	up = vector(0.0, 1.0, 0.0);
+	tmp = scene->tmp_heap;
 	cam = scene->camera;
-	if (fabs(magnitude(*cam->normal_v) - 1.0) >= EPSILON)
+	if (magnitude(*cam->normal_v) != 1.0)
 		*cam->normal_v = normal(*cam->normal_v);
-	cam->transform = view_transform(scene, *cam->pos, *cam->normal_v, up);
-	cam->inv_transform = inverse(scene, cam->transform);
+	tmp->all = view_transform(scene, *cam->pos, *cam->normal_v, up);
+	cam->inv_transform = inverse(scene, tmp->all);
+	tmp->all = free_matrix(tmp->all);
 	cam->aspect = (double) WIDTH / (double) HEIGHT;
 	if (cam->aspect >= 1.0)
 	{
@@ -616,14 +622,13 @@ void	sphere_compenent(t_scene *scene)
 	while (sphere)
 	{
 		sphere->id = i;
-		sphere->radius = sphere->diameter / 2.0;
 		tmp->trans = translation(scene, sphere->pos->x, sphere->pos->y, sphere->pos->z);
 		tmp->scal = scaling(scene, sphere->radius, sphere->radius, sphere->radius);
-		sphere->trans = mult_matrix(scene, tmp->trans, tmp->scal);
+		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
 		tmp->trans = free_matrix(tmp->trans);
 		tmp->scal = free_matrix(tmp->scal);
-		sphere->inv_trans = inverse(scene, sphere->trans);
-		sphere->transpose_matrix = transpose(scene, sphere->trans);
+		sphere->inv_trans = inverse(scene, tmp->all);
+		tmp->all = free_matrix(tmp->all);
 		sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
 		sphere = sphere->next;
 		i++;
@@ -681,22 +686,24 @@ double **_get_trans_rot(t_scene *scene, t_tuple target)
 void	plane_compenent(t_scene *scene)
 {
 	t_plane		*pl;
-	t_tmp_heap	tmp;
+	t_tmp_heap	*tmp;
 	int		i;
 
 	pl = scene->plane;
+	tmp = scene->tmp_heap;
 	i = 0;
 	while (pl)
 	{
 		pl->id = i;
-		if (fabs(magnitude(*pl->normal_v) - 1.0) >= EPSILON)
+		if (magnitude(*pl->normal_v) != 1.0)
 			*pl->normal_v = normal(*pl->normal_v);
-		tmp.scal = _get_trans_rot(scene, *pl->normal_v);
-		tmp.trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
-		pl->trans = mult_matrix(scene, tmp.trans, tmp.scal);
-		tmp.scal = free_matrix(tmp.scal);
-		tmp.trans = free_matrix(tmp.trans);
-		pl->inv_trans = inverse(scene, pl->trans);
+		tmp->scal = _get_trans_rot(scene, *pl->normal_v);
+		tmp->trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
+		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
+		tmp->scal = free_matrix(tmp->scal);
+		tmp->trans = free_matrix(tmp->trans);
+		pl->inv_trans = inverse(scene, tmp->all);
+		tmp->all = free_matrix(tmp->all);
 		pl->transpose_inv_matrix = transpose(scene, pl->inv_trans);
 		pl = pl->next;
 		i++;
@@ -706,24 +713,26 @@ void	plane_compenent(t_scene *scene)
 void	cylinder_compenent(t_scene *scene)
 {
 	t_cylinder	*cy;
-	t_tmp_heap	tmp;
+	t_tmp_heap	*tmp;
 	int			i;
 
 	cy = scene->cylinder;
+	tmp = scene->tmp_heap;
 	i = 0;
 	while (cy)
 	{
 		cy->id = i;
-		cy->radius = cy->diameter / 2.0;
-		cy->max_min = cy->height / 2.0;
-		if (fabs(magnitude(*cy->normal_v) - 1.0) >= EPSILON)
-			*cy->normal_v = normal(*cy->normal_v);
-		tmp.scal = scaling(scene, cy->radius, 1, cy->radius);
-		tmp.trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
-		cy->trans = mult_matrix(scene, tmp.trans, tmp.scal);
-		tmp.scal = free_matrix(tmp.scal);
-		tmp.trans = free_matrix(tmp.trans);
-		cy->inv_trans = inverse(scene, cy->trans);
+		tmp->rot = _get_trans_rot(scene, *cy->normal_v);
+		tmp->scal = scaling(scene, cy->radius, 1, cy->radius);
+		tmp->trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
+		tmp->all =  mult_matrix(scene, tmp->scal, tmp->rot);
+		tmp->scal = free_matrix(tmp->scal);
+		tmp->rot = free_matrix(tmp->rot);
+		tmp->scal = mult_matrix(scene, tmp->trans, tmp->all);
+		tmp->trans = free_matrix(tmp->trans);
+		tmp->all = free_matrix(tmp->all);
+		cy->inv_trans = inverse(scene, tmp->scal);
+		tmp->scal = free_matrix(tmp->scal);
 		cy->transpose_inv_matrix = transpose(scene, cy->inv_trans);
 		cy = cy->next;
 		i++;
@@ -784,6 +793,18 @@ void	sec_cylinders(t_scene *scene, t_ray *ray)
 		if (tmp)
 			add_intersect(&scene->sect, tmp);
 		cy = cy->next;
+	}
+}
+
+void	free_list(t_intersect *sec)
+{
+	t_intersect	*tmp;
+
+	tmp = sec;
+	while (tmp)
+	{
+		tmp = sec->next;
+		free(sec);
 	}
 }
 
@@ -853,7 +874,7 @@ t_color	lighting(t_light *light, t_obj_draw *obj, t_am_light *am_light)
 	light_normal = dot_product(light_v, obj->normal_v);
 	if (obj->shadow == true)
 		return (ambient);
-	if (light_normal >= 0)
+	if (light_normal >= 0.0)
 	{
 		difusse = op_color(*light->f_color, object, MULT);
 		difusse = color_scal(difusse, light_normal, MULT);
@@ -881,7 +902,7 @@ void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 	obj->normal_v = normal_at(*obj, obj->position, op);
 	obj->inside = true;
 	obj->shadow = false;
-	if (dot_product(obj->normal_v, obj->eye_v) < 0.0)
+	if (dot_product(obj->normal_v, obj->eye_v) <= 0.0)
 		obj->normal_v = tuple_scal(obj->normal_v, 1, OPP);
 	else
 		obj->inside = false;
@@ -900,24 +921,26 @@ void	check_shadow(t_scene *scene, t_obj_draw *obj)
 	ray.origin_p = obj->position;
 	ray.direction_v = direction;
 	intersect_world(scene, &ray);
-	if (scene->sect && scene->sect->t < magn)
+	if (scene->sect && (magn - scene->sect->t) >= EPSILON)
 		obj->shadow = true;
 }
 
 t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 {
-	t_obj_draw	*obj;
+	t_obj_draw	obj;
+	t_color		color;
 
-	obj = ft_malloc(scene, sizeof(t_obj_draw), true);
+	// obj = ft_malloc(scene, sizeof(t_obj_draw), true);
 	if (object == SPHERE)
-		prepare_compute(scene, obj, ray, SPHERE);
+		prepare_compute(scene, &obj, ray, SPHERE);
 	else if (object == PLANE)
-		prepare_compute(scene, obj, ray, PLANE);
+		prepare_compute(scene, &obj, ray, PLANE);
 	else
-		prepare_compute(scene, obj, ray, CYLINDER);
-	// check_shadow(scene, obj);
-	obj->render = object;
-	return (lighting(scene->light, obj, scene->Ambient));
+		prepare_compute(scene, &obj, ray, CYLINDER);
+	check_shadow(scene, &obj);
+	obj.render = object;
+	color = lighting(scene->light, &obj, scene->Ambient);
+	return (color);
 }
 
 t_color	color_pixel(t_scene *scene, t_ray *ray)
@@ -961,6 +984,12 @@ void	draw(t_scene *scene, t_mlx *mlx)
 	
 }
 
+int	close_window(int mouse)
+{
+	(void) mouse;
+	exit(0);
+}
+
 void	render(t_scene *scene)
 {
 	t_mlx	*m;
@@ -972,7 +1001,8 @@ void	render(t_scene *scene)
 	m->pixels = mlx_get_data_addr(m->mlx_img, &m->bpp, &m->s_line, &m->endian);
 	draw(scene, m);
 	mlx_put_image_to_window(m->mlx, m->mlx_win, m->mlx_img, 0, 0);
-	mlx_key_hook(m->mlx_win, &handle_event, &scene);
+	mlx_key_hook(m->mlx_win, &handle_event, scene);
+	mlx_hook(m->mlx_win, 17, 0, &close_window, scene);
 	mlx_loop(m->mlx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/01/29 17:21:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:53:05 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 // turn vector into a unit vector while preserving its direction //
 double	magnitude(t_tuple v)
 {
-	if (v.x == 0.0 && v.y == 0.0 && v.z == 0.0)
-		return (-1.0);
 	return (sqrt(pow(v.x, 2.0) + pow(v.y, 2.0) + pow(v.z, 2.0)));
 }
 
@@ -28,6 +26,8 @@ t_tuple	normal(t_tuple tuple)
 	double	magn;
 
 	magn = magnitude(tuple);
+	if (!magn)
+		return (tuple);
 	return (tuple_scal(tuple, magn, DIV));
 }
 
