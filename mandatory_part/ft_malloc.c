@@ -6,102 +6,23 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/05 20:12:13 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/06 18:46:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Minirt.h"
+#include "inc/Minirt.h"
 
-t_leaks	*ft_lstlast(t_leaks *lst)
+void	__ft_free(t_scene *scene, int flag, int exit_status)
 {
-	if (lst != NULL)
-	{
-		while (lst->next != NULL)
-			lst = lst -> next;
-		return (lst); 
-	}
-	return (NULL); 
-}
-
-void	ft_lstadd_back(t_leaks **lst, t_leaks *new)
-{
-	t_leaks	*temp;
-
-	if (new != NULL)
-	{
-		if (*lst != NULL)
-		{
-			temp = ft_lstlast((*lst));
-			temp -> next = new;
-		}
-		else
-			(*lst) = new;
-	}
-}
-
-char	**free_split(char **split)
-{
-	char	**spl;
-	int		i;
-
-	spl = split;
-	i = 0;
-	while (*spl)
-	{
-		i++;
-		free(*spl);
-		spl = (split + i);
-	}
-	free(split);
-	return (NULL);
-}
-
-double	**free_matrix(double **matrix)
-{
-	double	**mat;
-	int		i;
-
-	mat = matrix;
-	i = 0;
-	while (*mat)
-	{
-		i++;
-		free(*mat);
-		mat = (matrix + i);
-	}
-	free(matrix);
-	return (NULL);
-}
-
-void	_ft_free_part(t_scene *scene)
-{
-	if (scene->tmp_heap->line)
-		free(scene->tmp_heap->line);
-	if (scene->tmp_heap->spl)
-		free_split(scene->tmp_heap->spl);
-	if (scene->tmp_heap->split)
-		free_split(scene->tmp_heap->split);
-	if (scene->tmp_heap->trans)
-		free_matrix(scene->tmp_heap->trans);
-	if (scene->tmp_heap->scal)
-		free_matrix(scene->tmp_heap->scal);
-	if (scene->tmp_heap->rot)
-		free_matrix(scene->tmp_heap->rot);
-	if (scene->tmp_heap->all)
-		free_matrix(scene->tmp_heap->all);
-}
-
-static void	_ft_free_all(t_leaks *heap)
-{
-	t_leaks	*tmp;
-
-	while (heap)
-	{
-		tmp = heap;
-		heap = heap->next;
-		free (tmp->address);
-		free (tmp->_struct);
-	}
+	(void) flag;
+	(void) exit_status;
+	_ft_free_part(scene);
+	_ft_free_all(scene->heap);
+	if (scene->tmp_heap->fd >= 0)
+		close(scene->tmp_heap->fd);
+	free(scene->tmp_heap);
+	free(scene);
+	exit(exit_status);
 }
 
 static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
@@ -129,20 +50,6 @@ static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
 		tail = tail->next;
 	}
 	return (new);
-}
-
-void	__ft_free(t_scene *scene, int flag, int exit_status)
-{
-
-	(void) flag;
-	(void) exit_status;
-	_ft_free_part(scene);
-	_ft_free_all(scene->heap);
-	if (scene->tmp_heap->fd >= 0)
-		close(scene->tmp_heap->fd);
-	free(scene->tmp_heap);
-	free(scene);
-	exit(exit_status);
 }
 
 void	*ft_malloc(t_scene *scene, size_t size, bool flag)

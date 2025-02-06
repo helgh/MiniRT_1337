@@ -1,0 +1,113 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macros.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
+/*   Updated: 2025/02/06 17:53:57 by hael-ghd         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MACROS_H
+# define MACROS_H
+
+# include <unistd.h>
+# include <mlx.h>
+# include <time.h>
+# include <limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <fcntl.h>
+# include <string.h>
+# include <math.h>
+
+# ifndef BUFFER_SIZE
+# define BUFFER_SIZE 40
+#endif
+
+# define WIDTH 1600
+# define HEIGHT 900
+
+# ifndef RADIAN
+# define RADIAN 3.14159265358
+#endif
+
+# define ALL 1
+# define PART 2
+
+# define OBJ_TO_WORLD 1
+# define WORLD_TO_OBJ 2
+
+# define TRANSLATING 1
+# define SCALING 2
+# define ROTATE_X 3
+# define ROTATE_Y 4
+# define ROTATE_Z 5
+# define EPSILON 0.00001
+
+# define MULT 1
+# define ADD 2
+# define SUB 3
+# define DIV 4
+# define OPP 5
+
+# define F_MALL "  Allocation failed\n"
+# define NORMAL "  Vector not normalized\n"
+# define BAD_TYPE "  Bad type of element in the scene\n"
+# define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
+# define ERR_l "  Forget information for element 'l' in the scene\n"
+# define ERR_pl "  Forget information for element 'pl' in the scene\n"
+# define ERR_sp "  Forget information for element 'sp' in the scene\n"
+# define ERR_cy "  Forget information for element 'cy' in the scene\n"
+# define ERR_tr "  Forget information for element 'tr' in the scene\n"
+# define ERR_sq "  Forget information for element 'sq' in the scene\n"
+
+/*------------------------------ err window --------------------------------*/
+
+# define ERR_HW "  Invalid information for element 'Hw' in the scene\n"
+# define ERR_HW_1 "  Bad identifier information for element 'Hw' in the scene\n"
+# define ERR_HW_2 "  information for element 'Hw' in the scene cannot be negative or zero\n"
+# define ERR_HW_3 "  information for element 'Hw' in the scene cannot be over than 1200\n"
+
+/*------------------------- err Ambient lightning ---------------------------*/
+
+# define ERR_A "  Declared more then one element 'A' in the scene\n"
+# define ERR_A_1 "  Bad identifier information for element 'A' in the scene\n"
+# define ERR_A_2 "  ambient lighting of element 'A' in the scene out of range [0.0,1.0]\n"
+# define ERR_A_3 "  R.G.B for element 'A' in the scene out of range [0-255]\n"
+
+/*------------------------- err camera ---------------------------*/
+
+# define ERR_C "  Declared more then one element 'C' in the scene\n"
+# define ERR_C_1 "  Bad identifier information for element 'C' in the scene\n"
+# define ERR_C_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
+# define ERR_C_3 "  FOV of element 'A' in the scene out of range [0-180]\n"
+# define OPEN_FILE_ERR "  Failed to open file\n"
+
+/*------------------------- err light ---------------------------*/
+
+# define ERR_L "  Declared more then one element 'L' in the scene\n"
+# define ERR_L_1 "  Bad identifier information for element 'L' in the scene\n"
+# define ERR_L_2 "  Light brightness of element 'L' in the scene out of range [0.0,1.0]\n"
+
+/*------------------------- err sphere ---------------------------*/
+
+# define ERR_SP_1 "  Bad identifier information for element 'sp' in the scene\n"
+# define ERR_SP_2 "  R.G.B for element 'sp' in the scene out of range [0-255]\n"
+
+/*------------------------- err plane ---------------------------*/
+
+# define ERR_PL_1 "  Bad identifier information for element 'pl' in the scene\n"
+# define ERR_PL_2 "  Normalized vector of element 'pl' in the scene out of range [-1.0,1.0]\n"
+# define ERR_PL_3 "  R.G.B for element 'pl' in the scene out of range [0-255]\n"
+
+/*------------------------- err cylinder ---------------------------*/
+
+# define ERR_CY_1 "  Bad identifier information for element 'cy' in the scene\n"
+# define ERR_CY_2 "  Normalized vector of element 'cy' in the scene out of range [-1.0,1.0]\n"
+# define ERR_CY_3 "  R.G.B for element 'cy' in the scene out of range [0-255]\n"
+
+# endif
