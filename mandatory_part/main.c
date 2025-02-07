@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:42:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:39:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ static t_scene	*init_struct(void)
 	return (scene);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_scene	*scene;
 
 	scene = init_struct();
 	if (!scene)
-		return (write(2, "Allocation failed!\n", strlen("Allocation failed")), 1);
+		return (write(2, "Allocation failed!\n", \
+			strlen("Allocation failed")), 1);
 	if (ac != 2)
-		return (free(scene), write(2, "Invalid argument\n", strlen("Invalid argument\n")), 1);
+		return (free(scene), write(2, "Invalid argument\n", \
+			strlen("Invalid argument\n")), 1);
 	if (check_extention(av[1]))
 		return (free(scene->tmp_heap), free(scene), 1);
 	parse_part(scene, av[1]);
