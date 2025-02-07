@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 13:49:00 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:30:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:52:05 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ t_color	check_color_range(t_color color)
 
 	max = 1.0;
 	min = 0.0;
-    if (color.r < min)
-		color.r = min; 
+	if (color.r < min)
+		color.r = min;
 	else if (color.r > max)
 		color.r = max;
-    if (color.g < min)
+	if (color.g < min)
 		color.g = min;
 	else if (color.g > max)
 		color.g = max;
-    if (color.b < min)
+	if (color.b < min)
 		color.b = min;
 	else if (color.b > max)
 		color.b = max;

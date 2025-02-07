@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:38:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:44 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:44 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_ov(int sign)
 	if (sign == 1)
 		return (-1);
 	else
-		return (0); 
+		return (0);
 }
 
 int	ft_atoi(const char *str)

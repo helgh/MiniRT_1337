@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 18:22:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:41:36 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,25 +68,13 @@ typedef struct s_material
 	t_color	color;
 }				t_material;
 
-typedef	enum e_type
+typedef enum e_type
 {
 	SPHERE,
 	PLANE,
 	CYLINDER,
 	LIGHT
 }			t_type;
-
-
-typedef struct s_intersect
-{
-	double				point_sec_1;
-	double				point_sec_2;
-	void				*object;
-	double				t;
-	int					type;
-	int					id;
-	struct s_intersect	*next;
-}						t_intersect;
 
 typedef struct s_ray
 {
@@ -109,7 +97,7 @@ typedef struct s_light
 
 typedef struct s_camera
 {
-	double	FOV;
+	double	fov;
 	double	aspect;
 	double	half_width;
 	double	half_height;
@@ -156,6 +144,19 @@ typedef struct s_cylinder
 	struct s_cylinder	*next;
 }			t_cylinder;
 
+typedef struct s_intersect
+{
+	double				point_sec_1;
+	double				point_sec_2;
+	void				*object;
+	double				t;
+	int					type;
+	int					id;
+	t_sphere			*sp;
+	t_plane				*pl;
+	t_cylinder			*cy;
+	struct s_intersect	*next;
+}						t_intersect;
 
 typedef struct s_obj_draw
 {
@@ -174,7 +175,7 @@ typedef struct s_obj_draw
 typedef struct s_scene
 {
 	t_tmp_heap	*tmp_heap;
-	t_am_light	*Ambient;
+	t_am_light	*ambient;
 	t_camera	*camera;
 	t_light		*light;
 	t_sphere	*sphere;

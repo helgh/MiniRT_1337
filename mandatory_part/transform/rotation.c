@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 19:54:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:31:59 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:35:07 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static double	**rotate_y(t_scene *scene, double angle)
 	rot[2][2] = cos(angle);
 	return (rot);
 }
+
 static double	**rotate_z(t_scene *scene, double angle)
 {
 	double	**rot;

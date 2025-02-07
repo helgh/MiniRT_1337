@@ -6,16 +6,16 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:12:28 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:31:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 19:35:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-static double	**get_rot(t_scene *scene, t_tmp_heap *tmp, double beta)
+static double   **get_rot(t_scene *scene, t_tmp_heap *tmp, double beta)
 {
-	int	i;
-    int	j;
+    int i;
+    int j;
 
 	i = -1;
     tmp->rot = identity_matrix(scene);

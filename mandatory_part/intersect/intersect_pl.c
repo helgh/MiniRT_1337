@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:18 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:47:45 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-t_intersect *intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray)
+t_intersect	*intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray)
 {
 	t_intersect	*sec;
 	t_ray		new_ray;

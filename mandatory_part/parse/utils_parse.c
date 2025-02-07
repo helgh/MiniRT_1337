@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:37:23 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:31:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:55:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	check_color(t_scene *scene, char *str, char *err1, char *err2)
 	scene->tmp_heap->split = free_split(tmp->split);
 }
 
-int		valid_float(char *str, bool checker)
+int	valid_float(char *str, bool checker)
 {
 	int	i;
 	int	flag;
@@ -81,7 +81,7 @@ t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1)
 	t_tmp_heap	*tmp;
 	t_tuple		*normal_v;
 	double		cord[3];
-	int		i;
+	int			i;
 
 	i = -1;
 	tmp = scene->tmp_heap;
@@ -106,7 +106,7 @@ t_tuple	*_get_position(t_scene *scene, char *line, char *error)
 	t_tuple		*pos;
 	double		cord[3];
 	t_tmp_heap	*tmp;
-	int		i;
+	int			i;
 
 	i = -1;
 	tmp = scene->tmp_heap;

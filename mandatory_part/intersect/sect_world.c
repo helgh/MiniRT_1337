@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 20:30:29 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:02 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
 	t_intersect	*tmp;
 	t_sphere	*sp;
 	t_intersect	*send;
-	double		t;
 	bool		flag;
 
 	flag = true;
@@ -30,9 +29,13 @@ static t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
 		{
 			flag = false;
 			send = tmp;
+			send->sp = sp;
 		}
 		else if (tmp && tmp->t < send->t)
+		{
 			send = tmp;
+			send->sp = sp;
+		}
 		sp = sp->next;
 	}
 	return (send);
@@ -43,7 +46,6 @@ static t_intersect	*sec_planes(t_scene *scene, t_ray *ray)
 	t_intersect	*tmp;
 	t_plane		*pl;
 	t_intersect	*send;
-	double		t;
 	bool		flag;
 
 	flag = true;
@@ -56,9 +58,13 @@ static t_intersect	*sec_planes(t_scene *scene, t_ray *ray)
 		{
 			flag = false;
 			send = tmp;
+			send->pl = pl;
 		}
 		else if (tmp && tmp->t < send->t)
+		{
 			send = tmp;
+			send->pl = pl;
+		}
 		pl = pl->next;
 	}
 	return (send);
@@ -81,9 +87,13 @@ static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
 		{
 			flag = false;
 			send = tmp;
+			send->cy = cy;
 		}
 		else if (tmp && tmp->t < send->t)
+		{
 			send = tmp;
+			send->cy = cy;
+		}
 		cy = cy->next;
 	}
 	return (send);

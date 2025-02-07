@@ -6,18 +6,11 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 18:40:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:42:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/Minirt.h"
-
-int	handle_event(int keycode, t_scene *scene)
-{
-	if (keycode == 53)
-		__ft_free(scene, ALL, 0);
-	return (0);
-}
 
 static int	check_extention(const char *str)
 {
@@ -55,7 +48,7 @@ static t_scene	*init_struct(void)
 	scene->tmp_heap->scal = NULL;
 	scene->tmp_heap->rot = NULL;
 	scene->tmp_heap->all = NULL;
-	scene->Ambient = NULL;
+	scene->ambient = NULL;
 	scene->camera = NULL;
 	scene->light = NULL;
 	scene->sphere = NULL;
@@ -79,5 +72,4 @@ int main(int ac, char **av)
 		return (free(scene->tmp_heap), free(scene), 1);
 	parse_part(scene, av[1]);
 	render(scene);
-	__ft_free(scene, ALL, 0);
 }

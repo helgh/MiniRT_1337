@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:08:03 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:30:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:48:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ double	degree_to_rad(double degree)
 {
 	double	value;
 
-	value = (degree * (double) RADIAN) / 180.0;
+	value = (degree * (double) M_PI) / 180.0;
 	return (value);
 }
 
@@ -37,7 +37,7 @@ int	ft_isdigit(int c)
 	return (0);
 }
 
-int		lengh(char **str)
+int	lengh(char **str)
 {
 	int	i;
 

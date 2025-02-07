@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:27:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:30:42 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:46:27 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ static void	camera_compenent(t_scene *scene)
 	cam->aspect = (double) WIDTH / (double) HEIGHT;
 	if (cam->aspect >= 1.0)
 	{
-		cam->half_width = tan(cam->FOV / 2.0);
+		cam->half_width = tan(cam->fov / 2.0);
 		cam->half_height = cam->half_width / cam->aspect;
 	}
 	else
 	{
-		cam->half_height = tan(cam->FOV / 2.0);
+		cam->half_height = tan(cam->fov / 2.0);
 		cam->half_width = cam->half_height * cam->aspect;
 	}
 	cam->pixel_size = (cam->half_width * 2.0) / (double) WIDTH;
@@ -74,7 +74,7 @@ void	parse_camera(t_scene *scene, char **line)
 	if ((len == 5 && strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_C_1);
 	camera = ft_malloc(scene, sizeof(t_camera), false);
-	camera->FOV = degree_to_rad(_get_fov(scene, line[3]));
+	camera->fov = degree_to_rad(_get_fov(scene, line[3]));
 	camera->pos = _get_position(scene, line[1], ERR_C_1);
 	camera->normal_v = _get_normal_v(scene, line[2], ERR_C_1);
 	scene->camera = camera;

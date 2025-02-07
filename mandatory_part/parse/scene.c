@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 18:40:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:54:12 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	important_element(t_scene *scene)
 {
-	if (!scene->Ambient)
+	if (!scene->ambient)
 		print_scene_err(scene, "  No ambient light found \n");
 	if (!scene->camera)
 		print_scene_err(scene, "  No camera found\n");

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 13:15:47 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:30:20 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:52:41 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_tuple	reflect(t_tuple in, t_tuple normal)
 
 double	dot_product(t_tuple vec1, t_tuple vec2)
 {
-	return ((vec1.x * vec2.x) +
-		(vec1.y * vec2.y) +
+	return ((vec1.x * vec2.x) + \
+		(vec1.y * vec2.y) + \
 		(vec1.z * vec2.z));
 }
 
@@ -51,4 +51,3 @@ t_tuple	cross_product(t_tuple vec1, t_tuple vec2)
 		vec3.z = (vec1.x * vec2.y) - (vec1.y * vec2.x),
 		vec3.w = 0.0, vec3);
 }
-

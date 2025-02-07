@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:06:05 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:31:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 18:03:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ t_ray	ray_for_pixel(t_camera *camera, int pos_x, int pos_y)
 	t_tuple	pixel;
 	double	x_offset;
 	double	y_offset;
-	double	world_x;
-	double	world_y;
+	double	world[2];
 
 	x_offset = (pos_x + 0.5) * camera->pixel_size;
 	y_offset = (pos_y + 0.5) * camera->pixel_size;
-	world_x = camera->half_width - x_offset;
-	world_y = camera->half_height - y_offset;
-	pixel = mult_mat_point(camera->inv_transform, point(world_x, world_y, -1.0));
+	world[0] = camera->half_width - x_offset;
+	world[1] = camera->half_height - y_offset;
+	pixel = mult_mat_point(camera->inv_transform, \
+		point(world[0], world[1], -1.0));
 	ray.origin_p = mult_mat_point(camera->inv_transform, point(0.0, 0.0, 0.0));
 	ray.direction_v = normal(op_tuple(pixel, ray.origin_p, SUB));
 	return (ray);

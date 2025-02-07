@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 18:41:35 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/07 17:54:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	plane_compenent(t_scene *scene)
 {
 	t_plane		*pl;
 	t_tmp_heap	*tmp;
-	int		i;
+	int			i;
 
 	pl = scene->plane;
 	tmp = scene->tmp_heap;
