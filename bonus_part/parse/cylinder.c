@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 16:54:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/09 20:17:28 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,25 @@ static void	add_cy_list(t_scene *scene, t_cylinder *cy)
 	while (cylinder->next)
 		cylinder = cylinder->next;
 	cylinder->next = cy;
+}
+
+double	_check_get_number(t_scene *scene, char *line, char *msg)
+{
+	double	number;
+	int		i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (!ft_isdigit(line[i]))
+		{
+			if (line[i] == 10)
+				break ;
+			print_scene_err(scene, msg);
+		}
+	}
+	number = ft_atof(line);
+	return (number);
 }
 
 void	cylinder_compenent(t_scene *scene)
@@ -37,14 +56,14 @@ void	cylinder_compenent(t_scene *scene)
 		tmp->rot = _get_trans_rot(scene, *cy->normal_v);
 		tmp->scal = scaling(scene, cy->radius, 1, cy->radius);
 		tmp->trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
-		tmp->all = mult_matrix(scene, tmp->trans, tmp->rot);
-		tmp->trans = free_matrix(tmp->trans);
-		tmp->rot = free_matrix(tmp->rot);
-		tmp->trans = mult_matrix(scene, tmp->all, tmp->scal);
+		tmp->all = mult_matrix(scene, tmp->scal, tmp->rot);
 		tmp->scal = free_matrix(tmp->scal);
-		tmp->all = free_matrix(tmp->all);
-		cy->inv_trans = inverse(scene, tmp->trans);
+		tmp->rot = free_matrix(tmp->rot);
+		tmp->scal = mult_matrix(scene, tmp->trans, tmp->all);
 		tmp->trans = free_matrix(tmp->trans);
+		tmp->all = free_matrix(tmp->all);
+		cy->inv_trans = inverse(scene, tmp->scal);
+		tmp->scal = free_matrix(tmp->scal);
 		cy->transpose_inv_matrix = transpose(scene, cy->inv_trans);
 		cy = cy->next;
 		i++;
@@ -68,8 +87,8 @@ void	parse_cylinder(t_scene *scene, char **line)
 		*cylinder->normal_v = normal(*cylinder->normal_v);
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
 	cylinder->color = _get_color(scene, line[5]);
-	cylinder->radius = ft_atof(line[3]) / 2.0;
-	cylinder->max_min = ft_atof(line[4]) / 2.0;
+	cylinder->radius = _check_get_number(scene, line[3], ERR_CY_1) / 2.0;
+	cylinder->max_min = _check_get_number(scene, line[4], ERR_CY_1) / 2.0;
 	cylinder->next = NULL;
 	if (!scene->cylinder)
 		scene->cylinder = cylinder;

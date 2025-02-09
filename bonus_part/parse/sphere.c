@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:28:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 15:42:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/08 15:40:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	add_sp_list(t_scene *scene, t_sphere *sp)
 {
-	t_sphere	*sphere;
+	static t_sphere	*sphere;
 
-	sphere = scene->sphere;
-	while (sphere->next)
+	if (!sphere)
+	{
+		sphere = scene->sphere;
+		sphere->next = sp;
 		sphere = sphere->next;
-	sphere->next = sp;
+	}
+	else
+	{
+		sphere->next = sp;
+		sphere = sphere->next;
+	}
 }
 
 void	sphere_compenent(t_scene *scene)
