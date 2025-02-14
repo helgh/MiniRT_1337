@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 19:39:22 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:35:35 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ static t_scene	*init_struct(void)
 	scene->sphere = NULL;
 	scene->plane = NULL;
 	scene->cylinder = NULL;
+	scene->cone = NULL;
 	scene->sect = NULL;
 	scene->heap = NULL;
 	return (scene);

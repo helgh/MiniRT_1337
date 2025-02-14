@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/09 19:46:54 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:38:30 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_color
 typedef struct s_checker
 {
 	double	ratio;
-	double	**inv_trans;
 	t_color	*color;
 }				t_checker;
 
@@ -71,6 +70,7 @@ typedef enum e_type
 	SPHERE,
 	PLANE,
 	CYLINDER,
+	CONE,
 	LIGHT
 }			t_type;
 
@@ -146,6 +146,20 @@ typedef struct s_cylinder
 	struct s_cylinder	*next;
 }			t_cylinder;
 
+typedef struct s_cone
+{
+	int					id;
+	void				*object;
+	double				radius;
+	double				**inv_trans;
+	double				**transpose_inv_matrix;
+	double				max_min;
+	t_tuple				*pos;
+	t_tuple				*normal_v;
+	t_color				*color;
+	struct s_cone		*next;
+}						t_cone;
+
 typedef struct s_intersect
 {
 	double				point_sec_1;
@@ -157,6 +171,7 @@ typedef struct s_intersect
 	t_sphere			*sp;
 	t_plane				*pl;
 	t_cylinder			*cy;
+	t_cylinder			*cone;
 	struct s_intersect	*next;
 }						t_intersect;
 
@@ -168,6 +183,7 @@ typedef struct s_obj_draw
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;
+	t_cylinder	*cone;
 	t_tuple		position;
 	t_tuple		ov_p;
 	t_tuple		eye_v;
@@ -183,6 +199,7 @@ typedef struct s_scene
 	t_sphere	*sphere;
 	t_plane		*plane;
 	t_cylinder	*cylinder;
+	t_cone		*cone;
 	t_intersect	*sect;
 	t_leaks		*heap;
 }				t_scene;

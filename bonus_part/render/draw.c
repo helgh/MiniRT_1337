@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/09 20:06:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/10 18:15:06 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ static double	rgb_to_hex(double r, double g, double b)
 static t_color	_color_pl_or_checker(t_obj_draw *obj)
 {
 	t_color	color;
-	int		div;
 	t_tuple	obj_space;
 	t_tuple	world_space;
+	double	scal;
+	int		div;
 
 	color = *obj->pl->color;
+	scal = obj->pl->checker->ratio;
 	if (!obj->pl->checker)
 		return (color);
 	obj_space = mult_mat_point(obj->pl->inv_trans, obj->position);
-	world_space = mult_mat_point(obj->pl->checker->inv_trans, obj_space);
-	div = (int) (fabs(floor(world_space.x) + floor(world_space.y) + \
-		floor(world_space.z)));
+	div = (int) (fabs(floor(obj_space.x / scal) + floor(obj_space.z / scal)));
 	div %= 2;
 	if (div == 0)
 		return (color);
@@ -52,8 +52,10 @@ static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 		obj->pl = scene->sect->pl;
 		obj->normal_v = *obj->pl->normal_v;
 	}
-	else
+	else if (op == CYLINDER)
 		obj->cy = scene->sect->cy;
+	else
+		obj->cone = scene->sect->cone;
 	obj->position = point_sec(ray, scene->sect->t);
 	obj->eye_v = tuple_scal(ray.direction_v, -1, OPP);
 	obj->normal_v = normal_at(*obj, obj->position, op);
@@ -74,14 +76,18 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 		prepare_compute(scene, &obj, ray, SPHERE);
 	else if (object == PLANE)
 		prepare_compute(scene, &obj, ray, PLANE);
-	else
+	else if (object == CYLINDER)
 		prepare_compute(scene, &obj, ray, CYLINDER);
+	else
+		prepare_compute(scene, &obj, ray, CONE);
 	if (object == SPHERE)
 		color = *obj.sp->color;
 	else if (object == PLANE)
 		color = _color_pl_or_checker(&obj);
 	else if (object == CYLINDER)
 		color = *obj.cy->color;
+	else if (object == CONE)
+		color = *obj.cone->color;
 	color = lighting(scene, &obj, scene->ambient, color);
 	return (color);
 }
@@ -97,6 +103,8 @@ static t_color	color_pixel(t_scene *scene, t_ray *ray)
 		return (_get_final_color(scene, *ray, PLANE));
 	else if (scene->sect->type == CYLINDER)
 		return (_get_final_color(scene, *ray, CYLINDER));
+	else if (scene->sect->type == CONE)
+		return (_get_final_color(scene, *ray, CONE));
 	return (color(0.0, 0.0, 0.0));
 }
 

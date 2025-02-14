@@ -6,43 +6,18 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:38:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:48:44 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 14:48:48 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-static int	check_ov(int sign)
+int	ft_strlen(char *str)
 {
-	if (sign == 1)
-		return (-1);
-	else
-		return (0);
-}
+	int	i;
 
-int	ft_atoi(const char *str)
-{
-	int					i;
-	int					sign;
-	unsigned long int	result;
-
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == 45 || str[i] == 43)
-	{
-		if (str[i] == 45)
-			sign *= -1;
-		i++;
-	}
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		result = result * 10 + str[i] - 48;
-		i++;
-	}
-	if (result > 9223372036854775807)
-		return (check_ov(sign));
-	return (result * sign);
+	i = -1;
+	while (str[++i])
+		;
+	return (i);
 }

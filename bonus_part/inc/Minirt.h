@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/09 20:17:15 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:22:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 char		**ft_split(t_scene *scene, char const *s, char c);
 int			ft_strcmp(char *s1, char *s2);
 double		ft_atof(char *str);
+int			ft_strlen(char *str);
 int			lengh(char **str);
 int			ft_isdigit(int c);
 double		degree_to_rad(double degree);
@@ -60,6 +61,11 @@ void		plane_compenent(t_scene *scene);
 void		parse_cylinder(t_scene *scene, char **line);
 void		cylinder_compenent(t_scene *scene);
 
+// -------------------------  parse_cone  ----------------------------- //
+
+void		parse_cone(t_scene *scene, char **line);
+void		cone_compenent(t_scene *scene);
+
 // -------------------------  utils_parse  ----------------------------- //
 
 t_tuple		*_get_position(t_scene *scene, char *line, char *error);
@@ -83,6 +89,7 @@ void		intersect_world(t_scene *scene, t_ray *ray);
 t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
 t_intersect	*intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
 t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
+t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray);
 double		choise_point(t_intersect *sec);
 t_intersect	*hit(t_intersect **secs, int index);
 

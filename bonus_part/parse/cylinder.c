@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/09 20:17:28 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:39:23 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,8 @@ double	_check_get_number(t_scene *scene, char *line, char *msg)
 	int		i;
 
 	i = -1;
-	while (line[++i])
-	{
-		if (!ft_isdigit(line[i]))
-		{
-			if (line[i] == 10)
-				break ;
-			print_scene_err(scene, msg);
-		}
-	}
+	if (valid_float(line, false))
+		print_scene_err(scene, msg);
 	number = ft_atof(line);
 	return (number);
 }
@@ -56,14 +49,14 @@ void	cylinder_compenent(t_scene *scene)
 		tmp->rot = _get_trans_rot(scene, *cy->normal_v);
 		tmp->scal = scaling(scene, cy->radius, 1, cy->radius);
 		tmp->trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
-		tmp->all = mult_matrix(scene, tmp->scal, tmp->rot);
-		tmp->scal = free_matrix(tmp->scal);
-		tmp->rot = free_matrix(tmp->rot);
-		tmp->scal = mult_matrix(scene, tmp->trans, tmp->all);
+		tmp->all = mult_matrix(scene, tmp->trans, tmp->rot);
 		tmp->trans = free_matrix(tmp->trans);
-		tmp->all = free_matrix(tmp->all);
-		cy->inv_trans = inverse(scene, tmp->scal);
+		tmp->rot = free_matrix(tmp->rot);
+		tmp->trans = mult_matrix(scene, tmp->all, tmp->scal);
 		tmp->scal = free_matrix(tmp->scal);
+		tmp->all = free_matrix(tmp->all);
+		cy->inv_trans = inverse(scene, tmp->trans);
+		tmp->trans = free_matrix(tmp->trans);
 		cy->transpose_inv_matrix = transpose(scene, cy->inv_trans);
 		cy = cy->next;
 		i++;

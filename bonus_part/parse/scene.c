@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 15:47:33 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:29:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static void	parse_element(t_scene *scene, char **line)
 		parse_plane(scene, line);
 	else if (!strcmp(line[0], "cy"))
 		parse_cylinder(scene, line);
+	else if (!strcmp(line[0], "cone"))
+		parse_cone(scene, line);
 	else
 		print_scene_err(scene, "  Invalid element\n");
 }
@@ -75,4 +77,5 @@ void	parse_part(t_scene *scene, char *str)
 	sphere_compenent(scene);
 	plane_compenent(scene);
 	cylinder_compenent(scene);
+	cone_compenent(scene);
 }

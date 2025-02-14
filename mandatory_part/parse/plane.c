@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:54:00 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:46:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ void	plane_compenent(t_scene *scene)
 	while (pl)
 	{
 		pl->id = i;
-		if (magnitude(*pl->normal_v) != 1.0)
-			*pl->normal_v = normal(*pl->normal_v);
 		tmp->scal = _get_trans_rot(scene, *pl->normal_v);
 		tmp->trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
 		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
@@ -62,6 +60,11 @@ void	parse_plane(t_scene *scene, char **line)
 	plane = ft_malloc(scene, sizeof(t_plane), false);
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
 	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
+	if (magnitude(*plane->normal_v) != 1.0)
+	{
+		write(2, NORMAL, ft_strlen(NORMAL));
+		*plane->normal_v = normal(*plane->normal_v);
+	}
 	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
 	plane->color = _get_color(scene, line[3]);
 	plane->next = NULL;

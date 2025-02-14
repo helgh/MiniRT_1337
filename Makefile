@@ -1,43 +1,38 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/10/18 23:24:19 by hael-ghd          #+#    #+#              #
-#    Updated: 2025/01/19 17:14:31 by hael-ghd         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+C_FLAGS		= -Ofast -Wall -Wextra -Werror
+HEADER		= $(shell find ./mandatory_part -name '*.h')
+SRCS		= $(addprefix mandatory_part/, main.c error_free.c ft_malloc.c) \
+				$(addprefix mandatory_part/libft_utils/, ft_atof.c ft_strlen.c ft_split.c ft_strcmp.c \
+					get_next_line.c get_next_line_utils.c utils.c) \
+				$(addprefix mandatory_part/parse/, ab_light.c spot_light.c camera.c sphere.c plane.c \
+					cylinder.c scene.c camera_utils.c utils_parse.c) \
+				$(addprefix mandatory_part/render/, draw.c lighting.c mlx.c rays.c shadow.c) \
+				$(addprefix mandatory_part/intersect/, hits.c intersect_cy.c \
+					intersect_pl.c intersect_sp.c sect_world.c) \
+				$(addprefix mandatory_part/transform/, identity_matrix.c inverse.c \
+					determinant.c mult_mat_point.c mult_matrix.c rot_utils.c \
+					rotation.c transformation.c transpose_matrix.c) \
+				$(addprefix mandatory_part/math/, color_scal.c op_color.c op_tuple.c \
+					tuple_scal.c op_vector.c set_get.c)
 
-NAME = miniRT
-
-CC = cc
-
-FLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
-
-MLX = -framework OpenGL -framework AppKit libmlx.a
-
-SOURCE = test.c addition.c campare_matrix.c cross_product.c determinant.c distance_point.c dot_product.c hit.c identity_matrix.c intersect.c magnitude.c \
-			mult_by_scalar.c mult_mat_point.c mult_mat_vec.c mult_matrix.c normalization.c oposite.c point_or_vector.c position.c \
-				rotation.c scaling.c shearing.c subtract.c transform.c translation.c transpose_mat.c degree_to_radian.c inverse.c \
-					reflect.c lighting.c normal_at.c create_tuple.c operator_color.c default_world.c  view_transformation.c \
-						#test_color.c \
-					
-OBJ_SRC = $(SOURCE:.c=.o)
+BUILD		= mandatory_part/build
+MLX			= -lmlx -framework OpenGL -framework AppKit
+OBJS		= $(addprefix $(BUILD)/, $(SRCS:.c=.o))
+NAME		= miniRT
+RM			= rm -rf
 
 all: $(NAME)
 
-$(NAME): $(OBJ_SRC)
-	$(CC) $(FLAGS) $(OBJ_SRC) $(MLX) -o $(NAME)
+$(NAME): $(OBJS)
+	$(CC) $(C_FLAGS) $^ $(MLX) -o $@
 
-%.o: %.c Minirt.h
-	$(CC) $(FLAGS) -c $<
+$(BUILD)/%.o: %.c $(HEADER)
+	@mkdir -p $(dir $@)
+	$(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:
-	rm -f $(OBJ_SRC)
+	@$(RM) $(OBJS) $(BUILD)
 
 fclean: clean
-	rm -f $(NAME)
+	@$(RM) $(NAME)
 
 re: fclean all

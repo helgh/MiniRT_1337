@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 16:54:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 19:46:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	parse_cylinder(t_scene *scene, char **line)
 	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);
 	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
 	if (magnitude(*cylinder->normal_v) != 1.0)
+	{
+		write(2, NORMAL, ft_strlen(NORMAL));
 		*cylinder->normal_v = normal(*cylinder->normal_v);
+	}
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
 	cylinder->color = _get_color(scene, line[5]);
 	cylinder->radius = ft_atof(line[3]) / 2.0;

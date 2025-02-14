@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:28:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 15:40:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:08:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,27 +33,22 @@ void	sphere_compenent(t_scene *scene)
 {
 	t_sphere	*sphere;
 	t_tmp_heap	*tmp;
-	int			i;
+	static int	i;
 
-	i = 0;
 	tmp = scene->tmp_heap;
 	sphere = scene->sphere;
-	while (sphere)
-	{
-		sphere->id = i;
-		tmp->trans = translation(scene, sphere->pos->x, \
-			sphere->pos->y, sphere->pos->z);
-		tmp->scal = scaling(scene, sphere->radius, sphere->radius, \
-			sphere->radius);
-		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
-		tmp->trans = free_matrix(tmp->trans);
-		tmp->scal = free_matrix(tmp->scal);
-		sphere->inv_trans = inverse(scene, tmp->all);
-		tmp->all = free_matrix(tmp->all);
-		sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
-		sphere = sphere->next;
-		i++;
-	}
+	sphere->id = i;
+	tmp->trans = translation(scene, sphere->pos->x, \
+		sphere->pos->y, sphere->pos->z);
+	tmp->scal = scaling(scene, sphere->radius, sphere->radius, \
+		sphere->radius);
+	tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
+	tmp->trans = free_matrix(tmp->trans);
+	tmp->scal = free_matrix(tmp->scal);
+	sphere->inv_trans = inverse(scene, tmp->all);
+	tmp->all = free_matrix(tmp->all);
+	sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
+	i++;
 }
 
 void	parse_sphere(t_scene *scene, char **line)
