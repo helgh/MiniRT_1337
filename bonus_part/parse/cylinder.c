@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 16:39:23 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:32:47 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	add_cy_list(t_scene *scene, t_cylinder *cy)
 {
-	t_cylinder	*cylinder;
+	static t_cylinder	*cylinder;
 
-	cylinder = scene->cylinder;
-	while (cylinder->next)
+	if (!cylinder)
+	{
+		cylinder = scene->cylinder;
+		cylinder->next = cy;
 		cylinder = cylinder->next;
-	cylinder->next = cy;
+	}
+	else
+	{
+		cylinder->next = cy;
+		cylinder = cylinder->next;
+	}
 }
 
 double	_check_get_number(t_scene *scene, char *line, char *msg)

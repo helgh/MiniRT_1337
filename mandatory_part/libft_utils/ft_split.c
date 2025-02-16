@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:26:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:48 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:04:20 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*coppy(t_scene *scene, char const *str, int l)
 	i = 0;
 	s1 = (char *) malloc(sizeof(char) * l + 1);
 	if (s1 == NULL)
-		return (__ft_free(scene, ALL, 1), NULL);
+		return (__ft_free(scene, 1), NULL);
 	while (i < l)
 	{
 		s1[i] = str[i];
@@ -84,7 +84,7 @@ char	**ft_split(t_scene *scene, char const *s, char c)
 	len = count_str(s, c);
 	all = (char **)malloc(sizeof(char *) * (len + 1));
 	if (all == NULL)
-		return (__ft_free(scene, ALL, 1), NULL);
+		return (__ft_free(scene, 1), NULL);
 	while (i < len)
 	{
 		size += start(s + size, c);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/14 19:22:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:40:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 // -------------------------  libft_utils  ----------------------------- //
 
 char		**ft_split(t_scene *scene, char const *s, char c);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 double		ft_atof(char *str);
-int			ft_strlen(char *str);
+int			ft_strlen(const char *str);
 int			lengh(char **str);
 int			ft_isdigit(int c);
 double		degree_to_rad(double degree);
@@ -111,9 +111,6 @@ t_tuple		reflect(t_tuple in, t_tuple normal);
 t_tuple		point(double x, double y, double z);
 t_tuple		vector(double x, double y, double z);
 t_color		color(double r, double g, double b);
-t_sphere	*get_sphere(t_sphere *sp, int id);
-t_plane		*get_plane(t_plane *pl, int id);
-t_cylinder	*get_cylinder(t_cylinder *cy, int id);
 
 // -------------------------  rays  ----------------------------- //
 

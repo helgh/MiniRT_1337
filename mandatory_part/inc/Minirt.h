@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:46:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:39:26 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@
 // -------------------------  libft_utils  ----------------------------- //
 
 char		**ft_split(t_scene *scene, char const *s, char c);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 double		ft_atof(char *str);
+int			ft_strlen(const char *str);
 int			lengh(char **str);
 int			ft_isdigit(int c);
 double		degree_to_rad(double degree);
@@ -101,9 +102,6 @@ double		magnitude(t_tuple v);
 t_tuple		point(double x, double y, double z);
 t_tuple		vector(double x, double y, double z);
 t_color		color(double r, double g, double b);
-t_sphere	*get_sphere(t_sphere *sp, int id);
-t_plane		*get_plane(t_plane *pl, int id);
-t_cylinder	*get_cylinder(t_cylinder *cy, int id);
 
 // -------------------------  rays  ----------------------------- //
 
@@ -114,11 +112,11 @@ t_tuple		normal_at(t_obj_draw obj, t_tuple poin, int op);
 
 // -------------------------  ft_malloc  ----------------------------- //
 
-void		*ft_malloc(t_scene *scene, size_t size, bool flag);
+void		*ft_malloc(t_scene *scene, size_t size);
 
 // -------------------------  error_free  ----------------------------- //
 
-void		__ft_free(t_scene *scene, int flag, int exit_status);
+void		__ft_free(t_scene *scene, int exit_status);
 void		print_scene_err(t_scene *scene, char *msg);
 void		_ft_free_all(t_leaks *heap);
 void		_ft_free_part(t_scene *scene);
@@ -129,6 +127,8 @@ double		**free_matrix(double **matrix);
 
 double		**identity_matrix(t_scene *scene);
 double		**inverse(t_scene *scene, double **a);
+double		det(t_scene *scene, double **a);
+double		cofactor(t_scene *scene, double **a, int row, int col);
 t_tuple		mult_mat_point(double **mat, t_tuple point);
 double		**mult_matrix(t_scene *scene, double **a, double **b);
 double		**_get_trans_rot(t_scene *scene, t_tuple target);

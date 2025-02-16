@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/14 19:46:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:59:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	add_cy_list(t_scene *scene, t_cylinder *cy)
 {
-	t_cylinder	*cylinder;
+	static t_cylinder	*cylinder;
 
-	cylinder = scene->cylinder;
-	while (cylinder->next)
+	if (!cylinder)
+	{
+		cylinder = scene->cylinder;
+		cylinder->next = cy;
 		cylinder = cylinder->next;
-	cylinder->next = cy;
+	}
+	else
+	{
+		cylinder->next = cy;
+		cylinder = cylinder->next;
+	}
 }
 
 void	cylinder_compenent(t_scene *scene)
@@ -61,12 +68,12 @@ void	parse_cylinder(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_CY_1);
 	if (valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);
-	cylinder = ft_malloc(scene, sizeof(t_cylinder), false);
+	cylinder = ft_malloc(scene, sizeof(t_cylinder));
 	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);
 	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
 	if (magnitude(*cylinder->normal_v) != 1.0)
 	{
-		write(2, NORMAL, ft_strlen(NORMAL));
+		write(2, NORMAL_CY, ft_strlen(NORMAL_CY));
 		*cylinder->normal_v = normal(*cylinder->normal_v);
 	}
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);

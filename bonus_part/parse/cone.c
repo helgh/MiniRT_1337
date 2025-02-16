@@ -6,25 +6,32 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 17:33:06 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:33:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-static void	add_cone_list(t_scene *scene, t_cone *cone)
+static void	add_cone_list(t_scene *scene, t_cone *co)
 {
-	t_cone	*co;
+	static t_cone	*cone;
 
-	co = scene->cone;
-	while (co->next)
-		co = co->next;
-	co->next = cone;
+	if (!cone)
+	{
+		cone = scene->cone;
+		cone->next = co;
+		cone = cone->next;
+	}
+	else
+	{
+		cone->next = co;
+		cone = cone->next;
+	}
 }
 
 void	cone_compenent(t_scene *scene)
 {
-	t_cone	*cone;
+	t_cone		*cone;
 	t_tmp_heap	*tmp;
 	int			i;
 
@@ -53,7 +60,7 @@ void	cone_compenent(t_scene *scene)
 
 void	parse_cone(t_scene *scene, char **line)
 {
-	t_cone	*cone;
+	t_cone		*cone;
 	int			len;
 
 	len = lengh(line);

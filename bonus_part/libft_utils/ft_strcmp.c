@@ -6,13 +6,13 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 21:59:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:16:27 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
 	int	i;
 

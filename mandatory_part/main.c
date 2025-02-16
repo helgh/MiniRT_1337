@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/14 19:42:34 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:58:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	check_extention(const char *str)
 	i = -1;
 	extention = (const char *) ".rt";
 	fd = open(str, O_RDONLY);
-	if (!strncmp(str + (strlen(str) - 3), extention, (unsigned long) 3))
+	if (!ft_strcmp(str + (ft_strlen(str) - 3), extention))
 	{
 		if (fd < 0)
-			return (write(2, "No such file\n", 14), 1);
+			return (write(2, OPEN_FILE_ERR, ft_strlen(OPEN_FILE_ERR)), 1);
 		return (close(fd), EXIT_SUCCESS);
 	}
 	return (close(fd), write(2, "invalid extention\n", 19), EXIT_FAILURE);

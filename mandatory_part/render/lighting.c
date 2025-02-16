@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 18:02:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:50:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 		return (normal(world_vec));
 	}
 	else if (op == PLANE)
-		return (obj.normal_v);
+		return (*obj.pl->normal_v);
 	obj_p = mult_mat_point(obj.cy->inv_trans, poin);
 	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
 	if (dis < 1 && obj_p.y >= obj.cy->max_min - EPSILON)

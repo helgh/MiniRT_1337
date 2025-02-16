@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:09:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:28:58 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:03:58 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,5 @@ void	print_scene_err(t_scene *scene, char *msg)
 	write(2, "Error\n", 7);
 	while (msg[++i])
 		write(2, &msg[i], 1);
-	__ft_free(scene, ALL, EXIT_FAILURE);
+	__ft_free(scene, EXIT_FAILURE);
 }

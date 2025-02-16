@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 18:15:06 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:44:42 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static t_color	_color_pl_or_checker(t_obj_draw *obj)
 {
 	t_color	color;
 	t_tuple	obj_space;
-	t_tuple	world_space;
 	double	scal;
 	int		div;
 
@@ -48,10 +47,7 @@ static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 	if (op == SPHERE)
 		obj->sp = scene->sect->sp;
 	else if (op == PLANE)
-	{
 		obj->pl = scene->sect->pl;
-		obj->normal_v = *obj->pl->normal_v;
-	}
 	else if (op == CYLINDER)
 		obj->cy = scene->sect->cy;
 	else
@@ -72,14 +68,7 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 	t_obj_draw	obj;
 	t_color		color;
 
-	if (object == SPHERE)
-		prepare_compute(scene, &obj, ray, SPHERE);
-	else if (object == PLANE)
-		prepare_compute(scene, &obj, ray, PLANE);
-	else if (object == CYLINDER)
-		prepare_compute(scene, &obj, ray, CYLINDER);
-	else
-		prepare_compute(scene, &obj, ray, CONE);
+	prepare_compute(scene, &obj, ray, object);
 	if (object == SPHERE)
 		color = *obj.sp->color;
 	else if (object == PLANE)

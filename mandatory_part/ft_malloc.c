@@ -6,15 +6,14 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 18:46:37 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:04:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "inc/Minirt.h"
 
-void	__ft_free(t_scene *scene, int flag, int exit_status)
+void	__ft_free(t_scene *scene, int exit_status)
 {
-	(void) flag;
 	(void) exit_status;
 	_ft_free_part(scene);
 	_ft_free_all(scene->heap);
@@ -25,7 +24,7 @@ void	__ft_free(t_scene *scene, int flag, int exit_status)
 	exit(exit_status);
 }
 
-static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
+static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap)
 {
 	static t_leaks	*head;
 	static t_leaks	*tail;
@@ -37,7 +36,6 @@ static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
 	new->address = for_leaks;
 	new->_struct = new;
 	new->next = NULL;
-	new->is_free = flag;
 	if (!*heap)
 	{
 		*heap = new;
@@ -52,14 +50,14 @@ static t_leaks	*leaks_collector(void *for_leaks, t_leaks **heap, bool flag)
 	return (new);
 }
 
-void	*ft_malloc(t_scene *scene, size_t size, bool flag)
+void	*ft_malloc(t_scene *scene, size_t size)
 {
 	void	*new;
 
 	new = malloc (size);
 	if (!new)
 		return (print_scene_err(scene, F_MALL), NULL);
-	if (!leaks_collector(new, &scene->heap, flag))
+	if (!leaks_collector(new, &scene->heap))
 		return (free(new), print_scene_err(scene, F_MALL), NULL);
 	return (new);
 }

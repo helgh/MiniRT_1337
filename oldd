@@ -4,9 +4,9 @@ CC = cc
 
 C_FLAGS = -Wall -Wextra -Werror
 
-MLX = -lmlx -framework OpenGL -framework Appkit
+FLAG_MLX = -lmlx -framework OpenGL -framework Appkit
 
-INC = $(addprefix mandatory_part/inc/, Minirt.h macros.h struct.h)
+INC = $(addprefix mandatory_part/inc/, minirt.h macros.h struct.h)
 
 SOURCE = $(addprefix mandatory_part/, main.c error_free.c ft_malloc.c) \
 			$(addprefix mandatory_part/libft_utils/, ft_atof.c ft_strlen.c ft_split.c ft_strcmp.c \
@@ -21,8 +21,7 @@ SOURCE = $(addprefix mandatory_part/, main.c error_free.c ft_malloc.c) \
 						rotation.c transformation.c transpose_matrix.c) \
 			$(addprefix mandatory_part/math/, color_scal.c op_color.c op_tuple.c \
 						tuple_scal.c op_vector.c set_get.c)
-RM			= rm -rf
-
+					
 OBJ_SRC = $(SOURCE:.c=.o)
 
 all: $(NAME)
@@ -30,13 +29,13 @@ all: $(NAME)
 $(NAME): $(OBJ_SRC)
 	$(CC) $(FLAG) $^ $(MLX) -o $@
 
-%.o: %.c $(HEADER)
+%.o: %.c $(INC)
 	$(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:
-	@$(RM) $(OBJ_SRC)
+	rm -f $(OBJ_SRC)
 
 fclean: clean
-	@$(RM) $(NAME)
+	rm -f $(NAME)
 
 re: fclean all

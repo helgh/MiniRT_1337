@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 17:35:35 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:23:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ static int	check_extention(const char *str)
 	i = -1;
 	extention = (const char *) ".rt";
 	fd = open(str, O_RDONLY);
-	if (!strncmp(str + (strlen(str) - 3), extention, (unsigned long) 3))
+	if (!ft_strcmp(str + (ft_strlen(str) - 3), extention))
 	{
 		if (fd < 0)
-			return (write(2, "No such file\n", 14), 1);
+			return (write(2, OPEN_FILE_ERR, ft_strlen(OPEN_FILE_ERR)), 1);
 		return (close(fd), EXIT_SUCCESS);
 	}
 	return (close(fd), write(2, "invalid extention\n", 19), EXIT_FAILURE);
@@ -66,10 +66,11 @@ int	main(int ac, char **av)
 
 	scene = init_struct();
 	if (!scene)
-		return (write(2, "Allocation failed!\n", \
-			strlen("Allocation failed")), 1);
+		return (write(2, F_MALL, \
+			strlen(F_MALL)), 1);
 	if (ac != 2)
-		return (free(scene), write(2, "Invalid argument\n", \
+		return (free(scene->tmp_heap), free(scene), \
+			write(2, "Invalid argument\n", \
 			strlen("Invalid argument\n")), 1);
 	if (check_extention(av[1]))
 		return (free(scene->tmp_heap), free(scene), 1);

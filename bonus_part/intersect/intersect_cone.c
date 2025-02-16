@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 18:30:36 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:18:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ static double	discriminant_cone(t_ray *ray, double *arr)
 		(2.0 * ray->origin_p.z * ray->direction_v.z);
 	arr[2] = pow(ray->origin_p.x, 2) - (pow(ray->origin_p.y, 2) + \
 		pow(ray->origin_p.z, 2));
-	// if (arr[0] == 0.0 && arr[1] == 0.0)
-	// 	return (-1);
 	discriminant = pow(arr[1], 2.0) - (4.0 * arr[0] * arr[2]);
 	return (discriminant);
 }

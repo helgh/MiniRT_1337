@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 16:20:33 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/14 21:14:08 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 # define BUFFER_SIZE 40
 
-# define WIDTH 1000
-# define HEIGHT 600
+# define WIDTH 1600
+# define HEIGHT 1000
 
 # define ALL 1
 # define PART 2
@@ -48,8 +48,8 @@
 # define DIV 4
 # define OPP 5
 
+# define OPEN_FILE_ERR "  Failed to open file\n"
 # define F_MALL "  Allocation failed\n"
-# define NORMAL "  Vector not normalized\n"
 # define BAD_TYPE "  Bad type of element in the scene\n"
 # define REP_TYPE "  Elements defined by capital letter can \
 							 only be declared once in the scene\n"
@@ -78,7 +78,7 @@
 # define ERR_C_2 "  Normalized vector of element 'C'\
 						 in the scene out of range [-1.0,1.0]\n"
 # define ERR_C_3 "  FOV of element 'A' in the scene out of range [0-180]\n"
-# define OPEN_FILE_ERR "  Failed to open file\n"
+# define NORMAL_C "  Vector not normalized for element 'C'\n"
 
 /*------------------------- err light ---------------------------*/
 
@@ -98,6 +98,7 @@
 # define ERR_PL_2 "  Normalized vector of element 'pl'\
 						 in the scene out of range [-1.0,1.0]\n"
 # define ERR_PL_3 "  R.G.B for element 'pl' in the scene out of range [0-255]\n"
+# define NORMAL_PL "  Vector not normalized for element 'pl'\n"
 
 /*------------------------- err cylinder ---------------------------*/
 
@@ -106,5 +107,6 @@
 						 in the scene out of range [-1.0,1.0]\n"
 # define ERR_CY_3 "  R.G.B for element 'cy' in the\
 						 scene out of range [0-255]\n"
+# define NORMAL_CY "  Vector not normalized for element 'cy'\n"
 
 #endif

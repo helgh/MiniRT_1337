@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/14 19:46:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,19 @@
 
 static void	add_pl_list(t_scene *scene, t_plane *pl)
 {
-	t_plane	*plane;
+	static t_plane	*plane;
 
-	plane = scene->plane;
-	while (plane->next)
+	if (!plane)
+	{
+		plane = scene->plane;
+		plane->next = pl;
 		plane = plane->next;
-	plane->next = pl;
+	}
+	else
+	{
+		plane->next = pl;
+		plane = plane->next;
+	}
 }
 
 void	plane_compenent(t_scene *scene)
@@ -57,12 +64,12 @@ void	parse_plane(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_PL_1);
 	if (len == 5 && strcmp(line[len - 1], "\n"))
 		print_scene_err(scene, ERR_PL_1);
-	plane = ft_malloc(scene, sizeof(t_plane), false);
+	plane = ft_malloc(scene, sizeof(t_plane));
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
 	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
 	if (magnitude(*plane->normal_v) != 1.0)
 	{
-		write(2, NORMAL, ft_strlen(NORMAL));
+		write(2, NORMAL_PL, ft_strlen(NORMAL_PL));
 		*plane->normal_v = normal(*plane->normal_v);
 	}
 	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);

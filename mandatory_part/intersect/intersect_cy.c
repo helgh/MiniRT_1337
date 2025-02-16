@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:09:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 16:49:35 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:48 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray)
 	double		arr[3];
 
 	new_ray = transform_ray(ray, cy->inv_trans);
-	sec = ft_malloc(scene, sizeof(t_intersect), true);
+	sec = ft_malloc(scene, sizeof(t_intersect));
 	dis = discriminant_cy(&new_ray, arr);
 	if (dis < 0.0)
 		return (NULL);

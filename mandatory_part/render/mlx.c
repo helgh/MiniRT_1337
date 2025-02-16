@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:47:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 19:33:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:06:59 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 static int	handle_event(int keycode, t_scene *scene)
 {
 	if (keycode == 53)
-		__ft_free(scene, ALL, 0);
+	{
+		mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
+		mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
+		__ft_free(scene, 0);
+	}
 	return (0);
 }
 
 static int	close_window(t_scene *scene)
 {
-	__ft_free(scene, ALL, 0);
+	mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
+	mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
+	__ft_free(scene, 0);
 	return (0);
 }
 
@@ -30,6 +36,9 @@ void	render(t_scene *scene)
 	t_mlx	*m;
 
 	m = malloc(sizeof(t_mlx));
+	if (!m)
+		print_scene_err(scene, F_MALL);
+	scene->mlx = m;
 	m->mlx = mlx_init();
 	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "miniRT");
 	m->mlx_img = mlx_new_image(m->mlx, WIDTH, HEIGHT);

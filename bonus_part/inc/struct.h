@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 17:38:30 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:21:54 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ typedef struct s_intersect
 	t_sphere			*sp;
 	t_plane				*pl;
 	t_cylinder			*cy;
-	t_cylinder			*cone;
+	t_cone				*cone;
 	struct s_intersect	*next;
 }						t_intersect;
 
@@ -183,7 +183,7 @@ typedef struct s_obj_draw
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;
-	t_cylinder	*cone;
+	t_cone		*cone;
 	t_tuple		position;
 	t_tuple		ov_p;
 	t_tuple		eye_v;

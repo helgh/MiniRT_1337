@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 18:18:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:20:34 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
 static t_intersect	*sec_cone(t_scene *scene, t_ray *ray)
 {
 	t_intersect	*tmp;
-	t_cylinder	*cone;
+	t_cone		*cone;
 	t_intersect	*send;
 	bool		flag;
 
@@ -150,7 +150,7 @@ void	intersect_world(t_scene *scene, t_ray *ray)
 	if (scene->cylinder)
 		sec_cy = sec_cylinders(scene, ray);
 	if (scene->cone)
-		sec_cy = sec_cone(scene, ray);
+		sec_cones = sec_cone(scene, ray);
 	if (sec_sp)
 		secs[++i] = sec_sp;
 	if (sec_pl)
@@ -158,7 +158,7 @@ void	intersect_world(t_scene *scene, t_ray *ray)
 	if (sec_cy)
 		secs[++i] = sec_cy;
 	if (sec_cones)
-		secs[++i] = sec_cone;
+		secs[++i] = sec_cones;
 	if (i >= 0)
 		scene->sect = hit(secs, i);
 }

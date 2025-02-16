@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 17:07:52 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:21 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:59 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray)
 	dis = discriminant(&new_ray, arr);
 	if (dis < 0)
 		return (NULL);
-	sec = ft_malloc(scene, sizeof(t_intersect), true);
+	sec = ft_malloc(scene, sizeof(t_intersect));
 	sec->type = SPHERE;
 	sec->id = sp->id;
 	sec->next = NULL;

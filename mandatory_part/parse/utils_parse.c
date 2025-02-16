@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:37:23 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:55:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:33 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_color	*_get_color(t_scene *scene, char *line)
 
 	tmp = scene->tmp_heap;
 	tmp->split = ft_split(scene, line, ',');
-	color = ft_malloc(scene, sizeof(t_color), false);
+	color = ft_malloc(scene, sizeof(t_color));
 	color->r = ft_atof(tmp->split[0]) / 255.0;
 	color->g = ft_atof(tmp->split[1]) / 255.0;
 	color->b = ft_atof(tmp->split[2]) / 255.0;
@@ -39,11 +39,13 @@ void	check_color(t_scene *scene, char *str, char *err1, char *err2)
 	tmp = scene->tmp_heap;
 	tmp->split = ft_split(scene, str, ',');
 	len = lengh(tmp->split);
-	if (len != 3 && len != 4)
+	if (len != 3)
 		print_scene_err(scene, err1);
 	while (tmp->split[++s])
 	{
 		i = -1;
+		if (tmp->split[s][0] == 0 || tmp->split[s][0] == 10)
+			print_scene_err(scene, err1);
 		while (ft_isdigit(tmp->split[s][++i]))
 			;
 		if (tmp->split[s][i] && tmp->split[s][i] != 10)
@@ -63,6 +65,8 @@ int	valid_float(char *str, bool checker)
 	flag = 0;
 	if (checker == true && str[0] == 45)
 		i++;
+	if (*str == 0)
+		return (1);
 	while (str[++i])
 	{
 		if (!ft_isdigit(str[0]) && checker == false)
@@ -92,7 +96,9 @@ t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1)
 			print_scene_err(scene, err1);
 		cord[i] = ft_atof(tmp->split[i]);
 	}
-	normal_v = ft_malloc(scene, sizeof(t_tuple), true);
+	if (i != 3)
+		print_scene_err(scene, err1);
+	normal_v = ft_malloc(scene, sizeof(t_tuple));
 	normal_v->x = cord[0];
 	normal_v->y = cord[1];
 	normal_v->z = cord[2];
@@ -117,7 +123,9 @@ t_tuple	*_get_position(t_scene *scene, char *line, char *error)
 			print_scene_err(scene, error);
 		cord[i] = ft_atof(tmp->split[i]);
 	}
-	pos = ft_malloc(scene, sizeof(t_tuple), true);
+	if (i != 3)
+		print_scene_err(scene, error);
+	pos = ft_malloc(scene, sizeof(t_tuple));
 	pos->x = cord[0];
 	pos->y = cord[1];
 	pos->z = cord[2];
