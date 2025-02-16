@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:44:42 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/16 21:04:42 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static t_color	_color_pl_or_checker(t_obj_draw *obj)
 	int		div;
 
 	color = *obj->pl->color;
-	scal = obj->pl->checker->ratio;
 	if (!obj->pl->checker)
 		return (color);
+	scal = obj->pl->checker->ratio;
 	obj_space = mult_mat_point(obj->pl->inv_trans, obj->position);
 	div = (int) (fabs(floor(obj_space.x / scal) + floor(obj_space.z / scal)));
 	div %= 2;
