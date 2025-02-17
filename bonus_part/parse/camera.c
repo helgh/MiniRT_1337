@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:27:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:46:27 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:35:21 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ static void	camera_compenent(t_scene *scene)
 	up = vector(0.0, 1.0, 0.0);
 	tmp = scene->tmp_heap;
 	cam = scene->camera;
-	if (magnitude(*cam->normal_v) != 1.0)
-		*cam->normal_v = normal(*cam->normal_v);
 	tmp->all = view_transform(scene, *cam->pos, *cam->normal_v, up);
 	cam->inv_transform = inverse(scene, tmp->all);
 	tmp->all = free_matrix(tmp->all);
@@ -77,6 +75,8 @@ void	parse_camera(t_scene *scene, char **line)
 	camera->fov = degree_to_rad(_get_fov(scene, line[3]));
 	camera->pos = _get_position(scene, line[1], ERR_C_1);
 	camera->normal_v = _get_normal_v(scene, line[2], ERR_C_1);
+	if (magnitude(*camera->normal_v) != 1.0)
+		*camera->normal_v = normal(*camera->normal_v);
 	scene->camera = camera;
 	camera_compenent(scene);
 }

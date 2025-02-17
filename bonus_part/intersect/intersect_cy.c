@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:09:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 16:44:30 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:36:56 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray)
 	if (sec->point_sec_1 < EPSILON && sec->point_sec_2 < EPSILON)
 		return (NULL);
 	sec->type = CYLINDER;
-	sec->id = cy->id;
 	sec->next = NULL;
 	choise_point(sec);
 	return (sec);

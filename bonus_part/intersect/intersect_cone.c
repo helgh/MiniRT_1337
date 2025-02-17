@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 20:36:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:36:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray)
 	sec = ft_malloc(scene, sizeof(t_intersect), true);
 	dis = discriminant_cone(&new_ray, arr);
 	sec->type = CONE;
-	sec->id = cone->id;
 	sec->next = NULL;
 	if (arr[0] == 0.0)
 	{

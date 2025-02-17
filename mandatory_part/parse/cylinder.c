@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 18:59:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:37:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ void	cylinder_compenent(t_scene *scene)
 {
 	t_cylinder	*cy;
 	t_tmp_heap	*tmp;
-	int			i;
 
 	cy = scene->cylinder;
 	tmp = scene->tmp_heap;
-	i = 0;
 	while (cy)
 	{
-		cy->id = i;
 		tmp->rot = _get_trans_rot(scene, *cy->normal_v);
 		tmp->scal = scaling(scene, cy->radius, 1, cy->radius);
 		tmp->trans = translation(scene, cy->pos->x, cy->pos->y, cy->pos->z);
@@ -54,7 +51,6 @@ void	cylinder_compenent(t_scene *scene)
 		tmp->trans = free_matrix(tmp->trans);
 		cy->transpose_inv_matrix = transpose(scene, cy->inv_trans);
 		cy = cy->next;
-		i++;
 	}
 }
 

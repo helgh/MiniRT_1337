@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:28:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:00:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:38:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ void	sphere_compenent(t_scene *scene)
 {
 	t_sphere	*sphere;
 	t_tmp_heap	*tmp;
-	int			i;
 
-	i = 0;
 	tmp = scene->tmp_heap;
 	sphere = scene->sphere;
 	while (sphere)
 	{
-		sphere->id = i;
 		tmp->trans = translation(scene, sphere->pos->x, \
 			sphere->pos->y, sphere->pos->z);
 		tmp->scal = scaling(scene, sphere->radius, sphere->radius, \
@@ -52,7 +49,6 @@ void	sphere_compenent(t_scene *scene)
 		tmp->all = free_matrix(tmp->all);
 		sphere->transpose_inv_matrix = transpose(scene, sphere->inv_trans);
 		sphere = sphere->next;
-		i++;
 	}
 }
 

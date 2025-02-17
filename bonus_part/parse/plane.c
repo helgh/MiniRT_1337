@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:54:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:36:44 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,12 @@ void	plane_compenent(t_scene *scene)
 {
 	t_plane		*pl;
 	t_tmp_heap	*tmp;
-	int			i;
 
 	pl = scene->plane;
 	tmp = scene->tmp_heap;
 	i = 0;
 	while (pl)
 	{
-		pl->id = i;
 		tmp->scal = _get_trans_rot(scene, *pl->normal_v);
 		tmp->trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
 		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
@@ -63,7 +61,6 @@ void	plane_compenent(t_scene *scene)
 		tmp->all = free_matrix(tmp->all);
 		pl->transpose_inv_matrix = transpose(scene, pl->inv_trans);
 		pl = pl->next;
-		i++;
 	}
 }
 
