@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/24 17:07:52 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:21 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:43:09 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray)
 		return (NULL);
 	sec = ft_malloc(scene, sizeof(t_intersect), true);
 	sec->type = SPHERE;
-	sec->id = sp->id;
 	sec->next = NULL;
 	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
 	sec->point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);

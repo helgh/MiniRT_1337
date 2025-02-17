@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:33:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:41:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,11 @@ void	cone_compenent(t_scene *scene)
 {
 	t_cone		*cone;
 	t_tmp_heap	*tmp;
-	int			i;
 
 	cone = scene->cone;
 	tmp = scene->tmp_heap;
-	i = 0;
 	while (cone)
 	{
-		cone->id = i;
 		tmp->rot = _get_trans_rot(scene, *cone->normal_v);
 		tmp->scal = scaling(scene, cone->radius, 1, cone->radius);
 		tmp->trans = translation(scene, cone->pos->x, cone->pos->y, cone->pos->z);
@@ -54,7 +51,6 @@ void	cone_compenent(t_scene *scene)
 		tmp->trans = free_matrix(tmp->trans);
 		cone->transpose_inv_matrix = transpose(scene, cone->inv_trans);
 		cone = cone->next;
-		i++;
 	}
 }
 

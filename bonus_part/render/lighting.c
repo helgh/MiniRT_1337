@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 21:11:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:51:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static t_tuple normal_cone(t_obj_draw obj, t_tuple poin)
 		return (vector(0.0, -1.0, 0.0));
 	y = sqrt(dis);
 	if (obj_p.y > 0.0)
-		y = -1;
+		y = -y;
 	obj_p.y = y;
 	world_vec = mult_mat_point(obj.cone->transpose_inv_matrix, obj_p);
 	return (world_vec.w = 0, normal(world_vec));

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:21:54 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:43:50 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_camera
 
 typedef struct s_sphere
 {
-	int				id;
 	double			radius;
 	double			**inv_trans;
 	double			**transpose_inv_matrix;
@@ -120,7 +119,6 @@ typedef struct s_sphere
 
 typedef struct s_plane
 {
-	int				id;
 	void			*object;
 	double			**inv_trans;
 	double			**transpose_inv_matrix;
@@ -134,7 +132,6 @@ typedef struct s_plane
 
 typedef struct s_cylinder
 {
-	int					id;
 	void				*object;
 	double				radius;
 	double				**inv_trans;
@@ -148,7 +145,6 @@ typedef struct s_cylinder
 
 typedef struct s_cone
 {
-	int					id;
 	void				*object;
 	double				radius;
 	double				**inv_trans;
@@ -167,7 +163,6 @@ typedef struct s_intersect
 	void				*object;
 	double				t;
 	int					type;
-	int					id;
 	t_sphere			*sp;
 	t_plane				*pl;
 	t_cylinder			*cy;
