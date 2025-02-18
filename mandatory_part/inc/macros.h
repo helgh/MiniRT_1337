@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/17 18:45:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:42:56 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <fcntl.h>
 # include <string.h>
 # include <math.h>
+# include "/usr/local/include/mlx.h"
 
 # define BUFFER_SIZE 40
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 18:58:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:52:43 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ int	main(int ac, char **av)
 	scene = init_struct();
 	if (!scene)
 		return (write(2, F_MALL, \
-			strlen(F_MALL)), 1);
+			ft_strlen(F_MALL)), 1);
 	if (ac != 2)
 		return (free(scene->tmp_heap), free(scene), \
 			write(2, "Invalid argument\n", \
-			strlen("Invalid argument\n")), 1);
+			ft_strlen("Invalid argument\n")), 1);
 	if (check_extention(av[1]))
 		return (free(scene->tmp_heap), free(scene), 1);
 	parse_part(scene, av[1]);

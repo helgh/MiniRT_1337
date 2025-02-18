@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:25:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 18:59:12 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:51:18 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	parse_ab_light(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_A);
 	if (len != 3 && len != 4)
 		print_scene_err(scene, ERR_A_1);
-	if ((len == 4 && strcmp(line[len - 1], "\n"))
+	if ((len == 4 && ft_strcmp(line[len - 1], "\n"))
 		|| valid_float(line[1], false))
 		print_scene_err(scene, ERR_A_1);
 	scene->ambient = ft_malloc(scene, sizeof(t_am_light));

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:27:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 18:59:47 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/18 20:51:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	parse_camera(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_C);
 	if (len != 4 && len != 5)
 		print_scene_err(scene, ERR_C_1);
-	if ((len == 5 && strcmp(line[len - 1], "\n")))
+	if ((len == 5 && ft_strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_C_1);
 	camera = ft_malloc(scene, sizeof(t_camera));
 	camera->fov = degree_to_rad(_get_fov(scene, line[3]));

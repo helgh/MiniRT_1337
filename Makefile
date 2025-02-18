@@ -2,13 +2,13 @@ NAME = miniRT
 
 CC = cc
 
-C_FLAGS = -Wall -Wextra -Werror
+C_FLAGS = -Wall -Wextra -Werror -fsanitize=address
 
 MLX = -lmlx -framework OpenGL -framework Appkit
 
 INC = $(addprefix mandatory_part/inc/, Minirt.h macros.h struct.h)
 
-INC_BONUS = $(addprefix bonus_part/inc/, Minirt_bonus.h macros_bonus.h struct_bonus.h)
+# INC_BONUS = $(addprefix bonus_part/inc/, Minirt_bonus.h macros_bonus.h struct_bonus.h)
 
 SOURCE = $(addprefix mandatory_part/, main.c error_free.c ft_malloc.c) \
 			$(addprefix mandatory_part/libft_utils/, ft_atof.c ft_strlen.c ft_split.c ft_strcmp.c \
@@ -48,7 +48,7 @@ OBJ_SRC = $(SOURCE:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJ_SRC)
-	$(CC) $(FLAG) $^ $(MLX) -o $@
+	$(CC) $(C_FLAGS) $(OBJ_SRC) $(MLX) -o $(NAME)
 
 # bonus: $(NAME) $(OBJ_SRC_BONUS)
 # 	@echo "executable is done for bonus"
@@ -60,7 +60,7 @@ $(NAME): $(OBJ_SRC)
 	$(CC) $(C_FLAGS) -c -o $@ $<
 
 clean:
-	$(RM) $(OBJ_SRC) $(OBJ_SRC_BONUS)
+	$(RM) $(OBJ_SRC)
 
 fclean: clean
 	$(RM) $(NAME)
