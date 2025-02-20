@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:39:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:06:33 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ double		**transpose(t_scene *scene, double **a);
 
 // -------------------------  get_next_line  ----------------------------- //
 
-char		*get_next_line(int fd);
-char		*mul_str(char *all, char *str);
-char		*copy_line(char *str);
-char		*save_free(char *str, char *p);
+char		*get_next_line(t_scene *scene, int fd);
+char		*mul_str(t_scene *scene, char *all, char *str);
+char		*copy_line(t_scene *scene, char *str);
+char		*save_free(t_scene *scene, char *str, char *p);
 char		*find_leak(char *all);
 
 #endif

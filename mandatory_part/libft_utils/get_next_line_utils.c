@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:43:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:07:36 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	leng(char *str)
 	return (i);
 }
 
-char	*save_free(char *str, char *p)
+char	*save_free(t_scene *scene, char *str, char *p)
 {
 	int		i;
 	int		c;
@@ -41,7 +41,7 @@ char	*save_free(char *str, char *p)
 		c++;
 	s = malloc(sizeof(char) * ((i - c) + 1));
 	if (s == NULL)
-		return (str = find_leak(str));
+		return (print_scene_err(scene, F_MALL), str = find_leak(str));
 	part = s;
 	while (c++ < i)
 		*(part)++ = *(str + c - 1);
@@ -52,7 +52,7 @@ char	*save_free(char *str, char *p)
 	return (s);
 }
 
-char	*copy_line(char *str)
+char	*copy_line(t_scene *scene, char *str)
 {
 	char	*s;
 	char	*p;
@@ -67,7 +67,7 @@ char	*copy_line(char *str)
 		i++;
 	s = malloc(sizeof(char) * (i + 1));
 	if (s == NULL)
-		return (str = find_leak(str));
+		return (print_scene_err(scene, F_MALL), str = find_leak(str));
 	p = s;
 	while (i-- > 0)
 		*(s)++ = *(str)++;
@@ -75,7 +75,7 @@ char	*copy_line(char *str)
 	return (p);
 }
 
-char	*mul_str(char *all, char *str)
+char	*mul_str(t_scene *scene, char *all, char *str)
 {
 	char	*s;
 	char	*al;
@@ -87,7 +87,7 @@ char	*mul_str(char *all, char *str)
 		return (NULL);
 	s = malloc(sizeof(char) * (i + leng(str) + 1));
 	if (s == NULL)
-		return (all = find_leak(all));
+		return (print_scene_err(scene, F_MALL), all = find_leak(all));
 	part = s;
 	al = all;
 	if (i != 0)

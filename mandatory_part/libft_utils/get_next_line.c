@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:43:25 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/06 17:29:59 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:07:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	check_new_line(char *all)
 	return (0);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line(t_scene *scene, int fd)
 {
 	static char	*all;
 	char		*part;
@@ -43,7 +43,7 @@ char	*get_next_line(int fd)
 		return (all = find_leak(all));
 	part = malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (part == NULL)
-		return (all = find_leak(all));
+		return (print_scene_err(scene, F_MALL), all = find_leak(all));
 	i = 1;
 	while (i != 0)
 	{
@@ -53,10 +53,10 @@ char	*get_next_line(int fd)
 		if (i == -1)
 			return (free(part), all = find_leak(all));
 		part[i] = 0;
-		all = mul_str(all, part);
+		all = mul_str(scene, all, part);
 	}
 	free(part);
-	part = copy_line(all);
-	all = save_free(all, part);
+	part = copy_line(scene, all);
+	all = save_free(scene, all, part);
 	return (part);
 }

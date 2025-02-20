@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/15 14:56:10 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:05:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	parse_scene(t_scene *scene, char *str)
 		print_scene_err(scene, OPEN_FILE_ERR);
 	while (1)
 	{
-		scene->tmp_heap->line = get_next_line(scene->tmp_heap->fd);
+		scene->tmp_heap->line = get_next_line(scene, scene->tmp_heap->fd);
 		if (!scene->tmp_heap->line)
 			break ;
 		if (ft_strcmp(scene->tmp_heap->line, "\n"))
