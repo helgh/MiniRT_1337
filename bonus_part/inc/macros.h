@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/17 19:24:58 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:25:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 
 # define BUFFER_SIZE 40
 
-# define WIDTH 1600
-# define HEIGHT 900
+# define WIDTH 1000
+# define HEIGHT 600
 
 # define ALL 1
 # define PART 2
