@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/17 19:48:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:13:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ void		cylinder_compenent(t_scene *scene);
 
 void		parse_cone(t_scene *scene, char **line);
 void		cone_compenent(t_scene *scene);
+
+// -------------------------  texture_parse  ----------------------------- //
+
+char		*texture_parse(t_scene *scene, char **line, char *msg);
+t_texture	*get_image_texture(t_scene *scene, char *path);
 
 // -------------------------  utils_parse  ----------------------------- //
 

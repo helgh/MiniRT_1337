@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 16:25:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:46:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@
 # define OPP 5
 
 # define F_MALL "  Allocation failed\n"
+# define BAD_FILE_TEXTURE "  Failed function 'mlx_xpm_file_to_image'\n"
 # define NORMAL "  Vector not normalized\n"
 # define BAD_TYPE "  Bad type of element in the scene\n"
 # define REP_TYPE "  Elements defined by capital letter can \

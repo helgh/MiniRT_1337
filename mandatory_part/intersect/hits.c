@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:07:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:13:24 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:03:47 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,17 @@ t_intersect	*hit(t_intersect **secs, int index)
 	int			i;
 	t_intersect	*send;
 
-	i = -1;
+	i = 0;
 	send = secs[0];
 	while (++i <= index)
 	{
 		if (send->t > secs[i]->t)
+		{
+			free(send);
 			send = secs[i];
+		}
+		else
+			free(secs[i]);
 	}
 	return (send);
 }

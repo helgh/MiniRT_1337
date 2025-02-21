@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:48:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:08:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,18 @@ static t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
 	t_intersect	*tmp;
 	t_sphere	*sp;
 	t_intersect	*send;
-	bool		flag;
 
-	flag = true;
 	send = NULL;
 	sp = scene->sphere;
 	while (sp)
 	{
 		tmp = intersect_sphere(scene, sp, ray);
-		if (tmp && flag == true)
-		{
-			flag = false;
+		if (!send)
 			send = tmp;
-			send->sp = sp;
-		}
 		else if (tmp && tmp->t < send->t)
 		{
+			free(send);
 			send = tmp;
-			send->sp = sp;
 		}
 		sp = sp->next;
 	}
@@ -46,24 +40,18 @@ static t_intersect	*sec_planes(t_scene *scene, t_ray *ray)
 	t_intersect	*tmp;
 	t_plane		*pl;
 	t_intersect	*send;
-	bool		flag;
 
-	flag = true;
 	send = NULL;
 	pl = scene->plane;
 	while (pl)
 	{
 		tmp = intersect_plane(scene, pl, ray);
-		if (tmp && flag == true)
-		{
-			flag = false;
+		if (!send)
 			send = tmp;
-			send->pl = pl;
-		}
 		else if (tmp && tmp->t < send->t)
 		{
+			free(send);
 			send = tmp;
-			send->pl = pl;
 		}
 		pl = pl->next;
 	}
@@ -75,24 +63,18 @@ static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
 	t_intersect	*tmp;
 	t_cylinder	*cy;
 	t_intersect	*send;
-	bool		flag;
 
-	flag = true;
 	send = NULL;
 	cy = scene->cylinder;
 	while (cy)
 	{
 		tmp = intersect_cylinder(scene, cy, ray);
-		if (tmp && flag == true)
-		{
-			flag = false;
+		if (!send)
 			send = tmp;
-			send->cy = cy;
-		}
 		else if (tmp && tmp->t < send->t)
 		{
+			free(send);
 			send = tmp;
-			send->cy = cy;
 		}
 		cy = cy->next;
 	}
