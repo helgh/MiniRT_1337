@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:28:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 20:44:33 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:55:21 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ void	sphere_compenent(t_scene *scene)
 	sphere = scene->sphere;
 	while (sphere)
 	{
+		if (sphere->flag_text)
+			sphere->text = get_image_texture(scene, sphere->path);
 		tmp->trans = translation(scene, sphere->pos->x, \
 			sphere->pos->y, sphere->pos->z);
 		tmp->scal = scaling(scene, sphere->radius, sphere->radius, \
@@ -59,6 +61,7 @@ void	parse_sphere(t_scene *scene, char **line)
 	char		*path;
 
 	len = lengh(line);
+	path = NULL;
 	if (len != 4 && len != 5 && len != 6)
 		print_scene_err(scene, ERR_SP_1);
 	if (len == 6 || len == 5)
@@ -73,6 +76,7 @@ void	parse_sphere(t_scene *scene, char **line)
 	sphere->radius = ft_atof(line[2]) / 2.0;
 	if (path)
 		sphere->flag_text = true;
+	sphere->path = path;
 	sphere->next = NULL;
 	if (!scene->sphere)
 		scene->sphere = sphere;

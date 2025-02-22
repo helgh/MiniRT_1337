@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 20:38:14 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:52:48 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,32 @@
 
 t_texture	*get_image_texture(t_scene *scene, char *path)
 {
+	t_mlx		*mlx;
 	t_texture	*texture;
 
-	// printf("path = %s\n", path);
 	texture = ft_malloc(scene, sizeof(t_texture), true);
-	texture->texture = mlx_xpm_file_to_image(scene->mlx->mlx, path, \
-		texture->w, texture->h);
+	mlx = malloc(sizeof(t_mlx));
+	mlx->mlx = mlx_init();
+	texture->texture = mlx_xpm_file_to_image(mlx->mlx, path, \
+		&texture->w, &texture->h);
 	if (!texture->texture)
 	{
 		free(path);
 		print_scene_err(scene, BAD_FILE_TEXTURE);
 	}
-	free(path);
 	return (texture);
 }
 
-char	*check_path(t_scene *scene, char *path, char *msg)
+char	*check_path(t_scene *scene, char *path)
 {
 	int	i;
 
-	i = 0;
-	if (path[0] != '"')
-		print_scene_err(scene, msg);
-	while (path[++i] && path[i] != '"')
+	i = -1;
+	(void) scene;
+	while (path[++i] && path[i] != '\n')
 		;
-	if (path[i] == 0)
-		print_scene_err(scene, msg);
-	while (path[++i])
-	{
-		if (path[i] != 32 && path[i] != '\n')
-			print_scene_err(scene, msg);
-	}
+	if (path[i] == '\n')
+		path[i] = 0;
 	return (strdup((const char *) path));
 }
 
@@ -66,7 +61,7 @@ char	*texture_parse(t_scene *scene, char **line, char *msg)
 		if (lengh(scene->tmp_heap->split) != 2)
 			print_scene_err(scene, msg);
 		else
-			path = check_path(scene, scene->tmp_heap->split[1], msg);
+			path = check_path(scene, scene->tmp_heap->split[1]);
 	}
 	scene->tmp_heap->split = free_split(scene->tmp_heap->split);
 	return (path);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 20:44:54 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/22 20:59:09 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,7 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 
 	prepare_compute(scene, &obj, ray, object);
 	if (object == SPHERE)
-	{
-		// if (obj.sp->flag_text)
-		// 	obj.sp->text = get_image_texture(scene, obj.sp->path);
 		color = *obj.sp->color;
-	}
 	else if (object == PLANE)
 		color = _color_pl_or_checker(&obj);
 	else if (object == CYLINDER)

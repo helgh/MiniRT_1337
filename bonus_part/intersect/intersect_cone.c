@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 20:41:23 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:41:47 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray)
 		if (arr[1] == 0.0)
 			return (NULL);
 		return (sec->t = -arr[2] / (2.0 * arr[1]), sec);
-		printf("here\n");
 	}
 	if (dis < 0)
 		return (NULL);

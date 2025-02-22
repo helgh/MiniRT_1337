@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 20:20:20 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:17:58 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ typedef struct s_leaks
 typedef struct s_texture
 {
 	void	*texture;
-	int		*w;
-	int		*h;
+	int		w;
+	int		h;
 }				t_texture;	
 
 typedef struct s_tmp_heap
