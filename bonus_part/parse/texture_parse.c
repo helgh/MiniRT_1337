@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/22 20:52:48 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:27:07 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 t_texture	*get_image_texture(t_scene *scene, char *path)
 {
-	t_mlx		*mlx;
 	t_texture	*texture;
 
 	texture = ft_malloc(scene, sizeof(t_texture), true);
-	mlx = malloc(sizeof(t_mlx));
-	mlx->mlx = mlx_init();
-	texture->texture = mlx_xpm_file_to_image(mlx->mlx, path, \
+	texture->mlx = mlx_init();
+	texture->texture = mlx_xpm_file_to_image(texture->mlx, path, \
 		&texture->w, &texture->h);
 	if (!texture->texture)
 	{
 		free(path);
 		print_scene_err(scene, BAD_FILE_TEXTURE);
 	}
+	texture->data = mlx_get_data_addr(texture->texture, &texture->bpp, \
+		&texture->s_line, &texture->endian);
 	return (texture);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:51:57 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/21 15:47:42 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:40:12 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ void	check_shadow(t_scene *scene, t_obj_draw *obj)
 	direction = normal(v);
 	ray.origin_p = obj->position;
 	ray.direction_v = direction;
-	free(scene->sect);
 	intersect_world(scene, &ray);
 	if (scene->sect && (magn - scene->sect->t) >= EPSILON)
 		obj->shadow = true;
-	if (!scene->sect)
-		free(scene->sect);
 }

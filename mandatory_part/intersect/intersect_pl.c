@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/31 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/21 16:11:59 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:43:43 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ t_intersect	*intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray)
 	t = -new_ray.origin_p.y / new_ray.direction_v.y;
 	if (t < EPSILON)
 		return (NULL);
-	sec = malloc(sizeof(t_intersect));
-	if (!sec)
-		print_scene_err(scene, F_MALL);
+	sec = ft_malloc(scene, sizeof(t_intersect));
 	sec->t = t;
 	sec->type = PLANE;
 	sec->pl = pl;

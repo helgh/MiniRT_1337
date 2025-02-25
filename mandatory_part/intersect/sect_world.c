@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/21 16:08:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:38:35 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,7 @@ static t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
 		if (!send)
 			send = tmp;
 		else if (tmp && tmp->t < send->t)
-		{
-			free(send);
 			send = tmp;
-		}
 		sp = sp->next;
 	}
 	return (send);
@@ -49,10 +46,7 @@ static t_intersect	*sec_planes(t_scene *scene, t_ray *ray)
 		if (!send)
 			send = tmp;
 		else if (tmp && tmp->t < send->t)
-		{
-			free(send);
 			send = tmp;
-		}
 		pl = pl->next;
 	}
 	return (send);
@@ -72,10 +66,7 @@ static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
 		if (!send)
 			send = tmp;
 		else if (tmp && tmp->t < send->t)
-		{
-			free(send);
 			send = tmp;
-		}
 		cy = cy->next;
 	}
 	return (send);
