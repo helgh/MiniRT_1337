@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/22 23:06:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/28 00:12:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@
 # define ROTATE_Y 4
 # define ROTATE_Z 5
 # define EPSILON 0.00001
+
+# define M_U 1
+# define P_U 2
+# define M_V 3
+# define P_V 4
 
 # define MULT 1
 # define ADD 2

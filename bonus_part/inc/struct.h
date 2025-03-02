@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/23 16:21:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/02 17:46:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_sphere
 	double			**transpose_inv_matrix;
 	bool			flag_text;
 	char			*path;
+	t_checker		*checker;
 	t_texture		*text;
 	t_tuple			*pos;
 	t_color			*color;
@@ -141,6 +142,7 @@ typedef struct s_plane
 	double			**transpose_inv_matrix;
 	int				flag;
 	t_checker		*checker;
+	t_texture		*text;
 	t_tuple			*pos;
 	t_tuple			*normal_v;
 	t_color			*color;

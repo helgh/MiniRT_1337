@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/24 21:06:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/02/26 19:49:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,16 +80,14 @@ static t_tuple normal_cone(t_obj_draw obj, t_tuple poin)
 t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 {
 	t_tuple	obj_p;
-	t_tuple	obj_n;
 	t_tuple	world_vec;
 
 	if (op == SPHERE)
 	{
 		obj_p = mult_mat_point(obj.sp->inv_trans, poin);
-		obj_n = op_tuple(obj_p, point(0.0, 0.0, 0.0), SUB);
 		if (obj.sp->flag_text)
-			obj_n = _bump_mapping(obj, obj_p, obj_n);
-		world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, obj_n);
+			obj_p = _bump_mapping(obj, obj_p);
+		world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, obj_p);
 		world_vec.w = 0.0;
 		return (normal(world_vec));
 	}

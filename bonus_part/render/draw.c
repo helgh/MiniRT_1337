@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/25 17:02:21 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:22:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,48 +41,68 @@ static t_color	_color_pl_or_checker(t_obj_draw *obj)
 
 void	spherical_coordinates(t_obj_draw obj, t_tuple obj_p, double *u, double *v)
 {
-	*u = 0.5 + (atan2(obj_p.z, obj_p.x) / (2.0 * M_PI));
-	*v = 0.5 - (asin(obj_p.y) / M_PI);
-    *u = fmax(0.0, fmin(1.0, *u));
-    *v = fmax(0.0, fmin(1.0, *v));
+	double	theta;
+	double	phi;
+
+	theta = atan2(obj_p.z, obj_p.x);
+	phi = acos(obj_p.y);
+	*u = (theta + M_PI) / (2.0 * M_PI);
+	*v = (M_PI - phi) / M_PI;
+}
+static t_color	_color_sp_or_checker(t_obj_draw *obj)
+{
+	t_color	color;
+	t_tuple	obj_space;
+	double	u;
+	double	v;
+	int		u_tile;
+	int		v_tile;
+
+	color = *obj->sp->color;
+	if (!obj->sp->checker)
+		return (color);
+	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
+	normal(obj_space);
+	spherical_coordinates(*obj, obj_space, &u, &v);
+	u_tile = (int) (u * 15);
+	v_tile = (int) (v * 15);
+	if ((u_tile + v_tile) % 2 == 0)
+		return (color);
+	return (*obj->sp->checker->color);
 }
 
 double	get_height(t_obj_draw obj, double u, double v)
 {
-    int bump_x;
-    int bump_y;
-    double height_value;
+	int				bump_x;
+	int				bump_y;
+	int				index;
+	unsigned char	color;
+	double			f_heght;
 
-    bump_x = (int) floor(u * obj.sp->text->w - 1.0);
-    bump_y = (int) floor(v * obj.sp->text->h - 1.0);
-    bump_x = fmax(0, fmin(obj.sp->text->w - 1, bump_x));
-    bump_y = fmax(0, fmin(obj.sp->text->h - 1, bump_y));
-    height_value = bump_y * obj.sp->text->s_line + (bump_x * obj.sp->text->bpp / 8);
-	height_value /= 255.0;
-    height_value = fmax(0.0, fmin(1.0, height_value)); 
-    return (height_value);
+    bump_x = (int) round(u * obj.sp->text->w - 1);
+    bump_y = (int) round((1 - v) * obj.sp->text->h - 1);
+    index = (bump_y * obj.sp->text->s_line + bump_x * (obj.sp->text->bpp / 8));
+	color = obj.sp->text->data[index];
+	f_heght = 4.0 * (color / 255.0) - 1.0;
+    return (f_heght);
 }
 
-t_tuple	_bump_mapping(t_obj_draw obj, t_tuple obj_p, t_tuple obj_n)
+t_tuple	_bump_mapping(t_obj_draw obj, t_tuple obj_p)
 {
     t_tuple	new_normal_v;
-	t_tuple	tangent;
-	t_tuple	bitangent;
     double	u;
     double	v;
-	double	delta_u;
-	double	delta_v;
+	double	du;
+	double	dv;
 	double	height;
 
+	obj_p = normal(obj_p);
     spherical_coordinates(obj, obj_p, &u, &v);
 	height = get_height(obj, u, v);
-	delta_u = get_height(obj, u + 0.01, v) - height;
-	delta_v = get_height(obj, u, v + 0.01) - height;
-	tangent = vector(1.0, 0.0, delta_u);
-	bitangent = vector(0.0, 1.0, delta_v);
-	new_normal_v.x = obj_n.x + (delta_u * tangent.x + delta_v * bitangent.x);
-	new_normal_v.y = obj_n.y + (delta_u * tangent.y + delta_v * bitangent.y);
-	new_normal_v.z = obj_n.z + (delta_u * tangent.z + delta_v * bitangent.z);
+	new_normal_v.x = obj_p.x + height;
+	new_normal_v.y = obj_p.y + height;
+	new_normal_v.z = obj_p.z;
+	new_normal_v.w = 0;
     return (normal(new_normal_v));
 }
 
@@ -117,7 +137,7 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 
 	prepare_compute(scene, &obj, ray, object);
 	if (object == SPHERE)
-		color = *obj.sp->color;
+		color = _color_sp_or_checker(&obj);
 	else if (object == PLANE)
 		color = _color_pl_or_checker(&obj);
 	else if (object == CYLINDER)
