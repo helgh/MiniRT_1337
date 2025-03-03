@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/17 18:39:17 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:33:31 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ typedef struct s_obj_draw
 {
 	int			render;
 	bool		shadow;
-	bool		inside;
 	t_sphere	*sp;
 	t_plane		*pl;
 	t_cylinder	*cy;

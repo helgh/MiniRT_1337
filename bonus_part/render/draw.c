@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/02 18:22:19 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:43:03 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,19 @@ static t_color	_color_sp_or_checker(t_obj_draw *obj)
 	int		v_tile;
 
 	color = *obj->sp->color;
-	if (!obj->sp->checker)
-		return (color);
+	// if (!obj->sp->checker)
+	// 	return (color);
 	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
 	normal(obj_space);
 	spherical_coordinates(*obj, obj_space, &u, &v);
-	u_tile = (int) (u * 15);
-	v_tile = (int) (v * 15);
+	u_tile = (int) (u * 8);
+	v_tile = (int) (v * 8);
 	if ((u_tile + v_tile) % 2 == 0)
 		return (color);
-	return (*obj->sp->checker->color);
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	return (color);
 }
 
 double	get_height(t_obj_draw obj, double u, double v)
@@ -124,7 +127,7 @@ static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 	obj->normal_v = normal_at(*obj, obj->position, op);
 	obj->inside = true;
 	obj->shadow = false;
-	if (dot_product(obj->normal_v, obj->eye_v) <= 0.0)
+	if (dot_product(obj->normal_v, obj->eye_v) < 0.0)
 		obj->normal_v = tuple_scal(obj->normal_v, 1, OPP);
 	else
 		obj->inside = false;

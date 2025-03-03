@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:09:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/17 19:47:26 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/02 22:45:02 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static bool	check_cap(t_ray ray, double t)
 
 	x = ray.origin_p.x + (t * ray.direction_v.x);
 	z = ray.origin_p.z + (t * ray.direction_v.z);
-	return ((x * x) + (z * z) <= 1.0);
+	return ((x * x) + (z * z) < 1.0);
 }
 
 static void	check_cap_sect(t_intersect *sec, t_cylinder *cy, t_ray ray)
@@ -41,7 +41,6 @@ static void	check_cap_sect(t_intersect *sec, t_cylinder *cy, t_ray ray)
 	double	t1;
 	double	t2;
 
-	ray.direction_v = normal(ray.direction_v);
 	if (fabs(ray.direction_v.y) < EPSILON)
 		;
 	t1 = ((-cy->max_min - ray.origin_p.y) / ray.direction_v.y);
@@ -50,7 +49,6 @@ static void	check_cap_sect(t_intersect *sec, t_cylinder *cy, t_ray ray)
 		sec->point_sec_1 = t1;
 	if (check_cap(ray, t2))
 		sec->point_sec_2 = t2;
-	choise_point(sec);
 }
 
 static void	truncate_cylinder(t_cylinder *cy, t_ray ray, t_intersect *sec)
@@ -80,6 +78,7 @@ t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray)
 	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
 	sec->point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
 	truncate_cylinder(cy, new_ray, sec);
+	check_cap_sect(sec, cy, new_ray);
 	if (sec->point_sec_1 < EPSILON && sec->point_sec_2 < EPSILON)
 		return (NULL);
 	sec->type = CYLINDER;

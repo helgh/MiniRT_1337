@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/21 16:22:37 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:33:36 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,9 @@ static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 	obj->position = point_sec(ray, scene->sect->t);
 	obj->eye_v = tuple_scal(ray.direction_v, -1, OPP);
 	obj->normal_v = normal_at(*obj, obj->position, op);
-	obj->inside = true;
 	obj->shadow = false;
 	if (dot_product(obj->normal_v, obj->eye_v) <= 0.0)
 		obj->normal_v = tuple_scal(obj->normal_v, 1, OPP);
-	else
-		obj->inside = false;
 }
 
 static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
