@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:25:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:30:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@
 # define OPEN_FILE_ERR "  Failed to open file\n"
 # define F_MALL "  Allocation failed\n"
 # define BAD_TYPE "  Bad type of element in the scene\n"
-# define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
+# define REP_TYPE "  Elements defined by capital letter \
+can only be declared once in the scene\n"
 
 /*------------------------------ err window --------------------------------*/
 
@@ -67,14 +68,16 @@
 
 # define ERR_A "  Declared more then one element 'A' in the scene\n"
 # define ERR_A_1 "  Bad identifier information for element 'A' in the scene\n"
-# define ERR_A_2 "  ambient lighting of element 'A' in the scene out of range [0.0,1.0]\n"
+# define ERR_A_2 "  ambient lighting of element 'A' \
+in the scene out of range [0.0,1.0]\n"
 # define ERR_A_3 "  R.G.B for element 'A' in the scene out of range [0-255]\n"
 
 /*------------------------- err camera ---------------------------*/
 
 # define ERR_C "  Declared more then one element 'C' in the scene\n"
 # define ERR_C_1 "  Bad identifier information for element 'C' in the scene\n"
-# define ERR_C_2 "  Normalized vector of element 'C' in the scene out of range [-1.0,1.0]\n"
+# define ERR_C_2 "  Normalized vector of element 'C' \
+in the scene out of range [-1.0,1.0]\n"
 # define ERR_C_3 "  FOV of element 'A' in the scene out of range [0-180]\n"
 # define NORMAL_C "  Vector not normalized for element 'C'\n"
 
@@ -82,7 +85,8 @@
 
 # define ERR_L "  Declared more then one element 'L' in the scene\n"
 # define ERR_L_1 "  Bad identifier information for element 'L' in the scene\n"
-# define ERR_L_2 "  Light brightness of element 'L' in the scene out of range [0.0,1.0]\n"
+# define ERR_L_2 "  Light brightness of element 'L' \
+in the scene out of range [0.0,1.0]\n"
 
 /*------------------------- err sphere ---------------------------*/
 
@@ -92,14 +96,16 @@
 /*------------------------- err plane ---------------------------*/
 
 # define ERR_PL_1 "  Bad identifier information for element 'pl' in the scene\n"
-# define ERR_PL_2 "  Normalized vector of element 'pl' in the scene out of range [-1.0,1.0]\n"
+# define ERR_PL_2 "  Normalized vector of element 'pl' \
+in the scene out of range [-1.0,1.0]\n"
 # define ERR_PL_3 "  R.G.B for element 'pl' in the scene out of range [0-255]\n"
 # define NORMAL_PL "  Vector not normalized for element 'pl'\n"
 
 /*------------------------- err cylinder ---------------------------*/
 
 # define ERR_CY_1 "  Bad identifier information for element 'cy' in the scene\n"
-# define ERR_CY_2 "  Normalized vector of element 'cy' in the scene out of range [-1.0,1.0]\n"
+# define ERR_CY_2 "  Normalized vector of element 'cy' \
+in the scene out of range [-1.0,1.0]\n"
 # define ERR_CY_3 "  R.G.B for element 'cy' in the scene out of range [0-255]\n"
 # define NORMAL_CY "  Vector not normalized for element 'cy'\n"
 

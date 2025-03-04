@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:45:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 20:04:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:29:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ double	**view_transform(t_scene *scene, t_tuple from, t_tuple to, t_tuple up)
 
 	tmp = scene->tmp_heap;
 	forward = vector(to.x, to.y, to.z);
-	left = cross_product(forward, up);
-	normal(left);
-	true_up = cross_product(left, forward);
-	normal(true_up);
+	left = normal(cross_product(forward, up));
+	true_up = normal(cross_product(left, forward));
 	tmp->scal = identity_matrix(scene);
 	tmp->scal[0][0] = left.x;
 	tmp->scal[0][1] = left.y;
