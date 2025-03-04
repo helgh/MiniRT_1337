@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/28 00:12:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:41:47 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@
 # define ERR_C_2 "  Normalized vector of element 'C'\
 						 in the scene out of range [-1.0,1.0]\n"
 # define ERR_C_3 "  FOV of element 'A' in the scene out of range [0-180]\n"
+# define NORMAL_C "  Vector not normalized for element 'C'\n"
 # define OPEN_FILE_ERR "  Failed to open file\n"
 
 /*------------------------- err light ---------------------------*/

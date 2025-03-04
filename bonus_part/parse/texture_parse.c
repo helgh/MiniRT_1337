@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 22:30:23 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:18:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,21 +48,15 @@ char	*texture_parse(t_scene *scene, char **line, char *msg)
 	char	*path;
 	int		cmp;
 
-	cmp = ft_strcmp(line[0], "\n");
-	if (!cmp)
+	if (!line[0])
 		return (NULL);
-	if (line[1] && ft_strcmp(line[1], "\n"))
+	if (strncmp(line[0], "texture=", 8))
 		print_scene_err(scene, msg);
-	if (cmp)
-	{
-		if (strncmp(line[0], "texture=", 8))
-			print_scene_err(scene, msg);
-		scene->tmp_heap->split = ft_split(scene, line[0], '=');
-		if (lengh(scene->tmp_heap->split) != 2)
-			print_scene_err(scene, msg);
-		else
-			path = check_path(scene, scene->tmp_heap->split[1]);
-	}
+	scene->tmp_heap->split = ft_split(scene, line[0], '=');
+	if (lengh(scene->tmp_heap->split) != 2)
+		print_scene_err(scene, msg);
+	else
+		path = check_path(scene, scene->tmp_heap->split[1]);
 	scene->tmp_heap->split = free_split(scene->tmp_heap->split);
 	return (path);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 22:57:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:58:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ static t_color	_color_sp_or_checker(t_obj_draw *obj)
 	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
 	normal(obj_space);
 	spherical_coordinates(*obj, obj_space, &u, &v);
-	u_tile = (int) (u * 8);
-	v_tile = (int) (v * 8);
+	u_tile = (int) (u * 50);
+	v_tile = (int) (v * 50);
 	if ((u_tile + v_tile) % 2 == 0)
 		return (color);
 	color.r = 0;

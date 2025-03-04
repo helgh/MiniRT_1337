@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:08:03 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/07 17:48:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:36:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int	lengh(char **str)
 		return (0);
 	while (str[++i])
 		;
+	if (!ft_strcmp(str[i - 1], "\n"))
+		i--;
 	return (i);
 }

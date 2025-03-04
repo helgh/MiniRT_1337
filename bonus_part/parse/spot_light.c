@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:27:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/08 15:59:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:43:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,7 @@ void	parse_light(t_scene *scene, char **line)
 	int			len;
 
 	len = lengh(line);
-	if (len != 4 && len != 5)
-		print_scene_err(scene, ERR_L_1);
-	if ((len == 5 && strcmp(line[len - 1], "\n")))
-		print_scene_err(scene, ERR_L_1);
-	if (valid_float(line[2], false))
+	if (len != 4 || valid_float(line[2], false))
 		print_scene_err(scene, ERR_L_1);
 	light = ft_malloc(scene, sizeof(t_light), false);
 	light->pos = _get_position(scene, line[1], ERR_L_1);

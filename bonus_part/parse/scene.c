@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/10 17:29:11 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:46:03 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	parse_element(t_scene *scene, char **line)
 		parse_ab_light(scene, line);
 	else if (!strcmp(line[0], "C"))
 		parse_camera(scene, line);
-	else if (!strcmp(line[0], "L"))
+	else if (!strcmp(line[0], "l"))
 		parse_light(scene, line);
 	else if (!strcmp(line[0], "sp"))
 		parse_sphere(scene, line);
@@ -38,10 +38,10 @@ static void	parse_element(t_scene *scene, char **line)
 		parse_plane(scene, line);
 	else if (!strcmp(line[0], "cy"))
 		parse_cylinder(scene, line);
-	else if (!strcmp(line[0], "cone"))
+	else if (!strcmp(line[0], "co"))
 		parse_cone(scene, line);
 	else
-		print_scene_err(scene, "  Invalid element\n");
+		print_scene_err(scene, BAD_TYPE);
 }
 
 static void	parse_scene(t_scene *scene, char *str)
