@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 22:58:07 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:09:15 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,19 @@ static void	add_pl_list(t_scene *scene, t_plane *pl)
 	}
 }
 
-static t_checker	*_get_checker(t_scene *scene, char **line)
+static t_checker	*_get_checker(t_scene *scene, char **line, char *msg1, char *msg2)
 {
 	t_checker	*checker;
+	int			len;
 
-	if (ft_strcmp(line[0], "checker"))
-		print_scene_err(scene, ERR_PL_1);
+	len = lengh(line);
+	if (!line[0] || !ft_strcmp(line[0], "\n") || len == 1)
+		return (NULL);
+	if (len < 3 || ft_strcmp(line[0], "checker"))
+		print_scene_err(scene, msg1);
 	checker = ft_malloc(scene, sizeof(t_checker), false);
-	checker->ratio = _check_get_number(scene, line[1], ERR_PL_1);
-	check_color(scene, line[2], ERR_PL_1, ERR_PL_3);
+	checker->ratio = _check_get_number(scene, line[1], msg1);
+	check_color(scene, line[2], msg1, msg2);
 	checker->color = _get_color(scene, line[2]);
 	return (checker);
 }
@@ -51,8 +55,13 @@ void	plane_compenent(t_scene *scene)
 	tmp = scene->tmp_heap;
 	while (pl)
 	{
+		if (pl->flag_text == true)
+			pl->text = get_image_texture(scene, pl->path);
 		if (magnitude(*pl->normal_v) != 1.0)
+		{
+			write(2, NORMAL_PL, ft_strlen(NORMAL_PL));
 			*pl->normal_v = normal(*pl->normal_v);
+		}
 		tmp->scal = _get_trans_rot(scene, *pl->normal_v);
 		tmp->trans = translation(scene, pl->pos->x, pl->pos->y, pl->pos->z);
 		tmp->all = mult_matrix(scene, tmp->trans, tmp->scal);
@@ -73,18 +82,19 @@ void	parse_plane(t_scene *scene, char **line)
 	len = lengh(line);
 	if (len < 4 || len > 8)
 		print_scene_err(scene, ERR_PL_1);
-	if (len > 5 && len == 8 && strcmp(line[len - 1], "\n"))
-		print_scene_err(scene, ERR_PL_1);
-	else if (len == 5 && strcmp(line[len - 1], "\n"))
-		print_scene_err(scene, ERR_PL_1);
 	plane = ft_malloc(scene, sizeof(t_plane), false);
+	plane->checker = _get_checker(scene, &line[4], ERR_PL_1, ERR_PL_2);
+	if (plane->checker)
+		plane->path = texture_parse(scene, &line[7], ERR_PL_1);
+	else
+		plane->path = texture_parse(scene, &line[4], ERR_PL_1);
+	plane->flag_text = false;
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
 	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
 	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
 	plane->color = _get_color(scene, line[3]);
-	plane->checker = NULL;
-	if (len > 5)
-		plane->checker = _get_checker(scene, &line[4]);
+	if (plane->path)
+		plane->flag_text = true;
 	plane->next = NULL;
 	if (!scene->plane)
 		scene->plane = plane;

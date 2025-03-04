@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:28:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 18:16:13 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:52:54 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ static t_checker	*_get_checker(t_scene *scene, char **line, char *msg1, char *ms
 	t_checker	*checker;
 	int			len;
 
-	if (!line[0])
-		return (NULL);
 	len = lengh(line);
+	if (!line[0] || !ft_strcmp(line[0], "\n") || len == 1)
+		return (NULL);
 	if (len < 3 || ft_strcmp(line[0], "checker"))
 		print_scene_err(scene, msg1);
 	checker = ft_malloc(scene, sizeof(t_checker), false);
@@ -81,9 +81,9 @@ void	parse_sphere(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_SP_1);
 	sphere = ft_malloc(scene, sizeof(t_sphere), false);
 	sphere->checker = _get_checker(scene, &line[4], ERR_SP_1, ERR_SP_2);
-	if (len >= 7)
+	if (sphere->checker)
 		sphere->path = texture_parse(scene, &line[7], ERR_SP_1);
-	else if (len >= 4)
+	else
 		sphere->path = texture_parse(scene, &line[4], ERR_SP_1);
 	sphere->flag_text = false;
 	sphere->pos = _get_position(scene, line[1], ERR_SP_1);

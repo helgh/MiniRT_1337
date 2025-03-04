@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:58:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 20:59:45 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,16 @@ static t_color	_color_sp_or_checker(t_obj_draw *obj)
 	int		v_tile;
 
 	color = *obj->sp->color;
-	// if (!obj->sp->checker)
-	// 	return (color);
+	if (!obj->sp->checker)
+		return (color);
 	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
 	normal(obj_space);
 	spherical_coordinates(*obj, obj_space, &u, &v);
-	u_tile = (int) (u * 50);
-	v_tile = (int) (v * 50);
+	u_tile = (int) (u * obj->sp->checker->ratio);
+	v_tile = (int) (v * obj->sp->checker->ratio);
 	if ((u_tile + v_tile) % 2 == 0)
 		return (color);
-	color.r = 0;
-	color.g = 0;
-	color.b = 0;
-	return (color);
+	return (*obj->sp->checker->color);
 }
 
 double	get_height(t_obj_draw obj, double u, double v)
@@ -86,7 +83,7 @@ double	get_height(t_obj_draw obj, double u, double v)
     bump_y = (int) round((1 - v) * obj.sp->text->h - 1);
     index = (bump_y * obj.sp->text->s_line + bump_x * (obj.sp->text->bpp / 8));
 	color = obj.sp->text->data[index];
-	f_heght = 4.0 * (color / 255.0) - 1.0;
+	f_heght = 2.0 * (color / 255.0) - 1.0;
     return (f_heght);
 }
 

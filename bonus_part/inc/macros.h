@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:41:47 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:08:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@
 # define ERR_PL_2 "  Normalized vector of element 'pl'\
 						 in the scene out of range [-1.0,1.0]\n"
 # define ERR_PL_3 "  R.G.B for element 'pl' in the scene out of range [0-255]\n"
+# define NORMAL_PL "  Vector not normalized for element 'pl'\n"
 
 /*------------------------- err cylinder ---------------------------*/
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 22:58:21 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 21:05:49 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ typedef struct s_plane
 	double			**inv_trans;
 	double			**transpose_inv_matrix;
 	int				flag;
+	bool			flag_text;
+	char			*path;
 	t_checker		*checker;
 	t_texture		*text;
 	t_tuple			*pos;

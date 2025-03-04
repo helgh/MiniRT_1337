@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 18:18:40 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:55:04 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*texture_parse(t_scene *scene, char **line, char *msg)
 	char	*path;
 	int		cmp;
 
-	if (!line[0])
+	if (!line[0] || !ft_strcmp(line[0], "\n") || lengh(line) != 1)
 		return (NULL);
 	if (strncmp(line[0], "texture=", 8))
 		print_scene_err(scene, msg);
