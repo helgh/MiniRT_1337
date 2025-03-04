@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 23:05:18 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:56:41 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,10 @@ void	cone_compenent(t_scene *scene)
 	while (cone)
 	{
 		tmp->rot = _get_trans_rot(scene, *cone->normal_v);
-		tmp->scal = scaling(scene, cone->radius / cone->max_min, 1, cone->radius / cone->max_min);
-		tmp->trans = translation(scene, cone->pos->x, cone->pos->y, cone->pos->z);
+		tmp->scal = scaling(scene, cone->radius / cone->max_min, 1, \
+			cone->radius / cone->max_min);
+		tmp->trans = translation(scene, cone->pos->x, \
+			cone->pos->y, cone->pos->z);
 		tmp->all = mult_matrix(scene, tmp->trans, tmp->rot);
 		tmp->trans = free_matrix(tmp->trans);
 		tmp->rot = free_matrix(tmp->rot);

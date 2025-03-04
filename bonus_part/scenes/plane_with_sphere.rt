@@ -13,6 +13,6 @@ pl -60,0,0 -1,0,0 255,255,255 checker 6 0,0,0
 
 co 10,10,-5 1,-1,0 4 10 0,51,255
 cy -10,10,-5 1,1,0 4 10 255,51,0
-sp    -8,2,-9           4 5,51,255 texture=p.xpm
-sp    8,2,-9           4 255,51,5 texture=black_wall.xpm
-sp    0,5,2           10 51,255,5 texture=new.xpm
+sp    -8,2,-9           4 5,51,255 texture=./textures/p.xpm
+sp    8,2,-9           4 255,51,5 texture=./textures/black_wall.xpm
+sp    0,5,2           10 51,255,5 texture=./textures/new.xpm

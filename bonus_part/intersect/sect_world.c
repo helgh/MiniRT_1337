@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:20:34 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:12:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,35 +130,24 @@ static t_intersect	*sec_cone(t_scene *scene, t_ray *ray)
 
 void	intersect_world(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*sec_sp;
-	t_intersect	*sec_pl;
-	t_intersect	*sec_cy;
-	t_intersect	*sec_cones;
+	t_intersect	*sec;
 	t_intersect	*secs[4];
 	int			i;
 
 	i = -1;
 	scene->sect = NULL;
-	sec_sp = NULL;
-	sec_pl = NULL;
-	sec_cy = NULL;
-	sec_cones = NULL;
-	if (scene->sphere)
-		sec_sp = sec_spheres(scene, ray);
-	if (scene->plane)
-		sec_pl = sec_planes(scene, ray);
-	if (scene->cylinder)
-		sec_cy = sec_cylinders(scene, ray);
-	if (scene->cone)
-		sec_cones = sec_cone(scene, ray);
-	if (sec_sp)
-		secs[++i] = sec_sp;
-	if (sec_pl)
-		secs[++i] = sec_pl;
-	if (sec_cy)
-		secs[++i] = sec_cy;
-	if (sec_cones)
-		secs[++i] = sec_cones;
+	sec = sec_spheres(scene, ray);
+	if (sec)
+		secs[++i] = sec;
+	sec = sec_planes(scene, ray);
+	if (sec)
+		secs[++i] = sec;
+	sec = sec_cylinders(scene, ray);
+	if (sec)
+		secs[++i] = sec;
+	sec = sec_cone(scene, ray);
+	if (sec)
+		secs[++i] = sec;
 	if (i >= 0)
 		scene->sect = hit(secs, i);
 }

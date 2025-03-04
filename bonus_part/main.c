@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 16:28:54 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:35:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,8 @@ static int	check_extention(const char *str)
 	return (close(fd), write(2, "invalid extention\n", 19), EXIT_FAILURE);
 }
 
-static t_scene	*init_struct(void)
+void	set_to_null(t_scene *scene)
 {
-	t_scene	*scene;
-
-	scene = malloc(sizeof(t_scene));
-	if (!scene)
-		return (NULL);
-	scene->tmp_heap = malloc(sizeof(t_tmp_heap));
-	if (!scene->tmp_heap)
-		return (free(scene), NULL);
 	scene->tmp_heap->fd = -1;
 	scene->tmp_heap->line = NULL;
 	scene->tmp_heap->spl = NULL;
@@ -57,6 +49,19 @@ static t_scene	*init_struct(void)
 	scene->cone = NULL;
 	scene->sect = NULL;
 	scene->heap = NULL;
+}
+
+static t_scene	*init_struct(void)
+{
+	t_scene	*scene;
+
+	scene = malloc(sizeof(t_scene));
+	if (!scene)
+		return (NULL);
+	scene->tmp_heap = malloc(sizeof(t_tmp_heap));
+	if (!scene->tmp_heap)
+		return (free(scene), NULL);
+	set_to_null(scene);
 	return (scene);
 }
 
