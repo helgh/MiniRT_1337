@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/20 16:05:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:26:06 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	parse_element(t_scene *scene, char **line)
 	else if (!ft_strcmp(line[0], "cy"))
 		parse_cylinder(scene, line);
 	else
-		print_scene_err(scene, "  Invalid element\n");
+		print_scene_err(scene, BAD_TYPE);
 }
 
 static void	parse_scene(t_scene *scene, char *str)

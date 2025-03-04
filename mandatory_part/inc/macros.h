@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 16:47:50 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:25:31 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@
 # define OPEN_FILE_ERR "  Failed to open file\n"
 # define F_MALL "  Allocation failed\n"
 # define BAD_TYPE "  Bad type of element in the scene\n"
-# define REP_TYPE "  Elements defined by capital letter can \
-							 only be declared once in the scene\n"
+# define REP_TYPE "  Elements defined by capital letter can only be declared once in the scene\n"
 
 /*------------------------------ err window --------------------------------*/
 
