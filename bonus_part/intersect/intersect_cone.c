@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 15:17:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:57:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,12 @@ t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray)
 	dis = discriminant_cone(&new_ray, arr);
 	sec->type = CONE;
 	sec->next = NULL;
-	// if (arr[0] == 0.0)
-	// {
-	// 	printf("here\n");
-	// 	if (arr[1] <= 0.0)
-	// 		return (NULL);
-	// 	return (sec->t = -arr[2] / (2.0 * arr[1]), sec);
-	// }
+	if (arr[0] == 0.0)
+	{
+		if (arr[1] <= 0.0)
+			return (NULL);
+		return (sec->t = -arr[2] / (2.0 * arr[1]), sec);
+	}
 	if (dis < 0)
 		return (NULL);
 	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);

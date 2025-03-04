@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/18 20:51:32 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:03:57 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,7 @@ void	parse_cylinder(t_scene *scene, char **line)
 	int			len;
 
 	len = lengh(line);
-	if ((len != 6 && len != 7) || (len == 7 && ft_strcmp(line[len - 1], "\n")))
-		print_scene_err(scene, ERR_CY_1);
-	if (valid_float(line[3], false) || valid_float(line[4], false))
+	if (len != 6 || valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);
 	cylinder = ft_malloc(scene, sizeof(t_cylinder));
 	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);

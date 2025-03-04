@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/18 20:51:39 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:04:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,7 @@ void	parse_plane(t_scene *scene, char **line)
 	int		len;
 
 	len = lengh(line);
-	if (len != 4 && len != 5)
-		print_scene_err(scene, ERR_PL_1);
-	if (len == 5 && ft_strcmp(line[len - 1], "\n"))
+	if (len != 4)
 		print_scene_err(scene, ERR_PL_1);
 	plane = ft_malloc(scene, sizeof(t_plane));
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
