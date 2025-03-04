@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 20:59:45 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:37:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,92 +18,6 @@ static double	rgb_to_hex(double r, double g, double b)
 	g *= 255.0;
 	b *= 255.0;
 	return ((u_int64_t)r << 16 | (u_int64_t)g << 8 | (u_int64_t)b);
-}
-
-static t_color	_color_pl_or_checker(t_obj_draw *obj)
-{
-	t_color	color;
-	t_tuple	obj_space;
-	double	scal;
-	int		div;
-
-	color = *obj->pl->color;
-	if (!obj->pl->checker)
-		return (color);
-	scal = obj->pl->checker->ratio;
-	obj_space = mult_mat_point(obj->pl->inv_trans, obj->position);
-	div = (int) (fabs(floor(obj_space.x / scal) + floor(obj_space.z / scal)));
-	div %= 2;
-	if (div == 0)
-		return (color);
-	return (*obj->pl->checker->color);
-}
-
-void	spherical_coordinates(t_obj_draw obj, t_tuple obj_p, double *u, double *v)
-{
-	double	theta;
-	double	phi;
-
-	theta = atan2(obj_p.z, obj_p.x);
-	phi = acos(obj_p.y);
-	*u = (theta + M_PI) / (2.0 * M_PI);
-	*v = (M_PI - phi) / M_PI;
-}
-static t_color	_color_sp_or_checker(t_obj_draw *obj)
-{
-	t_color	color;
-	t_tuple	obj_space;
-	double	u;
-	double	v;
-	int		u_tile;
-	int		v_tile;
-
-	color = *obj->sp->color;
-	if (!obj->sp->checker)
-		return (color);
-	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
-	normal(obj_space);
-	spherical_coordinates(*obj, obj_space, &u, &v);
-	u_tile = (int) (u * obj->sp->checker->ratio);
-	v_tile = (int) (v * obj->sp->checker->ratio);
-	if ((u_tile + v_tile) % 2 == 0)
-		return (color);
-	return (*obj->sp->checker->color);
-}
-
-double	get_height(t_obj_draw obj, double u, double v)
-{
-	int				bump_x;
-	int				bump_y;
-	int				index;
-	unsigned char	color;
-	double			f_heght;
-
-    bump_x = (int) round(u * obj.sp->text->w - 1);
-    bump_y = (int) round((1 - v) * obj.sp->text->h - 1);
-    index = (bump_y * obj.sp->text->s_line + bump_x * (obj.sp->text->bpp / 8));
-	color = obj.sp->text->data[index];
-	f_heght = 2.0 * (color / 255.0) - 1.0;
-    return (f_heght);
-}
-
-t_tuple	_bump_mapping(t_obj_draw obj, t_tuple obj_p)
-{
-    t_tuple	new_normal_v;
-    double	u;
-    double	v;
-	double	du;
-	double	dv;
-	double	height;
-
-	obj_p = normal(obj_p);
-    spherical_coordinates(obj, obj_p, &u, &v);
-	height = get_height(obj, u, v);
-	new_normal_v.x = obj_p.x + height;
-	new_normal_v.y = obj_p.y + height;
-	new_normal_v.z = obj_p.z;
-	new_normal_v.w = 0;
-    return (normal(new_normal_v));
 }
 
 static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)

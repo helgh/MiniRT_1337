@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 22:58:25 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/04 22:37:00 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,10 @@ void		cylinder_compenent(t_scene *scene);
 void		parse_cone(t_scene *scene, char **line);
 void		cone_compenent(t_scene *scene);
 
+// -------------------------  parse_checker  ----------------------------- //
+
+t_checker	*_get_checker(t_scene *scene, char **line, char *msg1, char *msg2);
+
 // -------------------------  texture_parse  ----------------------------- //
 
 char		*texture_parse(t_scene *scene, char **line, char *msg);
@@ -87,7 +91,10 @@ void		draw(t_scene *scene, t_mlx *mlx);
 t_ray		ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
 t_color		lighting(t_scene *scene, t_obj_draw *obj, t_am_light *am_light, t_color col);
 bool		check_shadow(t_scene *scene, t_obj_draw *obj, t_light light);
+void		spherical_coordinates(t_obj_draw obj, t_tuple obj_p, double *u, double *v);
 t_tuple		_bump_mapping(t_obj_draw obj, t_tuple obj_p);
+t_color		_color_pl_or_checker(t_obj_draw *obj);
+t_color		_color_sp_or_checker(t_obj_draw *obj);
 
 // -------------------------  intersect  ----------------------------- //
 
