@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 17:28:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/05 18:15:28 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/Minirt.h"
+#include "inc/Minirt_bonus.h"
 
 static int	check_extention(const char *str)
 {
@@ -30,16 +30,8 @@ static int	check_extention(const char *str)
 	return (close(fd), write(2, "invalid extention\n", 19), EXIT_FAILURE);
 }
 
-static t_scene	*init_struct(void)
+void	set_to_null(t_scene *scene)
 {
-	t_scene	*scene;
-
-	scene = malloc(sizeof(t_scene));
-	if (!scene)
-		return (NULL);
-	scene->tmp_heap = malloc(sizeof(t_tmp_heap));
-	if (!scene->tmp_heap)
-		return (free(scene), NULL);
 	scene->tmp_heap->fd = -1;
 	scene->tmp_heap->line = NULL;
 	scene->tmp_heap->spl = NULL;
@@ -54,8 +46,22 @@ static t_scene	*init_struct(void)
 	scene->sphere = NULL;
 	scene->plane = NULL;
 	scene->cylinder = NULL;
+	scene->cone = NULL;
 	scene->sect = NULL;
 	scene->heap = NULL;
+}
+
+static t_scene	*init_struct(void)
+{
+	t_scene	*scene;
+
+	scene = malloc(sizeof(t_scene));
+	if (!scene)
+		return (NULL);
+	scene->tmp_heap = malloc(sizeof(t_tmp_heap));
+	if (!scene->tmp_heap)
+		return (free(scene), NULL);
+	set_to_null(scene);
 	return (scene);
 }
 
@@ -66,11 +72,11 @@ int	main(int ac, char **av)
 	scene = init_struct();
 	if (!scene)
 		return (write(2, F_MALL, \
-			ft_strlen(F_MALL)), 1);
+			strlen(F_MALL)), 1);
 	if (ac != 2)
 		return (free(scene->tmp_heap), free(scene), \
 			write(2, "Invalid argument\n", \
-			ft_strlen("Invalid argument\n")), 1);
+			strlen("Invalid argument\n")), 1);
 	if (check_extention(av[1]))
 		return (free(scene->tmp_heap), free(scene), 1);
 	parse_part(scene, av[1]);
