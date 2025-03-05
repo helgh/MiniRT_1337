@@ -1,5 +1,7 @@
 NAME = miniRT
 
+NAME_BONUS = miniRT_bonus
+
 CC = cc
 
 C_FLAGS = -Wall -Wextra -Werror
@@ -46,19 +48,23 @@ all: $(NAME)
 $(NAME): $(OBJ_SRC) $(INC)
 	$(CC) $(C_FLAGS) $(OBJ_SRC) $(MLX) -o $(NAME)
 
-bonus: $(OBJ_SRC_BONUS) $(INC_BONUS)
-	$(CC) $(C_FLAGS) $(OBJ_SRC_BONUS) $(MLX) -o $(NAME)
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): $(OBJ_SRC_BONUS) $(INC_BONUS)
+	$(CC) $(C_FLAGS) $(OBJ_SRC_BONUS) $(MLX) -o $(NAME_BONUS)
 
 %.o: %.c $(INC)
-	$(CC) $(C_FLAGS) -c -o $@ $<
+	$(CC) $(C_FLAGS) -c $< -o $@
 
 %bonus.o: %bonus.c $(INC_BONUS)
-	$(CC) $(C_FLAGS) -c -o $@ $<
+	$(CC) $(C_FLAGS) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ_SRC) $(OBJ_SRC_BONUS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME_BONUS)
 
 re: fclean all
+
+re_bonus: fclean bonus
