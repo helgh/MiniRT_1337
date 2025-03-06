@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:22:19 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:44:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 	else if (object == PLANE)
 		color = _color_pl_or_checker(&obj);
 	else if (object == CYLINDER)
-		color = *obj.cy->color;
+		color = _color_cy_or_checker(&obj);
 	else
 		color = *obj.cone->color;
 	color = lighting(scene, &obj, scene->ambient, color);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 18:07:51 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:40:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_cylinder
 	double				**inv_trans;
 	double				**transpose_inv_matrix;
 	double				max_min;
+	t_checker			*checker;
 	t_tuple				*pos;
 	t_tuple				*normal_v;
 	t_color				*color;

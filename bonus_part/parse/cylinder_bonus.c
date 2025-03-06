@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:13:33 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:32:38 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	parse_cylinder(t_scene *scene, char **line)
 	int			len;
 
 	len = lengh(line);
-	if ((len != 6 && len != 7) || (len == 7 && strcmp(line[len - 1], "\n")))
+	if (len < 6 || len > 9)
 		print_scene_err(scene, ERR_CY_1);
 	if (valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);
@@ -85,6 +85,7 @@ void	parse_cylinder(t_scene *scene, char **line)
 	cylinder->color = _get_color(scene, line[5]);
 	cylinder->radius = _check_get_number(scene, line[3], ERR_CY_1) / 2.0;
 	cylinder->max_min = _check_get_number(scene, line[4], ERR_CY_1) / 2.0;
+	cylinder->checker = _get_checker(scene, &line[6], ERR_CY_1, ERR_CY_2);
 	cylinder->next = NULL;
 	if (!scene->cylinder)
 		scene->cylinder = cylinder;

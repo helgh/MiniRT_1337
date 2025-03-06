@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:36:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:14:15 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:53:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,23 @@ t_color	_color_sp_or_checker(t_obj_draw *obj)
 	if (u_v_tile % 2 == 0)
 		return (color);
 	return (*obj->sp->checker->color);
+}
+
+t_color	_color_cy_or_checker(t_obj_draw *obj)
+{
+	t_color	color;
+	double	u;
+	double	v;
+	int		u_v_tile;
+
+	color = *obj->cy->color;
+	if (!obj->cy->checker)
+		return (color);
+	u = obj->position.x;
+	v = obj->position.y;
+	u_v_tile = (int) floor(u * obj->cy->checker->ratio);
+	u_v_tile += (int) floor(v * obj->cy->checker->ratio);
+	if (u_v_tile % 2 == 0)
+		return (color);
+	return (*obj->cy->checker->color);
 }

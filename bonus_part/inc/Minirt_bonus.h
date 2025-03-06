@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 19:46:02 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:45:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_tuple		_bump_mapping(t_obj_draw obj, t_tuple obj_p);
 t_tuple		_bump_map_plane(t_obj_draw obj, t_tuple poin);
 t_color		_color_pl_or_checker(t_obj_draw *obj);
 t_color		_color_sp_or_checker(t_obj_draw *obj);
+t_color		_color_cy_or_checker(t_obj_draw *obj);
 
 // -------------------------  intersect  ----------------------------- //
 
