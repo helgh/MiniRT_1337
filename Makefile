@@ -15,7 +15,8 @@ INC_BONUS = $(addprefix bonus_part/inc/, Minirt_bonus.h) $(INC_UTILS)
 
 UTILS = $(addprefix utils/, error_free.c ft_malloc.c) \
 		$(addprefix utils/libft_utils/, ft_atof.c ft_strlen.c ft_split.c ft_strcmp.c \
-						get_next_line.c get_next_line_utils.c utils.c) \
+						get_next_line.c get_next_line_utils.c utils.c ft_strdup.c \
+						ft_strncmp.c) \
 		$(addprefix utils/transform/, identity_matrix.c inverse.c \
 						determinant.c mult_mat_point.c mult_matrix.c rot_utils.c \
 						rotation.c transformation.c transpose_matrix.c) \

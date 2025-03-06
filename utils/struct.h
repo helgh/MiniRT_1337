@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 17:41:56 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:07:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ typedef struct s_texture
 	char			*data;
 	int				w;
 	int				h;
-	unsigned int	pixel;
-	int				color;
 }				t_texture;	
 
 typedef struct s_tmp_heap

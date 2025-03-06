@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:20:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:15:14 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ t_texture	*get_image_texture(t_scene *scene, char *path)
 	texture->texture = mlx_xpm_file_to_image(texture->mlx, path, \
 		&texture->w, &texture->h);
 	if (!texture->texture)
-	{
-		free(path);
 		print_scene_err(scene, BAD_FILE_TEXTURE);
-	}
 	texture->data = mlx_get_data_addr(texture->texture, &texture->bpp, \
 		&texture->s_line, &texture->endian);
 	return (texture);
@@ -40,7 +37,7 @@ char	*check_path(t_scene *scene, char *path)
 		;
 	if (path[i] == '\n')
 		path[i] = 0;
-	return (strdup((const char *) path));
+	return (ft_strdup(scene, (const char *) path));
 }
 
 char	*texture_parse(t_scene *scene, char **line, char *msg)
@@ -50,7 +47,7 @@ char	*texture_parse(t_scene *scene, char **line, char *msg)
 	path = NULL;
 	if (!line[0] || !ft_strcmp(line[0], "\n") || lengh(line) != 1)
 		return (NULL);
-	if (strncmp(line[0], "texture=", 8))
+	if (ft_strncmp(line[0], "texture=", 8))
 		print_scene_err(scene, msg);
 	scene->tmp_heap->split = ft_split(scene, line[0], '=');
 	if (lengh(scene->tmp_heap->split) != 2)

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 16:06:07 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:27:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:15:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 
 char		**ft_split(t_scene *scene, char const *s, char c);
 int			ft_strcmp(const char *s1, const char *s2);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+char		*ft_strdup(t_scene *scene, const char *s1);
 double		ft_atof(char *str);
 int			ft_strlen(const char *str);
 int			lengh(char **str);
