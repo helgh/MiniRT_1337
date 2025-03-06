@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:47:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:15:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:50:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,18 @@
 static int	handle_event(int keycode, t_scene *scene)
 {
 	if (keycode == 53)
+	{
+		mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
+		mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
 		__ft_free(scene, 0);
+	}
 	return (0);
 }
 
 static int	close_window(t_scene *scene)
 {
+	mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
+	mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
 	__ft_free(scene, 0);
 	return (0);
 }
