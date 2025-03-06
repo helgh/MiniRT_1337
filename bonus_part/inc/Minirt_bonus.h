@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 20:53:23 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:46:02 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ bool		check_shadow(t_scene *scene, t_obj_draw *obj, t_light light);
 void		spherical_coordinates(t_obj_draw obj, t_tuple obj_p, \
 	double *u, double *v);
 t_tuple		_bump_mapping(t_obj_draw obj, t_tuple obj_p);
+t_tuple		_bump_map_plane(t_obj_draw obj, t_tuple poin);
 t_color		_color_pl_or_checker(t_obj_draw *obj);
 t_color		_color_sp_or_checker(t_obj_draw *obj);
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:14:20 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:38:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 		return (normal_cone(obj, poin));
 	else if (op == CYLINDER)
 		return (normal_cylinder(obj, poin));
+	if (obj.pl->flag_text == true)
+		*obj.pl->normal_v = _bump_map_plane(obj, poin);
 	return (*obj.pl->normal_v);
 }
 

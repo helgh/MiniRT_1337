@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:33:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 20:45:06 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 22:38:29 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,35 @@ t_tuple	_bump_mapping(t_obj_draw obj, t_tuple obj_p)
 	new_normal_v.x = obj_p.x + height;
 	new_normal_v.y = obj_p.y + height;
 	new_normal_v.z = obj_p.z;
+	new_normal_v.w = 0;
+	return (normal(new_normal_v));
+}
+
+t_tuple	_bump_map_plane(t_obj_draw obj, t_tuple poin)
+{
+	t_tuple			new_normal_v;
+	double			u;
+	double			v;
+	double			height;
+	int				index;
+	unsigned char	color;
+
+	poin = mult_mat_point(obj.pl->inv_trans, poin);
+	poin.x /= 20.0;
+	poin.z /= 20.0;
+	u = fmod(poin.x, 1.0);
+	v = fmod(poin.z, 1.0);
+	if (u < 0)
+		u += 1.0;
+	if (v < 0)
+		v += 1.0;
+	index = ((int)(v * obj.pl->text->h - 1) * obj.pl->text->s_line + \
+		(int)(u * obj.pl->text->w - 1) * (obj.pl->text->bpp / 8));
+	color = obj.pl->text->data[index];
+	height = 2.0 * (color / 255.0) - 1.0;
+	new_normal_v.x = height;
+	new_normal_v.y = 1.0;
+	new_normal_v.z = height;
 	new_normal_v.w = 0;
 	return (normal(new_normal_v));
 }
