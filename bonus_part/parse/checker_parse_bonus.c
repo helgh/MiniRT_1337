@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:26:32 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 23:22:22 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:39:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_checker	*_get_checker(t_scene *scene, char **line, char *msg1, char *msg2)
 	int			len;
 
 	len = lengh(line);
-	if (!line[0] || !ft_strcmp(line[0], "\n"))
+	if (!line[0] || !ft_strcmp(line[0], "\n") || len == 1)
 		return (NULL);
 	if (len < 3 || ft_strcmp(line[0], "checker"))
 		print_scene_err(scene, msg1);
