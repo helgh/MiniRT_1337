@@ -2,10 +2,12 @@ A 0.1 50,50,50
 
 C 0,0,-20 0,0,1.0 60
 
-l -10,10,-10 1 255,255,255
+l 0,0,-10 1 255,255,255
 
-cy 2,0,0 1,1,0.5 2 4 100,200,100 checker 4  255,255,255
+cy 2,0,0 0,1,1 2 4 100,200,100 texture=bonus_part/textures/p.xpm
 
 pl 0,-5,0 0,-1,0 18,106,220 texture=bonus_part/textures/wall_p.xpm
+
+pl 0,0,20 0,0,1 255,255,255 texture=bonus_part/textures/black_wall.xpm
 
 sp -3,0,0 3 255,100,200 checker 20 0,0,0

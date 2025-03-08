@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 22:45:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:35:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,14 @@ t_ray		ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
 t_color		lighting(t_scene *scene, t_obj_draw *obj, \
 	t_am_light *am_light, t_color col);
 bool		check_shadow(t_scene *scene, t_obj_draw *obj, t_light light);
-void		spherical_coordinates(t_obj_draw obj, t_tuple obj_p, \
-	double *u, double *v);
-t_tuple		_bump_mapping(t_obj_draw obj, t_tuple obj_p);
+t_tuple		_bump_map_sphere(t_obj_draw obj, t_tuple obj_p);
 t_tuple		_bump_map_plane(t_obj_draw obj, t_tuple poin);
+t_tuple		_bump_map_cylinder(t_obj_draw obj, t_tuple poin);
 t_color		_color_pl_or_checker(t_obj_draw *obj);
 t_color		_color_sp_or_checker(t_obj_draw *obj);
 t_color		_color_cy_or_checker(t_obj_draw *obj);
+void		spherical_cord(t_obj_draw obj, t_tuple obj_p, \
+	double *u, double *v);
 
 // -------------------------  intersect  ----------------------------- //
 

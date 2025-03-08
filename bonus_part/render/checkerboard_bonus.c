@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:36:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 22:53:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:21:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ t_color	_color_sp_or_checker(t_obj_draw *obj)
 	if (!obj->sp->checker)
 		return (color);
 	obj_space = mult_mat_point(obj->sp->inv_trans, obj->position);
-	normal(obj_space);
-	spherical_coordinates(*obj, obj_space, &u, &v);
+	spherical_cord(*obj, obj_space, &u, &v);
 	u_v_tile = (int) floor(u * obj->sp->checker->ratio);
 	u_v_tile += (int) floor(v * obj->sp->checker->ratio);
 	if (u_v_tile % 2 == 0)

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 19:38:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:38:05 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ static t_tuple	normal_cylinder(t_obj_draw obj, t_tuple poin)
 		return (vector(0.0, 1.0, 0.0));
 	else if (dis < 1 && obj_p.y <= -obj.cy->max_min + EPSILON)
 		return (vector(0.0, -1.0, 0.0));
+	if (obj.cy->flag_text == true)
+		obj_p = _bump_map_cylinder(obj, obj_p);
 	obj_p.y = 0;
 	world_vec = mult_mat_point(obj.cy->transpose_inv_matrix, obj_p);
 	return (world_vec.w = 0, normal(world_vec));
@@ -86,7 +88,7 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 	{
 		obj_p = mult_mat_point(obj.sp->inv_trans, poin);
 		if (obj.sp->flag_text)
-			obj_p = _bump_mapping(obj, obj_p);
+			obj_p = _bump_map_sphere(obj, obj_p);
 		world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, obj_p);
 		world_vec.w = 0.0;
 		return (normal(world_vec));
