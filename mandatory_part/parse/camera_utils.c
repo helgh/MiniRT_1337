@@ -6,11 +6,23 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:45:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:29:49 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:28:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
+
+static t_tuple	check_cross_p(t_tuple forward, t_tuple new_axe)
+{
+	t_tuple	up;
+
+	if (!new_axe.x && !new_axe.y && !new_axe.z)
+	{
+		up = vector(EPSILON, 1.0, 0.0);
+		new_axe = normal(cross_product(forward, up));
+	}
+	return (new_axe);
+}
 
 double	**view_transform(t_scene *scene, t_tuple from, t_tuple to, t_tuple up)
 {
@@ -21,8 +33,8 @@ double	**view_transform(t_scene *scene, t_tuple from, t_tuple to, t_tuple up)
 	double		**orientation;
 
 	tmp = scene->tmp_heap;
-	forward = vector(to.x, to.y, to.z);
-	left = normal(cross_product(forward, up));
+	forward = normal(op_tuple(to, from, SUB));
+	left = check_cross_p(forward, cross_product(forward, normal(up)));
 	true_up = normal(cross_product(left, forward));
 	tmp->scal = identity_matrix(scene);
 	tmp->scal[0][0] = left.x;
