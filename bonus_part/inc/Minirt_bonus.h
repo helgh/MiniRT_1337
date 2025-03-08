@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/07 23:35:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:07:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_texture	*get_image_texture(t_scene *scene, char *path);
 // -------------------------  utils_parse  ----------------------------- //
 
 t_tuple		*_get_position(t_scene *scene, char *line, char *error);
-t_tuple		*_get_normal_v(t_scene *scene, char *line, char *err1);
+t_tuple		*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2);
 int			valid_float(char *str, bool checker);
 void		check_color(t_scene *scene, char *str, char *err1, char *err2);
 t_color		*_get_color(t_scene *scene, char *line);

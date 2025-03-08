@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:37:23 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:13:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:06:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	valid_float(char *str, bool checker)
 	return (0);
 }
 
-t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1)
+t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2)
 {
 	t_tmp_heap	*tmp;
 	t_tuple		*normal_v;
@@ -95,6 +95,8 @@ t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1)
 		if (valid_float(tmp->split[i], true))
 			print_scene_err(scene, err1);
 		cord[i] = ft_atof(tmp->split[i]);
+		if (cord[i] < -1.0 || cord[i] > 1.0)
+			print_scene_err(scene, err2);
 	}
 	if (i != 3)
 		print_scene_err(scene, err1);

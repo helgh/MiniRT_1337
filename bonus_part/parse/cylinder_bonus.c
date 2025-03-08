@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:30:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/07 23:39:59 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:08:58 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	cylinder_compenent(t_scene *scene)
 
 static void	parse_cylinder_2(t_scene *scene, t_cylinder *cy, char **line)
 {
-	cy->checker = _get_checker(scene, &line[6], ERR_CY_1, ERR_CY_2);
+	cy->checker = _get_checker(scene, &line[6], ERR_CY_1, ERR_CY_3);
 	cy->flag_text = false;
 	if (cy->checker)
 		cy->path = texture_parse(scene, &line[9], ERR_PL_1);
@@ -97,7 +97,7 @@ void	parse_cylinder(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_CY_1);
 	cylinder = ft_malloc(scene, sizeof(t_cylinder));
 	cylinder->pos = _get_position(scene, line[1], ERR_CY_1);
-	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
+	cylinder->normal_v = _get_normal_v(scene, line[2], ERR_CY_1, ERR_CY_2);
 	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
 	cylinder->color = _get_color(scene, line[5]);
 	cylinder->radius = _check_get_number(scene, line[3], ERR_CY_1) / 2.0;

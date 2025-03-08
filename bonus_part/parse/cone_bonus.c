@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:13:41 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:07:07 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,18 +63,18 @@ void	parse_cone(t_scene *scene, char **line)
 
 	len = lengh(line);
 	if ((len != 6 && len != 7) || (len == 7 && strcmp(line[len - 1], "\n")))
-		print_scene_err(scene, ERR_CY_1);
+		print_scene_err(scene, ERR_CO_1);
 	if (valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);
 	cone = ft_malloc(scene, sizeof(t_cone));
-	cone->pos = _get_position(scene, line[1], ERR_CY_1);
-	cone->normal_v = _get_normal_v(scene, line[2], ERR_CY_1);
+	cone->pos = _get_position(scene, line[1], ERR_CO_1);
+	cone->normal_v = _get_normal_v(scene, line[2], ERR_CO_1, ERR_CO_2);
 	if (magnitude(*cone->normal_v) != 1.0)
 		*cone->normal_v = normal(*cone->normal_v);
-	check_color(scene, line[5], ERR_CY_1, ERR_CY_3);
+	check_color(scene, line[5], ERR_CO_1, ERR_CO_3);
 	cone->color = _get_color(scene, line[5]);
-	cone->radius = _check_get_number(scene, line[3], ERR_CY_1) / 2.0;
-	cone->max_min = _check_get_number(scene, line[4], ERR_CY_1) / 2.0;
+	cone->radius = _check_get_number(scene, line[3], ERR_CO_1) / 2.0;
+	cone->max_min = _check_get_number(scene, line[4], ERR_CO_1) / 2.0;
 	cone->next = NULL;
 	if (!scene->cone)
 		scene->cone = cone;

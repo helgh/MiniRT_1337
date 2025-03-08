@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:33:58 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:11:14 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	parse_plane(t_scene *scene, char **line)
 		print_scene_err(scene, ERR_PL_1);
 	plane = ft_malloc(scene, sizeof(t_plane));
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
-	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
+	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1, ERR_PL_2);
 	if (magnitude(*plane->normal_v) != 1.0)
 	{
 		write(2, NORMAL_PL, ft_strlen(NORMAL_PL));

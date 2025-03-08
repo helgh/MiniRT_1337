@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:29:41 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 23:16:04 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 23:09:38 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,14 @@ void	parse_plane(t_scene *scene, char **line)
 	if (len < 4 || len > 8)
 		print_scene_err(scene, ERR_PL_1);
 	plane = ft_malloc(scene, sizeof(t_plane));
-	plane->checker = _get_checker(scene, &line[4], ERR_PL_1, ERR_PL_2);
+	plane->checker = _get_checker(scene, &line[4], ERR_PL_1, ERR_PL_3);
 	if (plane->checker)
 		plane->path = texture_parse(scene, &line[7], ERR_PL_1);
 	else
 		plane->path = texture_parse(scene, &line[4], ERR_PL_1);
 	plane->flag_text = false;
 	plane->pos = _get_position(scene, line[1], ERR_PL_1);
-	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1);
+	plane->normal_v = _get_normal_v(scene, line[2], ERR_PL_1, ERR_PL_2);
 	check_color(scene, line[3], ERR_PL_1, ERR_PL_3);
 	plane->color = _get_color(scene, line[3]);
 	if (plane->path)

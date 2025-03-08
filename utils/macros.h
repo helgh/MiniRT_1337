@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:51:22 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 22:26:20 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/08 22:36:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,6 @@
 # define WIDTH 1600
 # define HEIGHT 900
 
-# define ALL 1
-# define PART 2
-
-# define TRANSLATING 1
-# define SCALING 2
-# define ROTATE_X 3
-# define ROTATE_Y 4
-# define ROTATE_Z 5
 # define EPSILON 0.00001
 
 # define MULT 1

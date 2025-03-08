@@ -19,7 +19,7 @@ UTILS = $(addprefix utils/, error_free.c ft_malloc.c) \
 						ft_strncmp.c) \
 		$(addprefix utils/transform/, identity_matrix.c inverse.c \
 						determinant.c mult_mat_point.c mult_matrix.c rot_utils.c \
-						rotation.c transformation.c transpose_matrix.c) \
+						transformation.c transpose_matrix.c) \
 		$(addprefix utils/math/, color_scal.c op_color.c op_tuple.c \
 						tuple_scal.c op_vector.c set_get.c)
 
