@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:47:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/16 19:06:59 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:43:03 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ void	render(t_scene *scene)
 {
 	t_mlx	*m;
 
-	m = malloc(sizeof(t_mlx));
-	if (!m)
-		print_scene_err(scene, F_MALL);
+	m = ft_malloc(scene, sizeof(t_mlx));
 	scene->mlx = m;
 	m->mlx = mlx_init();
 	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "miniRT");

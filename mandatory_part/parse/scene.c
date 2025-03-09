@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/04 17:26:06 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/09 00:25:32 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ static void	parse_scene(t_scene *scene, char *str)
 			parse_element(scene, scene->tmp_heap->spl);
 			scene->tmp_heap->spl = free_split(scene->tmp_heap->spl);
 			free(scene->tmp_heap->line);
-			scene->tmp_heap->line = NULL;
 		}
 		else
 			free(scene->tmp_heap->line);
+		scene->tmp_heap->line = NULL;
 	}
 	close(scene->tmp_heap->fd);
 	scene->tmp_heap->fd = -1;
