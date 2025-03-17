@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 21:04:21 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 23:43:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_tuple	normal_cy(t_obj_draw obj, t_tuple pos)
 
 	obj_p = mult_mat_point(obj.cy->inv_trans, pos);
 	local_vec = obj_p;
+	local_vec.w = 0.0;
 	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
 	if (dis < 1.0 && obj_p.y > (obj.cy->max_min - EPSILON))
 		local_vec = vector(0.0, 1.0, 0.0);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 23:16:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 23:36:32 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,10 @@ static t_scene	*init_struct(void)
 	return (scene);
 }
 
-void	leaks(void)
-{
-	system("leaks -q miniRT");
-}
-
 int	main(int ac, char **av)
 {
 	t_scene	*scene;
 
-	atexit(leaks);
 	scene = init_struct();
 	if (!scene)
 		return (write(2, F_MALL, \

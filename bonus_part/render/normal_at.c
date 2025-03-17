@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 21:21:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 21:22:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 23:42:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static t_tuple	normal_cy(t_obj_draw obj, t_tuple pos)
 
 	obj_p = mult_mat_point(obj.cy->inv_trans, pos);
 	local_vec = obj_p;
+	local_vec.w = 0.0;
 	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
 	if (dis < 1.0 && obj_p.y > (obj.cy->max_min - EPSILON))
 		local_vec = vector(0.0, 1.0, 0.0);
@@ -49,6 +50,7 @@ static t_tuple	normal_cone(t_obj_draw obj, t_tuple poin)
 	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
 	y = sqrt(dis);
 	local_vec = obj_p;
+	local_vec.w = 0.0;
 	if (dis < 1 && obj_p.y >= obj.cone->max_min - EPSILON)
 		local_vec = vector(0.0, 1.0, 0.0);
 	else if (dis < 1 && obj_p.y <= -obj.cone->max_min + EPSILON)
@@ -71,6 +73,7 @@ static t_tuple	normal_sp(t_obj_draw obj, t_tuple pos)
 
 	obj_p = mult_mat_point(obj.sp->inv_trans, pos);
 	local_vec = obj_p;
+	local_vec.w = 0.0;
 	if (obj.sp->flag_text)
 		local_vec = _bump_map_sphere(obj, obj_p);
 	world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, local_vec);

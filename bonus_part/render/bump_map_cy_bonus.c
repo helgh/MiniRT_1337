@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 23:20:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 00:46:36 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 23:43:58 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	cylindrical_cord(t_obj_draw obj, t_tuple poin, double *u, double *v)
 
 	theta = atan2(poin.x, poin.z);
 	*u = (theta + M_PI) / (2.0 * M_PI);
-	*v = (poin.y - (-obj.cy->max_min)) / (obj.cy->max_min - (-obj.cy->max_min));
+	*v = (poin.y + obj.cy->max_min) / (obj.cy->max_min + obj.cy->max_min);
 }
 
 static double	get_height_cy(t_obj_draw obj, double u, double v)
