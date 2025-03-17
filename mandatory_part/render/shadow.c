@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:51:57 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 15:32:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:50:03 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ void	check_shadow(t_scene *scene, t_obj_draw *obj)
 	t_tuple		direction;
 	double		magn;
 
+	if (!scene->light)
+	{
+		obj->shadow = true;
+		return ;
+	}
 	v = op_tuple(*scene->light->pos, obj->position, SUB);
 	magn = magnitude(v);
 	direction = normal(v);

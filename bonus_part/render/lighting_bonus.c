@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/07 23:38:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:20:50 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,69 +37,6 @@ static t_color	_get_dif_spe(t_light light, t_tuple light_v, t_obj_draw *obj, \
 		return (op_color(difusse, specular, ADD));
 	}
 	return (color(0.0, 0.0, 0.0));
-}
-
-static t_tuple	normal_cylinder(t_obj_draw obj, t_tuple poin)
-{
-	t_tuple	obj_p;
-	t_tuple	world_vec;
-	double	dis;
-
-	obj_p = mult_mat_point(obj.cy->inv_trans, poin);
-	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
-	if (dis < 1 && obj_p.y >= obj.cy->max_min - EPSILON)
-		return (vector(0.0, 1.0, 0.0));
-	else if (dis < 1 && obj_p.y <= -obj.cy->max_min + EPSILON)
-		return (vector(0.0, -1.0, 0.0));
-	if (obj.cy->flag_text == true)
-		obj_p = _bump_map_cylinder(obj, obj_p);
-	obj_p.y = 0;
-	world_vec = mult_mat_point(obj.cy->transpose_inv_matrix, obj_p);
-	return (world_vec.w = 0, normal(world_vec));
-}
-
-static t_tuple	normal_cone(t_obj_draw obj, t_tuple poin)
-{
-	t_tuple	obj_p;
-	t_tuple	world_vec;
-	double	dis;
-	double	y;
-
-	obj_p = mult_mat_point(obj.cone->inv_trans, poin);
-	dis = (obj_p.x * obj_p.x) + (obj_p.z * obj_p.z);
-	if (dis < 1 && obj_p.y >= obj.cone->max_min - EPSILON)
-		return (vector(0.0, 1.0, 0.0));
-	else if (dis < 1 && obj_p.y <= -obj.cone->max_min + EPSILON)
-		return (vector(0.0, -1.0, 0.0));
-	y = sqrt(dis);
-	if (obj_p.y > 0.0)
-		y = -y;
-	obj_p.y = y;
-	world_vec = mult_mat_point(obj.cone->transpose_inv_matrix, obj_p);
-	return (world_vec.w = 0, normal(world_vec));
-}
-
-t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
-{
-	t_tuple	obj_p;
-	t_tuple	world_vec;
-
-	if (op == SPHERE)
-	{
-		obj_p = mult_mat_point(obj.sp->inv_trans, poin);
-		if (obj.sp->flag_text)
-			obj_p = _bump_map_sphere(obj, obj_p);
-		world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, obj_p);
-		world_vec.w = 0.0;
-		return (normal(world_vec));
-	}
-	else if (op == CONE)
-		return (normal_cone(obj, poin));
-	else if (op == CYLINDER)
-		return (normal_cylinder(obj, poin));
-	if (obj.pl->flag_text == true)
-		*obj.pl->normal_v = _bump_map_plane(obj, poin);
-	return (*obj.pl->normal_v);
 }
 
 t_color	lighting(t_scene *scene, t_obj_draw *obj, t_am_light *am_light, \

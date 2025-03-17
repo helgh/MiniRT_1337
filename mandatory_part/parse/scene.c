@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/09 00:25:32 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:44:51 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static void	important_element(t_scene *scene)
 		print_scene_err(scene, "  No ambient light found \n");
 	if (!scene->camera)
 		print_scene_err(scene, "  No camera found\n");
-	if (!scene->light)
-		print_scene_err(scene, "  No light found\n");
 }
 
 static void	parse_element(t_scene *scene, char **line)

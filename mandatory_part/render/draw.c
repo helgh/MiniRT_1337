@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/03 15:33:36 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 20:48:38 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ static double	rgb_to_hex(double r, double g, double b)
 
 static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 {
-	t_tuple		*light;
-
-	light = scene->light->pos;
 	if (op == SPHERE)
 		obj->sp = scene->sect->sp;
 	else if (op == PLANE)

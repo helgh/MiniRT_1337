@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:33:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 00:45:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:06:11 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ t_tuple	_bump_map_sphere(t_obj_draw obj, t_tuple obj_p)
 	double	v;
 	double	height;
 
-	obj_p = normal(obj_p);
 	spherical_cord(obj, obj_p, &u, &v);
 	height = get_height_sp(obj, u, v);
 	new_normal_v.x = obj_p.x + height;

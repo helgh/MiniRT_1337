@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 23:07:17 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/17 21:22:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void		draw(t_scene *scene, t_mlx *mlx);
 t_ray		ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
 t_color		lighting(t_scene *scene, t_obj_draw *obj, \
 	t_am_light *am_light, t_color col);
+t_tuple		normal_at(t_obj_draw obj, t_tuple poin, int op);
 bool		check_shadow(t_scene *scene, t_obj_draw *obj, t_light light);
 t_tuple		_bump_map_sphere(t_obj_draw obj, t_tuple obj_p);
 t_tuple		_bump_map_plane(t_obj_draw obj, t_tuple poin);

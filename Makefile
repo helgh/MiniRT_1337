@@ -34,7 +34,7 @@ SOURCE_BONUS = $(addprefix bonus_part/, main_bonus.c) \
 			$(addprefix bonus_part/parse/, ab_light_bonus.c spot_light_bonus.c camera_bonus.c sphere_bonus.c plane_bonus.c \
 						cylinder_bonus.c scene_bonus.c camera_utils_bonus.c utils_parse_bonus.c \
 						checker_parse_bonus.c cone_bonus.c texture_parse_bonus.c) \
-			$(addprefix bonus_part/render/, draw_bonus.c lighting_bonus.c mlx_bonus.c rays_bonus.c shadow_bonus.c \
+			$(addprefix bonus_part/render/, draw_bonus.c lighting_bonus.c normal_at.c mlx_bonus.c rays_bonus.c shadow_bonus.c \
 						bump_map_sp_bonus.c bump_map_pl_bonus.c bump_map_cy_bonus.c checkerboard_bonus.c) \
 			$(addprefix bonus_part/intersect/, hits_bonus.c intersect_cy_bonus.c \
 						intersect_pl_bonus.c intersect_sp_bonus.c intersect_cone_bonus.c sect_world_bonus.c) \
