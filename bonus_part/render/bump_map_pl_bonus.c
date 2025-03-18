@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 23:19:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 01:03:31 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:12:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,6 @@ t_tuple	_bump_map_plane(t_obj_draw obj, t_tuple poin)
 	new_normal_v.x = height;
 	new_normal_v.y = 1.0;
 	new_normal_v.z = height;
-	new_normal_v.w = 0;
+	new_normal_v.w = 0.0;
 	return (normal(new_normal_v));
 }

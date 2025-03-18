@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 21:21:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 23:42:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:11:53 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,10 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 	else if (op == CONE)
 		return (normal_cone(obj, poin));
 	if (obj.pl->flag_text == true)
+	{
 		*obj.pl->normal_v = _bump_map_plane(obj, poin);
+		*obj.pl->normal_v = mult_mat_point(obj.pl->transpose_inv_matrix, \
+			*obj.pl->normal_v);
+	}
 	return (*obj.pl->normal_v);
 }
