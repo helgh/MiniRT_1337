@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 16:09:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:22:39 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:10:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,25 +38,25 @@ static void	truncate_cylinder(t_cylinder *cy, t_ray ray, t_intersect *sec)
 		sec->point_sec_2 = -1;
 }
 
-t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray)
+t_intersect	intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray)
 {
-	t_intersect	*sec;
+	t_intersect	sec;
 	t_ray		new_ray;
 	double		dis;
 	double		arr[3];
 
+	(void) scene;
 	new_ray = transform_ray(ray, cy->inv_trans);
-	sec = ft_malloc(scene, sizeof(t_intersect));
 	dis = discriminant_cy(&new_ray, arr);
 	if (dis < 0)
-		return (NULL);
-	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
-	sec->point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
-	truncate_cylinder(cy, new_ray, sec);
-	if (sec->point_sec_1 < EPSILON && sec->point_sec_2 < EPSILON)
-		return (NULL);
-	sec->type = CYLINDER;
-	sec->next = NULL;
-	choise_point(sec);
-	return (sec);
+		return (sec.exist = false, sec);
+	sec.point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
+	sec.point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
+	truncate_cylinder(cy, new_ray, &sec);
+	if (sec.point_sec_1 < EPSILON && sec.point_sec_2 < EPSILON)
+		return (sec.exist = false, sec);
+	sec.type = CYLINDER;
+	sec.cy = *cy;
+	choise_point(&sec);
+	return (sec.exist = true, sec);
 }

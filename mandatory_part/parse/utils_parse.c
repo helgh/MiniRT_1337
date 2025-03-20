@@ -6,23 +6,22 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:37:23 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 23:06:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:46:43 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-t_color	*_get_color(t_scene *scene, char *line)
+t_color	_get_color(t_scene *scene, char *line)
 {
-	t_color		*color;
+	t_color		color;
 	t_tmp_heap	*tmp;
 
 	tmp = scene->tmp_heap;
 	tmp->split = ft_split(scene, line, ',');
-	color = ft_malloc(scene, sizeof(t_color));
-	color->r = ft_atof(tmp->split[0]) / 255.0;
-	color->g = ft_atof(tmp->split[1]) / 255.0;
-	color->b = ft_atof(tmp->split[2]) / 255.0;
+	color.r = ft_atof(tmp->split[0]) / 255.0;
+	color.g = ft_atof(tmp->split[1]) / 255.0;
+	color.b = ft_atof(tmp->split[2]) / 255.0;
 	scene->tmp_heap->split = free_split(tmp->split);
 	return (color);
 }
@@ -80,10 +79,10 @@ int	valid_float(char *str, bool checker)
 	return (0);
 }
 
-t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2)
+t_tuple	_get_normal_v(t_scene *scene, char *line, char *err1, char *err2)
 {
 	t_tmp_heap	*tmp;
-	t_tuple		*normal_v;
+	t_tuple		normal_v;
 	double		cord[3];
 	int			i;
 
@@ -100,18 +99,17 @@ t_tuple	*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2)
 	}
 	if (i != 3)
 		print_scene_err(scene, err1);
-	normal_v = ft_malloc(scene, sizeof(t_tuple));
-	normal_v->x = cord[0];
-	normal_v->y = cord[1];
-	normal_v->z = cord[2];
-	normal_v->w = 0.0;
+	normal_v.x = cord[0];
+	normal_v.y = cord[1];
+	normal_v.z = cord[2];
+	normal_v.w = 0.0;
 	scene->tmp_heap->split = free_split(tmp->split);
 	return (normal_v);
 }
 
-t_tuple	*_get_position(t_scene *scene, char *line, char *error)
+t_tuple	_get_position(t_scene *scene, char *line, char *error)
 {
-	t_tuple		*pos;
+	t_tuple		pos;
 	double		cord[3];
 	t_tmp_heap	*tmp;
 	int			i;
@@ -127,11 +125,10 @@ t_tuple	*_get_position(t_scene *scene, char *line, char *error)
 	}
 	if (i != 3)
 		print_scene_err(scene, error);
-	pos = ft_malloc(scene, sizeof(t_tuple));
-	pos->x = cord[0];
-	pos->y = cord[1];
-	pos->z = cord[2];
-	pos->w = 1.0;
+	pos.x = cord[0];
+	pos.y = cord[1];
+	pos.z = cord[2];
+	pos.w = 1.0;
 	scene->tmp_heap->split = free_split(tmp->split);
 	return (pos);
 }

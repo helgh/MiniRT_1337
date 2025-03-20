@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/23 20:04:02 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 16:15:27 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:52:41 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ double	**inverse(t_scene *scene, double **a)
 
 	determinant = det(scene, a);
 	if (determinant == 0.0)
-		return (NULL);
+		return (a);
 	a2 = ft_malloc(scene, sizeof(double *) * 5);
 	if (!a2)
 		return (NULL);

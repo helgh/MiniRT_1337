@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 23:19:51 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/18 00:12:40 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:52:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ static double	get_height_pl(t_obj_draw obj, t_tuple poin, \
 		*u += 1.0;
 	if (*v < 0)
 		*v += 1.0;
-	bump_x = (int) round(*u * (obj.pl->text->w - 1));
-	bump_y = (int) round(*v * (obj.pl->text->h - 1));
-	index = (bump_y * obj.pl->text->s_line + \
-		bump_x * (obj.pl->text->bpp / 8));
-	color = obj.pl->text->data[index];
+	bump_x = (int) round(*u * (obj.pl->text.w - 1));
+	bump_y = (int) round(*v * (obj.pl->text.h - 1));
+	index = (bump_y * obj.pl->text.s_line + \
+		bump_x * (obj.pl->text.bpp / 8));
+	color = obj.pl->text.data[index];
 	height = 2.0 * (color / 255.0) - 1.0;
 	return (height);
 }

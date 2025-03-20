@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 23:43:39 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:45:02 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static t_tuple	normal_sp(t_obj_draw obj, t_tuple pos)
 
 	obj_p = mult_mat_point(obj.sp->inv_trans, pos);
 	local_vec = obj_p;
-	local_vec.w = 0;
+	local_vec.w = 0.0;
 	world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, local_vec);
 	world_vec.w = 0.0;
 	return (normal(world_vec));
@@ -53,7 +53,7 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 	if (op == SPHERE)
 		return (normal_sp(obj, poin));
 	else if (op == PLANE)
-		return (*obj.pl->normal_v);
+		return (obj.pl->normal_v);
 	return (normal_cy(obj, poin));
 }
 
@@ -66,20 +66,20 @@ t_color	lighting(t_light *light, t_obj_draw *obj, t_am_light *am_light)
 	double	light_normal;
 
 	if (obj->render == SPHERE)
-		object = *obj->sp->color;
+		object = obj->sp->color;
 	else if (obj->render == PLANE)
-		object = *obj->pl->color;
+		object = obj->pl->color;
 	else
-		object = *obj->cy->color;
+		object = obj->cy->color;
 	difusse = color(0.0, 0.0, 0.0);
-	ambient = op_color(*am_light->f_color, object, MULT);
+	ambient = op_color(am_light->f_color, object, MULT);
 	if (obj->shadow == true)
 		return (ambient);
-	light_v = normal(op_tuple(*light->pos, obj->position, SUB));
+	light_v = normal(op_tuple(light->pos, obj->position, SUB));
 	light_normal = dot_product(light_v, obj->normal_v);
 	if (light_normal >= 0.0)
 	{
-		difusse = op_color(*light->f_color, object, MULT);
+		difusse = op_color(light->f_color, object, MULT);
 		difusse = color_scal(difusse, light_normal, MULT);
 	}
 	return (op_color(ambient, difusse, ADD));

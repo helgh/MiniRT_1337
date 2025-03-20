@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:47:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 18:11:48 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/18 21:36:01 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,7 @@ void	render(t_scene *scene)
 {
 	t_mlx	*m;
 
-	m = malloc(sizeof(t_mlx));
-	m->mlx = mlx_init();
-	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "miniRT");
-	m->mlx_img = mlx_new_image(m->mlx, WIDTH, HEIGHT);
-	m->pixels = mlx_get_data_addr(m->mlx_img, &m->bpp, &m->s_line, &m->endian);
-	scene->mlx = m;
+	m = scene->mlx;
 	draw(scene, m);
 	mlx_put_image_to_window(m->mlx, m->mlx_win, m->mlx_img, 0, 0);
 	mlx_key_hook(m->mlx_win, &handle_event, scene);

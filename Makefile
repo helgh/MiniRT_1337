@@ -4,18 +4,19 @@ NAME_BONUS = miniRT_bonus
 
 CC = cc
 
-C_FLAGS = -Wall -Wextra -Werror #-fsanitize=address
+C_FLAGS = -Wall -Wextra -Werror
 
 MLX = -lmlx -framework OpenGL -framework Appkit
 
 INC_UTILS = $(addprefix utils/, utils.h macros.h struct.h)
 
-INC = $(addprefix mandatory_part/inc/, Minirt.h) $(INC_UTILS)
-INC_BONUS = $(addprefix bonus_part/inc/, Minirt_bonus.h) $(INC_UTILS)
+INC = $(addprefix mandatory_part/inc/, Minirt.h)
+
+INC_BONUS = $(addprefix bonus_part/inc/, Minirt_bonus.h)
 
 UTILS = $(addprefix utils/, error_free.c ft_malloc.c) \
 		$(addprefix utils/libft_utils/, ft_atof.c ft_strlen.c ft_split.c ft_strcmp.c \
-						get_next_line.c get_next_line_utils.c utils.c ft_strdup.c \
+						get_next_line.c get_next_line_utils.c utils.c ft_strdup.c ft_memset.c \
 						ft_strncmp.c) \
 		$(addprefix utils/transform/, identity_matrix.c inverse.c \
 						determinant.c mult_mat_point.c mult_matrix.c rot_utils.c \
@@ -47,18 +48,18 @@ OBJ_SRC_BONUS = $(SOURCE_BONUS:.c=.o) $(OBJ_UTILS)
 
 all: $(NAME)
 
-$(NAME): $(OBJ_SRC) $(INC)
+$(NAME): $(OBJ_SRC)
 	$(CC) $(C_FLAGS) $(OBJ_SRC) $(MLX) -o $(NAME)
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(OBJ_SRC_BONUS) $(INC_BONUS)
+$(NAME_BONUS): $(OBJ_SRC_BONUS) $(OBJ_UTILS)
 	$(CC) $(C_FLAGS) $(OBJ_SRC_BONUS) $(MLX) -o $(NAME_BONUS)
 
-%.o: %.c $(INC)
+%.o: %.c $(INC_UTILS) $(INC_BONUS)
 	$(CC) $(C_FLAGS) -c $< -o $@
 
-%bonus.o: %bonus.c $(INC_BONUS)
+%.o: %.c $(INC) $(INC_UTILS)
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 clean:

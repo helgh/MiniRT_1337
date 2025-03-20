@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:33:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 23:56:50 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:51:50 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ static double	get_height_sp(t_obj_draw obj, double u, double v)
 	unsigned char	color;
 	double			f_heght;
 
-	bump_x = (int) round(u * (obj.sp->text->w - 1));
-	bump_y = (int) round(v * (obj.sp->text->h - 1));
-	index = (bump_y * obj.sp->text->s_line + bump_x * (obj.sp->text->bpp / 8));
-	color = obj.sp->text->data[index];
+	bump_x = (int) round(u * (obj.sp->text.w - 1));
+	bump_y = (int) round(v * (obj.sp->text.h - 1));
+	index = (bump_y * obj.sp->text.s_line + bump_x * (obj.sp->text.bpp / 8));
+	color = obj.sp->text.data[index];
 	f_heght = 2.0 * (color / 255.0) - 1.0;
 	return (f_heght);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:52:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 21:20:50 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:46:29 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ static t_color	_get_dif_spe(t_light light, t_tuple light_v, t_obj_draw *obj, \
 	if (light_normal >= 0.0)
 	{
 		specular = color(0.0, 0.0, 0.0);
-		difusse = op_color(*light.f_color, col, MULT);
+		difusse = op_color(light.f_color, col, MULT);
 		difusse = color_scal(difusse, light_normal, MULT);
 		ref = reflect(tuple_scal(light_v, -1, OPP), obj->normal_v);
 		ref_dot_eye = dot_product(ref, obj->eye_v);
 		if (ref_dot_eye > 0.0)
 		{
-			specular = color_scal(*light.f_color, \
+			specular = color_scal(light.f_color, \
 				pow(ref_dot_eye, 200.0 * 0.7), MULT);
 		}
 		return (op_color(difusse, specular, ADD));
@@ -49,12 +49,12 @@ t_color	lighting(t_scene *scene, t_obj_draw *obj, t_am_light *am_light, \
 
 	light = scene->light;
 	dif_spe = color(0.0, 0.0, 0.0);
-	ambient = op_color(*am_light->f_color, col, MULT);
+	ambient = op_color(am_light->f_color, col, MULT);
 	while (light)
 	{
 		if (!check_shadow(scene, obj, *light))
 		{
-			light_v = normal(op_tuple(*light->pos, obj->position, SUB));
+			light_v = normal(op_tuple(light->pos, obj->position, SUB));
 			dif_spe = op_color(dif_spe, \
 				_get_dif_spe(*light, light_v, obj, col), ADD);
 		}

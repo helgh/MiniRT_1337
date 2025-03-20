@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:09:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 20:00:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:00:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	**free_split(char **split)
 
 void	_ft_free_part(t_scene *scene)
 {
+	if (!scene->tmp_heap)
+		return ;
 	if (scene->tmp_heap->line)
 		free(scene->tmp_heap->line);
 	if (scene->tmp_heap->spl)
@@ -62,6 +64,8 @@ void	_ft_free_part(t_scene *scene)
 		free_matrix(scene->tmp_heap->rot);
 	if (scene->tmp_heap->all)
 		free_matrix(scene->tmp_heap->all);
+	if (scene->tmp_heap->fd >= 0)
+		close(scene->tmp_heap->fd);
 }
 
 void	_ft_free_all(t_leaks *heap)

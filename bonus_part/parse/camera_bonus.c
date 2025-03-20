@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:27:59 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/08 23:04:48 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:37:23 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,23 @@ static void	camera_compenent(t_scene *scene)
 {
 	t_tmp_heap	*tmp;
 	t_camera	*cam;
-	t_tuple		up;
+	double		aspect;
 
-	up = vector(0.0, 1.0, 0.0);
 	tmp = scene->tmp_heap;
 	cam = scene->camera;
-	tmp->all = view_transform(scene, *cam->pos, *cam->normal_v, up);
+	tmp->all = view_transform(scene, cam->pos, cam->normal_v);
 	cam->inv_transform = inverse(scene, tmp->all);
 	tmp->all = free_matrix(tmp->all);
-	cam->aspect = (double) WIDTH / (double) HEIGHT;
-	if (cam->aspect >= 1.0)
+	aspect = (double) WIDTH / (double) HEIGHT;
+	if (aspect >= 1.0)
 	{
 		cam->half_width = tan(cam->fov / 2.0);
-		cam->half_height = cam->half_width / cam->aspect;
+		cam->half_height = cam->half_width / aspect;
 	}
 	else
 	{
 		cam->half_height = tan(cam->fov / 2.0);
-		cam->half_width = cam->half_height * cam->aspect;
+		cam->half_width = cam->half_height * aspect;
 	}
 	cam->pixel_size = (cam->half_width * 2.0) / (double) WIDTH;
 }
@@ -73,10 +72,10 @@ void	parse_camera(t_scene *scene, char **line)
 	camera->fov = degree_to_rad(_get_fov(scene, line[3]));
 	camera->pos = _get_position(scene, line[1], ERR_C_1);
 	camera->normal_v = _get_normal_v(scene, line[2], ERR_C_1, ERR_C_2);
-	if (magnitude(*camera->normal_v) != 1.0)
+	if (magnitude(camera->normal_v) != 1.0)
 	{
 		write(2, NORMAL_C, ft_strlen(NORMAL_C));
-		*camera->normal_v = normal(*camera->normal_v);
+		camera->normal_v = normal(camera->normal_v);
 	}
 	scene->camera = camera;
 	camera_compenent(scene);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:53:26 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:22:55 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 23:10:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,31 @@ static void	truncate_cone(t_cone *cone, t_ray ray, t_intersect *sec)
 		sec->point_sec_2 = -1;
 }
 
-t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray)
+t_intersect	intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray)
 {
-	t_intersect	*sec;
+	t_intersect	sec;
 	t_ray		new_ray;
 	double		dis;
 	double		arr[3];
 
+	(void) scene;
 	new_ray = transform_ray(ray, cone->inv_trans);
-	sec = ft_malloc(scene, sizeof(t_intersect));
 	dis = discriminant_cone(&new_ray, arr);
-	sec->type = CONE;
-	sec->next = NULL;
 	if (arr[0] == 0.0)
 	{
 		if (arr[1] <= 0.0)
-			return (NULL);
-		return (sec->t = -arr[2] / (2.0 * arr[1]), sec);
+			return (sec.exist = false, sec);
+		return (sec.t = -arr[2] / (2.0 * arr[1]), sec.exist = true, sec);
 	}
 	if (dis < 0)
-		return (NULL);
-	sec->point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
-	sec->point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
-	truncate_cone(cone, new_ray, sec);
-	if (sec->point_sec_1 < EPSILON && sec->point_sec_2 < EPSILON)
-		return (NULL);
-	choise_point(sec);
-	return (sec);
+		return (sec.exist = false, sec);
+	sec.point_sec_1 = (-(arr[1]) - sqrt(dis)) / (2.0 * arr[0]);
+	sec.point_sec_2 = (-(arr[1]) + sqrt(dis)) / (2.0 * arr[0]);
+	truncate_cone(cone, new_ray, &sec);
+	if (sec.point_sec_1 < EPSILON && sec.point_sec_2 < EPSILON)
+		return (sec.exist = false, sec);
+	sec.type = CONE;
+	sec.cone = *cone;
+	choise_point(&sec);
+	return (sec.exist = true, sec);
 }

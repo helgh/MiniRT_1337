@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:07:08 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/05 18:10:17 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:25:36 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,16 @@ double	choise_point(t_intersect *sec)
 	return (sec->t = sec->point_sec_2, sec->point_sec_2);
 }
 
-t_intersect	*hit(t_intersect **secs, int index)
+t_intersect	hit(t_intersect *secs, int index)
 {
 	int			i;
-	t_intersect	*send;
+	t_intersect	send;
 
 	i = -1;
 	send = secs[0];
 	while (++i <= index)
 	{
-		if (send->t > secs[i]->t)
+		if (send.t > secs[i].t)
 			send = secs[i];
 	}
 	return (send);

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 22:29:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:26:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,31 +30,27 @@ void		parse_light(t_scene *scene, char **line);
 // -------------------------  parse_camera  ----------------------------- //
 
 void		parse_camera(t_scene *scene, char **line);
-double		**view_transform(t_scene *scene, t_tuple from, \
-					t_tuple to, t_tuple up);
+double		**view_transform(t_scene *scene, t_tuple from, t_tuple to);
 
 // -------------------------  parse_sphere  ----------------------------- //
 
 void		parse_sphere(t_scene *scene, char **line);
-void		sphere_compenent(t_scene *scene);
 
 // -------------------------  parse_plane  ----------------------------- //
 
 void		parse_plane(t_scene *scene, char **line);
-void		plane_compenent(t_scene *scene);
 
 // -------------------------  parse_cylinder  ----------------------------- //
 
 void		parse_cylinder(t_scene *scene, char **line);
-void		cylinder_compenent(t_scene *scene);
 
 // -------------------------  utils_parse  ----------------------------- //
 
-t_tuple		*_get_position(t_scene *scene, char *line, char *error);
-t_tuple		*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2);
+t_tuple		_get_position(t_scene *scene, char *line, char *error);
+t_tuple		_get_normal_v(t_scene *scene, char *line, char *err1, char *err2);
 int			valid_float(char *str, bool checker);
 void		check_color(t_scene *scene, char *str, char *err1, char *err2);
-t_color		*_get_color(t_scene *scene, char *line);
+t_color		_get_color(t_scene *scene, char *line);
 
 // -------------------------  render  ----------------------------- //
 
@@ -67,11 +63,11 @@ void		check_shadow(t_scene *scene, t_obj_draw *obj);
 // -------------------------  intersect  ----------------------------- //
 
 void		intersect_world(t_scene *scene, t_ray *ray);
-t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
-t_intersect	*intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
-t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
+t_intersect	intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
+t_intersect	intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
+t_intersect	intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
 double		choise_point(t_intersect *sec);
-t_intersect	*hit(t_intersect **secs, int index);
+t_intersect	hit(t_intersect *secs, int index);
 
 // -------------------------  rays  ----------------------------- //
 

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 20:55:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:49:22 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static double	rgb_to_hex(double r, double g, double b)
 static void	prepare_compute(t_scene *scene, t_obj_draw *obj, t_ray ray, int op)
 {
 	if (op == SPHERE)
-		obj->sp = scene->sect->sp;
+		obj->sp = &scene->sect.sp;
 	else if (op == PLANE)
-		obj->pl = scene->sect->pl;
+		obj->pl = &scene->sect.pl;
 	else if (op == CYLINDER)
-		obj->cy = scene->sect->cy;
+		obj->cy = &scene->sect.cy;
 	else
-		obj->cone = scene->sect->cone;
-	obj->position = point_sec(ray, scene->sect->t);
+		obj->cone = &scene->sect.cone;
+	obj->position = point_sec(ray, scene->sect.t);
 	obj->eye_v = tuple_scal(ray.direction_v, -1, OPP);
 	obj->normal_v = normal_at(*obj, obj->position, op);
 	obj->shadow = false;
@@ -51,7 +51,7 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 	else if (object == CYLINDER)
 		color = _color_cy_or_checker(&obj);
 	else
-		color = *obj.cone->color;
+		color = obj.cone->color;
 	color = lighting(scene, &obj, scene->ambient, color);
 	return (color);
 }
@@ -59,15 +59,15 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 static t_color	color_pixel(t_scene *scene, t_ray *ray)
 {
 	intersect_world(scene, ray);
-	if (!scene->sect)
+	if (scene->sect.exist == false)
 		return (color(0.0, 0.0, 0.0));
-	else if (scene->sect->type == SPHERE)
+	else if (scene->sect.type == SPHERE)
 		return (_get_final_color(scene, *ray, SPHERE));
-	else if (scene->sect->type == PLANE)
+	else if (scene->sect.type == PLANE)
 		return (_get_final_color(scene, *ray, PLANE));
-	else if (scene->sect->type == CYLINDER)
+	else if (scene->sect.type == CYLINDER)
 		return (_get_final_color(scene, *ray, CYLINDER));
-	else if (scene->sect->type == CONE)
+	else if (scene->sect.type == CONE)
 		return (_get_final_color(scene, *ray, CONE));
 	return (color(0.0, 0.0, 0.0));
 }

@@ -6,24 +6,22 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/06 18:15:14 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 21:53:34 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt_bonus.h"
 
-t_texture	*get_image_texture(t_scene *scene, char *path)
+t_texture	get_image_texture(t_scene *scene, char *path)
 {
-	t_texture	*texture;
+	t_texture	texture;
 
-	texture = ft_malloc(scene, sizeof(t_texture));
-	texture->mlx = mlx_init();
-	texture->texture = mlx_xpm_file_to_image(texture->mlx, path, \
-		&texture->w, &texture->h);
-	if (!texture->texture)
+	texture.texture = mlx_xpm_file_to_image(scene->mlx->mlx, path, \
+		&texture.w, &texture.h);
+	if (!texture.texture)
 		print_scene_err(scene, BAD_FILE_TEXTURE);
-	texture->data = mlx_get_data_addr(texture->texture, &texture->bpp, \
-		&texture->s_line, &texture->endian);
+	texture.data = mlx_get_data_addr(texture.texture, &texture.bpp, \
+		&texture.s_line, &texture.endian);
 	return (texture);
 }
 

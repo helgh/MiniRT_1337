@@ -6,66 +6,81 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:56:27 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/02/25 18:38:35 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:35:17 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt.h"
 
-static t_intersect	*sec_spheres(t_scene *scene, t_ray *ray)
+static t_intersect	sec_spheres(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*tmp;
+	t_intersect	tmp;
 	t_sphere	*sp;
-	t_intersect	*send;
+	t_intersect	send;
+	bool		flag;
 
-	send = NULL;
+	flag = true;
 	sp = scene->sphere;
+	send.exist = false;
 	while (sp)
 	{
 		tmp = intersect_sphere(scene, sp, ray);
-		if (!send)
+		if (tmp.exist == true && flag == true)
+		{
+			flag = false;
 			send = tmp;
-		else if (tmp && tmp->t < send->t)
+		}
+		else if (tmp.exist == true && tmp.t < send.t)
 			send = tmp;
 		sp = sp->next;
 	}
 	return (send);
 }
 
-static t_intersect	*sec_planes(t_scene *scene, t_ray *ray)
+static t_intersect	sec_planes(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*tmp;
+	t_intersect	tmp;
 	t_plane		*pl;
-	t_intersect	*send;
+	t_intersect	send;
+	bool		flag;
 
-	send = NULL;
+	flag = true;
 	pl = scene->plane;
+	send.exist = false;
 	while (pl)
 	{
 		tmp = intersect_plane(scene, pl, ray);
-		if (!send)
+		if (tmp.exist == true && flag == true)
+		{
+			flag = false;
 			send = tmp;
-		else if (tmp && tmp->t < send->t)
+		}
+		else if (tmp.exist == true && tmp.t < send.t)
 			send = tmp;
 		pl = pl->next;
 	}
 	return (send);
 }
 
-static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
+static t_intersect	sec_cylinders(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*tmp;
+	t_intersect	tmp;
 	t_cylinder	*cy;
-	t_intersect	*send;
+	t_intersect	send;
+	bool		flag;
 
-	send = NULL;
+	flag = true;
 	cy = scene->cylinder;
+	send.exist = false;
 	while (cy)
 	{
 		tmp = intersect_cylinder(scene, cy, ray);
-		if (!send)
+		if (tmp.exist == true && flag == true)
+		{
+			flag = false;
 			send = tmp;
-		else if (tmp && tmp->t < send->t)
+		}
+		else if (tmp.exist == true && tmp.t < send.t)
 			send = tmp;
 		cy = cy->next;
 	}
@@ -74,29 +89,21 @@ static t_intersect	*sec_cylinders(t_scene *scene, t_ray *ray)
 
 void	intersect_world(t_scene *scene, t_ray *ray)
 {
-	t_intersect	*sec_sp;
-	t_intersect	*sec_pl;
-	t_intersect	*sec_cy;
-	t_intersect	*secs[4];
+	t_intersect	sec;
+	t_intersect	secs[4];
 	int			i;
 
 	i = -1;
-	scene->sect = NULL;
-	sec_sp = NULL;
-	sec_pl = NULL;
-	sec_cy = NULL;
-	if (scene->sphere)
-		sec_sp = sec_spheres(scene, ray);
-	if (scene->plane)
-		sec_pl = sec_planes(scene, ray);
-	if (scene->cylinder)
-		sec_cy = sec_cylinders(scene, ray);
-	if (sec_sp)
-		secs[++i] = sec_sp;
-	if (sec_pl)
-		secs[++i] = sec_pl;
-	if (sec_cy)
-		secs[++i] = sec_cy;
+	scene->sect.exist = false;
+	sec = sec_spheres(scene, ray);
+	if (sec.exist)
+		secs[++i] = sec;
+	sec = sec_planes(scene, ray);
+	if (sec.exist)
+		secs[++i] = sec;
+	sec = sec_cylinders(scene, ray);
+	if (sec.exist)
+		secs[++i] = sec;
 	if (i >= 0)
 		scene->sect = hit(secs, i);
 }

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 21:21:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/18 00:11:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/19 22:50:54 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static t_tuple	normal_cy(t_obj_draw obj, t_tuple pos)
 		local_vec = vector(0.0, -1.0, 0.0);
 	else
 	{
-		if (obj.cy->flag_text == true)
+		if (obj.cy->path)
 			local_vec = _bump_map_cylinder(obj, obj_p);
 		local_vec.y = 0;
 	}
@@ -74,7 +74,7 @@ static t_tuple	normal_sp(t_obj_draw obj, t_tuple pos)
 	obj_p = mult_mat_point(obj.sp->inv_trans, pos);
 	local_vec = obj_p;
 	local_vec.w = 0.0;
-	if (obj.sp->flag_text)
+	if (obj.sp->path)
 		local_vec = _bump_map_sphere(obj, obj_p);
 	world_vec = mult_mat_point(obj.sp->transpose_inv_matrix, local_vec);
 	world_vec.w = 0.0;
@@ -89,11 +89,11 @@ t_tuple	normal_at(t_obj_draw obj, t_tuple poin, int op)
 		return (normal_cy(obj, poin));
 	else if (op == CONE)
 		return (normal_cone(obj, poin));
-	if (obj.pl->flag_text == true)
+	if (obj.pl->path)
 	{
-		*obj.pl->normal_v = _bump_map_plane(obj, poin);
-		*obj.pl->normal_v = mult_mat_point(obj.pl->transpose_inv_matrix, \
-			*obj.pl->normal_v);
+		obj.pl->normal_v = _bump_map_plane(obj, poin);
+		obj.pl->normal_v = mult_mat_point(obj.pl->transpose_inv_matrix, \
+			obj.pl->normal_v);
 	}
-	return (*obj.pl->normal_v);
+	return (obj.pl->normal_v);
 }

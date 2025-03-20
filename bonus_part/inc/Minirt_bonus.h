@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/18 00:07:03 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:18:40 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,50 +26,44 @@ void		parse_ab_light(t_scene *scene, char **line);
 // -------------------------  parse_spot_light  ----------------------------- //
 
 void		parse_light(t_scene *scene, char **line);
-void		light_compenent(t_scene *scene);
 
 // -------------------------  parse_camera  ----------------------------- //
 
 void		parse_camera(t_scene *scene, char **line);
-double		**view_transform(t_scene *scene, t_tuple from, \
-					t_tuple to, t_tuple up);
+double		**view_transform(t_scene *scene, t_tuple from, t_tuple to);
 
 // -------------------------  parse_sphere  ----------------------------- //
 
 void		parse_sphere(t_scene *scene, char **line);
-void		sphere_compenent(t_scene *scene);
 
 // -------------------------  parse_plane  ----------------------------- //
 
 void		parse_plane(t_scene *scene, char **line);
-void		plane_compenent(t_scene *scene);
 
 // -------------------------  parse_cylinder  ----------------------------- //
 
 void		parse_cylinder(t_scene *scene, char **line);
-void		cylinder_compenent(t_scene *scene);
 
 // -------------------------  parse_cone  ----------------------------- //
 
 void		parse_cone(t_scene *scene, char **line);
-void		cone_compenent(t_scene *scene);
 
 // -------------------------  parse_checker  ----------------------------- //
 
-t_checker	*_get_checker(t_scene *scene, char **line, char *msg1, char *msg2);
+t_checker	_get_checker(t_scene *scene, char **line, char *msg1, char *msg2);
 
 // -------------------------  texture_parse  ----------------------------- //
 
 char		*texture_parse(t_scene *scene, char **line, char *msg);
-t_texture	*get_image_texture(t_scene *scene, char *path);
+t_texture	get_image_texture(t_scene *scene, char *path);
 
 // -------------------------  utils_parse  ----------------------------- //
 
-t_tuple		*_get_position(t_scene *scene, char *line, char *error);
-t_tuple		*_get_normal_v(t_scene *scene, char *line, char *err1, char *err2);
+t_tuple		_get_position(t_scene *scene, char *line, char *error);
+t_tuple		_get_normal_v(t_scene *scene, char *line, char *err1, char *err2);
 int			valid_float(char *str, bool checker);
 void		check_color(t_scene *scene, char *str, char *err1, char *err2);
-t_color		*_get_color(t_scene *scene, char *line);
+t_color		_get_color(t_scene *scene, char *line);
 double		_check_get_number(t_scene *scene, char *line, char *msg);
 
 // -------------------------  render  ----------------------------- //
@@ -93,12 +87,12 @@ void		spherical_cord(t_obj_draw obj, t_tuple obj_p, \
 // -------------------------  intersect  ----------------------------- //
 
 void		intersect_world(t_scene *scene, t_ray *ray);
-t_intersect	*intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
-t_intersect	*intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
-t_intersect	*intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
-t_intersect	*intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray);
+t_intersect	intersect_sphere(t_scene *scene, t_sphere *sp, t_ray *ray);
+t_intersect	intersect_plane(t_scene *scene, t_plane *pl, t_ray *ray);
+t_intersect	intersect_cylinder(t_scene *scene, t_cylinder *cy, t_ray *ray);
+t_intersect	intersect_cone(t_scene *scene, t_cone *cone, t_ray *ray);
 double		choise_point(t_intersect *sec);
-t_intersect	*hit(t_intersect **secs, int index);
+t_intersect	hit(t_intersect *secs, int index);
 
 // -------------------------  rays  ----------------------------- //
 

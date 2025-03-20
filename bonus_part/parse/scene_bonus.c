@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/17 20:51:41 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 00:14:57 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static void	important_element(t_scene *scene)
 
 static void	parse_element(t_scene *scene, char **line)
 {
-	if (!line[0])
-		return ;
 	if (!strcmp(line[0], "A"))
 		parse_ab_light(scene, line);
 	else if (!strcmp(line[0], "C"))
@@ -52,16 +50,13 @@ static void	parse_scene(t_scene *scene, char *str)
 		scene->tmp_heap->line = get_next_line(scene, scene->tmp_heap->fd);
 		if (!scene->tmp_heap->line)
 			break ;
-		if (strcmp(scene->tmp_heap->line, "\n"))
+		if (scene->tmp_heap->line[0] != 0 && scene->tmp_heap->line[0] != '\n')
 		{
 			scene->tmp_heap->spl = ft_split(scene, scene->tmp_heap->line, 32);
 			parse_element(scene, scene->tmp_heap->spl);
 			scene->tmp_heap->spl = free_split(scene->tmp_heap->spl);
-			free(scene->tmp_heap->line);
-			scene->tmp_heap->line = NULL;
 		}
-		else
-			free(scene->tmp_heap->line);
+		free(scene->tmp_heap->line);
 	}
 	close(scene->tmp_heap->fd);
 	scene->tmp_heap->fd = -1;
@@ -71,9 +66,4 @@ void	parse_part(t_scene *scene, char *str)
 {
 	parse_scene(scene, str);
 	important_element(scene);
-	light_compenent(scene);
-	sphere_compenent(scene);
-	plane_compenent(scene);
-	cylinder_compenent(scene);
-	cone_compenent(scene);
 }
