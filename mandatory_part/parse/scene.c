@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:22:08 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 00:33:55 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static void	important_element(t_scene *scene)
 
 static void	parse_element(t_scene *scene, char **line)
 {
+	if (!line[0])
+		return ;
 	if (!ft_strcmp(line[0], "A"))
 		parse_ab_light(scene, line);
 	else if (!ft_strcmp(line[0], "C"))

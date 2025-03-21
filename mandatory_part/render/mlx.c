@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:47:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/09 00:43:03 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 01:16:36 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	handle_event(int keycode, t_scene *scene)
 {
 	if (keycode == 53)
 	{
+		mlx_clear_window(scene->mlx->mlx, scene->mlx->mlx_win);
 		mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
 		mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
 		__ft_free(scene, 0);
@@ -25,6 +26,7 @@ static int	handle_event(int keycode, t_scene *scene)
 
 static int	close_window(t_scene *scene)
 {
+	mlx_clear_window(scene->mlx->mlx, scene->mlx->mlx_win);
 	mlx_destroy_image(scene->mlx->mlx, scene->mlx->mlx_img);
 	mlx_destroy_window(scene->mlx->mlx, scene->mlx->mlx_win);
 	__ft_free(scene, 0);

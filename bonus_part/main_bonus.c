@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:13:01 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 01:19:46 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,6 @@ static int	check_extention(t_scene *scene, const char *str)
 	return (close(fd), EXIT_FAILURE);
 }
 
-static void	init_mlx(t_scene *scene)
-{
-	t_mlx	*m;
-
-	scene->mlx = ft_malloc(scene, sizeof(t_mlx));
-	m = scene->mlx;
-	m->mlx = mlx_init();
-	m->mlx_win = mlx_new_window(m->mlx, WIDTH, HEIGHT, "miniRT");
-	m->mlx_img = mlx_new_image(m->mlx, WIDTH, HEIGHT);
-	m->pixels = mlx_get_data_addr(m->mlx_img, &m->bpp, &m->s_line, &m->endian);
-}
 
 static t_scene	*init_struct(void)
 {
@@ -53,7 +42,8 @@ static t_scene	*init_struct(void)
 	scene->tmp_heap = ft_malloc(scene, sizeof(t_tmp_heap));
 	ft_memset(scene->tmp_heap, 0, sizeof(t_tmp_heap));
 	scene->tmp_heap->fd = -1;
-	init_mlx(scene);
+	scene->mlx = ft_malloc(scene, sizeof(t_mlx));
+	scene->mlx->init = false;
 	return (scene);
 }
 
@@ -70,7 +60,7 @@ int	main(int ac, char **av)
 	scene = init_struct();
 	if (!scene)
 		return (write(2, F_MALL, \
-			strlen(F_MALL)), 1);
+			ft_strlen(F_MALL)), 1);
 	if (ac != 2)
 		return (print_scene_err(scene, "Invalid argument\n"), 1);
 	if (check_extention(scene, av[1]))

@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:18:40 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 01:10:06 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,5 @@ t_intersect	hit(t_intersect *secs, int index);
 t_ray		transform_ray(t_ray *ray, double **a);
 t_ray		ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
 t_tuple		point_sec(t_ray cam, double t);
-t_tuple		normal_at(t_obj_draw obj, t_tuple poin, int op);
 
 #endif

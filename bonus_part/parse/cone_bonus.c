@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/19 22:48:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 23:59:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	parse_cone(t_scene *scene, char **line)
 	int			len;
 
 	len = lengh(line);
-	if ((len != 6 && len != 7) || (len == 7 && strcmp(line[len - 1], "\n")))
+	if ((len != 6 && len != 7) || (len == 7 && ft_strcmp(line[len - 1], "\n")))
 		print_scene_err(scene, ERR_CO_1);
 	if (valid_float(line[3], false) || valid_float(line[4], false))
 		print_scene_err(scene, ERR_CY_1);

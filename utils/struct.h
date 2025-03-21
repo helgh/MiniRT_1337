@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:43:05 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 01:14:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_mlx
 	int		s_line;
 	int		endian;
 	char	*pixels;
+	bool	init;
 }				t_mlx;
 
 typedef struct s_leaks
@@ -185,7 +186,6 @@ typedef struct s_intersect
 
 typedef struct s_obj_draw
 {
-	int			render;
 	bool		shadow;
 	t_sphere	*sp;
 	t_plane		*pl;

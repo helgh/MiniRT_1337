@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:34:14 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:14:57 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 00:54:20 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,21 @@ static void	important_element(t_scene *scene)
 
 static void	parse_element(t_scene *scene, char **line)
 {
-	if (!strcmp(line[0], "A"))
+	if (!line[0])
+		return ;
+	if (!ft_strcmp(line[0], "A"))
 		parse_ab_light(scene, line);
-	else if (!strcmp(line[0], "C"))
+	else if (!ft_strcmp(line[0], "C"))
 		parse_camera(scene, line);
-	else if (!strcmp(line[0], "l"))
+	else if (!ft_strcmp(line[0], "l"))
 		parse_light(scene, line);
-	else if (!strcmp(line[0], "sp"))
+	else if (!ft_strcmp(line[0], "sp"))
 		parse_sphere(scene, line);
-	else if (!strcmp(line[0], "pl"))
+	else if (!ft_strcmp(line[0], "pl"))
 		parse_plane(scene, line);
-	else if (!strcmp(line[0], "cy"))
+	else if (!ft_strcmp(line[0], "cy"))
 		parse_cylinder(scene, line);
-	else if (!strcmp(line[0], "co"))
+	else if (!ft_strcmp(line[0], "co"))
 		parse_cone(scene, line);
 	else
 		print_scene_err(scene, BAD_TYPE);

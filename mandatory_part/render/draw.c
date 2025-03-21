@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:48:40 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:38:35 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 01:51:16 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,14 @@ static t_color	_get_final_color(t_scene *scene, t_ray ray, int object)
 	t_color		color;
 
 	prepare_compute(scene, &obj, ray, object);
+	if (object == SPHERE)
+		color = obj.sp->color;
+	else if (object == PLANE)
+		color = obj.pl->color;
+	else
+		color = obj.cy->color;
 	check_shadow(scene, &obj);
-	obj.render = object;
-	color = lighting(scene->light, &obj, scene->ambient);
+	color = lighting(scene->light, &obj, scene->ambient, color);
 	return (color);
 }
 

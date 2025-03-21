@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:35:35 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/19 21:53:34 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/21 01:16:29 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ t_texture	get_image_texture(t_scene *scene, char *path)
 {
 	t_texture	texture;
 
+	if (scene->mlx->init == false)
+	{
+		scene->mlx->mlx = mlx_init();
+		scene->mlx->init = true;
+	}
 	texture.texture = mlx_xpm_file_to_image(scene->mlx->mlx, path, \
 		&texture.w, &texture.h);
 	if (!texture.texture)

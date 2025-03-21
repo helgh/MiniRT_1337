@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:43:56 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 00:26:19 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/20 01:38:39 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ t_color		_get_color(t_scene *scene, char *line);
 void		render(t_scene *scene);
 void		draw(t_scene *scene, t_mlx *mlx);
 t_ray		ray_for_pixel(t_camera *camera, int pos_x, int pos_y);
-t_color		lighting(t_light *light, t_obj_draw *obj, t_am_light *am_light);
+t_color		lighting(t_light *light, t_obj_draw *obj, t_am_light *am_light, \
+				t_color col);
 void		check_shadow(t_scene *scene, t_obj_draw *obj);
 
 // -------------------------  intersect  ----------------------------- //
