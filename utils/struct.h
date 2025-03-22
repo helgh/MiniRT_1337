@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 17:54:06 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/21 01:14:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/22 00:55:19 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ typedef struct s_scene
 	t_cone		*cone;
 	t_intersect	sect;
 	t_leaks		*heap;
-	t_mlx		*mlx;
+	t_mlx		mlx;
 }				t_scene;
 
 #endif

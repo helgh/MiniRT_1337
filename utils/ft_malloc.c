@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:47:01 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/19 21:08:52 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/22 00:29:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	__ft_free(t_scene *scene, int exit_status)
 {
 	_ft_free_part(scene);
 	_ft_free_all(scene->heap);
-	free(scene);
 	exit(exit_status);
 }
 

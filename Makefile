@@ -49,17 +49,20 @@ OBJ_SRC_BONUS = $(SOURCE_BONUS:.c=.o) $(OBJ_UTILS)
 all: $(NAME)
 
 $(NAME): $(OBJ_SRC)
-	$(CC) $(C_FLAGS) $(OBJ_SRC) $(MLX) -o $(NAME)
+	$(CC) $(C_FLAGS) -lm $(OBJ_SRC) $(MLX) -o $(NAME)
 
 bonus: $(NAME_BONUS)
 
-$(NAME_BONUS): $(OBJ_SRC_BONUS) $(OBJ_UTILS)
-	$(CC) $(C_FLAGS) $(OBJ_SRC_BONUS) $(MLX) -o $(NAME_BONUS)
+$(NAME_BONUS): $(OBJ_SRC_BONUS)
+	$(CC) $(C_FLAGS) -lm $(OBJ_SRC_BONUS) $(MLX) -o $(NAME_BONUS)
 
-%.o: %.c $(INC_UTILS) $(INC_BONUS)
+utils/%.o: utils/%.c $(INC_UTILS)
 	$(CC) $(C_FLAGS) -c $< -o $@
 
-%.o: %.c $(INC) $(INC_UTILS)
+mandatory_part/%.o: mandatory_part/%.c $(INC)
+	$(CC) $(C_FLAGS) -c $< -o $@
+
+bonus_part/%.o: bonus_part/%.c $(INC_BONUS)
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 clean:

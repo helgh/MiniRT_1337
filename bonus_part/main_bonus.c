@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/21 12:44:53 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/21 01:19:46 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/22 00:37:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static int	check_extention(t_scene *scene, const char *str)
 	return (close(fd), EXIT_FAILURE);
 }
 
-
 static t_scene	*init_struct(void)
 {
 	t_scene	*scene;
@@ -42,21 +41,14 @@ static t_scene	*init_struct(void)
 	scene->tmp_heap = ft_malloc(scene, sizeof(t_tmp_heap));
 	ft_memset(scene->tmp_heap, 0, sizeof(t_tmp_heap));
 	scene->tmp_heap->fd = -1;
-	scene->mlx = ft_malloc(scene, sizeof(t_mlx));
-	scene->mlx->init = false;
+	scene->mlx.init = false;
 	return (scene);
-}
-
-void	leaks(void)
-{
-	system("leaks -q miniRT_bonus");
 }
 
 int	main(int ac, char **av)
 {
 	t_scene	*scene;
 
-	atexit(leaks);
 	scene = init_struct();
 	if (!scene)
 		return (write(2, F_MALL, \
