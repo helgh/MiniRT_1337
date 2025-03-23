@@ -6,11 +6,21 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:45:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/21 02:46:53 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/23 00:06:44 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/Minirt_bonus.h"
+
+static t_tuple	check_forward(t_tuple from, t_tuple to)
+{
+	if (!to.x && !to.y && !to.z)
+	{
+		to.w = 1;
+		return (normal(op_tuple(to, from, SUB)));
+	}
+	return (to);
+}
 
 static t_tuple	check_cross_p(t_tuple forward)
 {
@@ -35,7 +45,7 @@ double	**view_transform(t_scene *scene, t_tuple from, t_tuple to)
 	double		**orientation;
 
 	tmp = scene->tmp_heap;
-	forward = to;
+	forward = check_forward(from, to);
 	left = check_cross_p(forward);
 	true_up = cross_product(left, forward);
 	tmp->scal = identity_matrix(scene);
