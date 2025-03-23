@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 16:57:12 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/20 23:59:16 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/23 00:28:37 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,6 @@ void	parse_cone(t_scene *scene, char **line)
 	ft_memset(cone, 0, sizeof(t_cone));
 	cone->pos = _get_position(scene, line[1], ERR_CO_1);
 	cone->normal_v = _get_normal_v(scene, line[2], ERR_CO_1, ERR_CO_2);
-	if (magnitude(cone->normal_v) != 1.0)
-		cone->normal_v = normal(cone->normal_v);
 	check_color(scene, line[5], ERR_CO_1, ERR_CO_3);
 	cone->color = _get_color(scene, line[5]);
 	cone->radius = _check_get_number(scene, line[3], ERR_CO_1) / 2.0;
