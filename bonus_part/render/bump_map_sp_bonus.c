@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 22:33:43 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/19 22:51:50 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:04:35 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ t_tuple	_bump_map_sphere(t_obj_draw obj, t_tuple obj_p)
 	new_normal_v.x = obj_p.x + height;
 	new_normal_v.y = obj_p.y + height;
 	new_normal_v.z = obj_p.z;
-	new_normal_v.w = 0;
+	new_normal_v.w = 0.0;
 	return (normal(new_normal_v));
 }

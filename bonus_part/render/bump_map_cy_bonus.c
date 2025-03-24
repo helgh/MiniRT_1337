@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/07 23:20:21 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/23 01:22:44 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:03:50 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	cylindrical_cord(t_obj_draw obj, t_tuple poin, double *u, double *v)
 {
 	double	theta;
 
-	theta = atan2(poin.x, poin.z);
+	theta = atan2(poin.z, poin.x);
 	*u = (theta + M_PI) / (2.0 * M_PI);
 	*v = (poin.y + obj.cy->max_min) / (obj.cy->max_min + obj.cy->max_min);
 }
@@ -49,6 +49,6 @@ t_tuple	_bump_map_cylinder(t_obj_draw obj, t_tuple poin)
 	new_normal_v.x = poin.x + height;
 	new_normal_v.y = 0.0;
 	new_normal_v.z = poin.z + height;
-	new_normal_v.w = 0;
+	new_normal_v.w = 0.0;
 	return (normal(new_normal_v));
 }

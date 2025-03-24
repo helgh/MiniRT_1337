@@ -6,7 +6,7 @@
 /*   By: hael-ghd <hael-ghd@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 21:21:16 by hael-ghd          #+#    #+#             */
-/*   Updated: 2025/03/21 01:09:57 by hael-ghd         ###   ########.fr       */
+/*   Updated: 2025/03/24 01:04:52 by hael-ghd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ static t_tuple	normal_cy(t_obj_draw obj, t_tuple pos)
 	{
 		if (obj.cy->path)
 			local_vec = _bump_map_cylinder(obj, obj_p);
-		local_vec.y = 0;
+		local_vec.y = 0.0;
 	}
 	world_vec = mult_mat_point(obj.cy->transpose_inv_matrix, local_vec);
-	world_vec.w = 0;
+	world_vec.w = 0.0;
 	return (normal(world_vec));
 }
 
