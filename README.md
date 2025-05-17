@@ -267,8 +267,14 @@ The ambient light provides a base level of illumination for all objects, while p
 ``` mermaid
 graph TD
 A["Object Parsing"] --> B["Calculate Transform"]
-B --> C["Sphere Transform"] --> D["Translation matrix"<br><small>"(object position)"<small>] --> E["Scaling matrix"<br><small>"object radius"<small>] --> F["Combine matrices"]
-B --> G["Plane/Cylinder Transform"] --> H["rotation matrix"<br><small>"(normal vector alignment)"<small>] --> I["translation matrix"<br><small>"object position"<small>] --> J["Combine matrices"]
+B --> C["Sphere Transform"]
+C --> D["Translation matrix"<br><small>"(object position)"<small>]
+D --> E["Scaling matrix"<br><small>"object radius"<small>]
+E --> F["Combine matrices"]
+B --> G["Plane/Cylinder Transform"]
+G --> H["rotation matrix"<br><small>"(normal vector alignment)"<small>]
+H --> I["translation matrix"<br><small>"object position"<small>]
+I --> J["Combine matrices"]
 F --> K["Calculate inverse matrix"]
 J --> K
 K --> L["Calculate transpose of inverse matrix"]
