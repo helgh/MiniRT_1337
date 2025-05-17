@@ -268,12 +268,12 @@ The ambient light provides a base level of illumination for all objects, while p
 graph TD
 A["Object Parsing"] --> B["Calculate Transform"]
 B --> C["Sphere Transform"]
-C --> D["Translation matrix"<br><small>"(object position)"<small>]
-D --> E["Scaling matrix"<br><small>"object radius"<small>]
+C --> D["Translation matrix<br><small>(object position)</small>"]
+D --> E["Scaling matrix<br><small>object radius</small>"]
 E --> F["Combine matrices"]
 B --> G["Plane/Cylinder Transform"]
-G --> H["rotation matrix"<br><small>"(normal vector alignment)"<small>]
-H --> I["translation matrix"<br><small>"object position"<small>]
+G --> H["rotation matrix<br><small>(normal vector alignment)</small>"]
+H --> I["translation matrix<br><small>object position</small>"]
 I --> J["Combine matrices"]
 F --> K["Calculate inverse matrix"]
 J --> K
