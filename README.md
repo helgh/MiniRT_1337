@@ -42,17 +42,17 @@ graph TD
     A --> F
 ```
 
-##### Each component has a specific responsibility
+##### Each component has a specific responsibility:
 *Scene Parser*
-    - Reads .rt files and creates scene objects
+    - Reads .rt files and creates scene objects.
 **Scene Data Structure**
-    - Central data repository that holds all scene information
+    - Central data repository that holds all scene information.
 **Ray Tracing Engine** 
-    - Performs ray-object intersection calculations and lighting computations
+    - Performs ray-object intersection calculations and lighting computations.
 **MLX Rendering System**
-    - Displays the final rendered image
+    - Displays the final rendered image.
 **Memory Management System**
-    - Manages memory allocation and cleanup
+    - Manages memory allocation and cleanup.
 
 #### Ray Tracing Pipeline
 * The core rendering process follows this pipeline *
