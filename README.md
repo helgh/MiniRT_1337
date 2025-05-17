@@ -31,12 +31,12 @@ MiniRT is a ray tracing renderer that simulates light physics to generate realis
 
 ```mermaid
 graph TD
-    B["Scene Description<br><small>.rt files</small>"] --> C["Scene Parser<br><small>Validates & converts</small>"]
-    C --> D["Scene Data Structure<br><small>t_scene container</small>"]
-    D --> E["Ray Tracing Engine<br><small>Intersections & lighting</small>"]
-    E --> F["MLX Rendering<br><small>Pixel display</small>"]
+    B["Scene Description<small>(.rt files)</small>"] --> C["Scene Parser"]
+    C --> D["Scene Data Structure<br><small>(t_scene)</small>"]
+    D --> E["Ray Tracing Engine"]
+    E --> F["MLX Rendering System"]
     F --> G["Output Image"]
-    A["Memory Management<br><small>Allocation tracking</small>"] --> C
+    A["Memory Management<br> System"] --> C
     A --> D
     A --> E
     A --> F
