@@ -42,8 +42,8 @@ graph TD
     A --> F
 ```
 
-*Each component has a specific responsibility*
-**Scene Parser**
+##### Each component has a specific responsibility
+*Scene Parser*
     - Reads .rt files and creates scene objects
 **Scene Data Structure**
     - Central data repository that holds all scene information
