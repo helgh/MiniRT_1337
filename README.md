@@ -63,9 +63,25 @@ graph TD
 ### -^- Supported Primitive Types
 ##### MiniRT supports several geometric primitives:
 
-    | Primitive  | Mandatory | Bonus | Description                          |
-    |------------|-----------|-------|--------------------------------------|
-    | Sphere     | ✓         | ✓     | Simple sphere defined by center position and radius        |
-    | Plane      | ✓         | ✓     | Infinite plane defined by point and normal vector |
-    | Cylinder   | ✓         | ✓     | Cylinder defined by center, axis, radius, and height  |
-    | Cone       | ✗         | ✓     | Cone defined by center, axis, radius, and height        |
+| Primitive  | Mandatory | Bonus | Description                          |
+|------------|-----------|-------|--------------------------------------|
+| Sphere     | ✓         | ✓     | Simple sphere defined by center position and radius        |
+| Plane      | ✓         | ✓     | Infinite plane defined by point and normal vector |
+| Cylinder   | ✓         | ✓     | Cylinder defined by center, axis, radius, and height  |
+| Cone       | ✗         | ✓     | Cone defined by center, axis, radius, and height        |
+
+##### The bonus implementation also supports advanced surface features:
+    - Texture mapping (using XPM files)
+    - Checkerboard patterns
+    - Bump mapping
+
+### -^- Build System
+##### MiniRT uses a Makefile to manage compilation of both the mandatory and bonus implementations:
+``` mermaid
+graph TD
+A[Makefile] --> B[mandatory(miniRT)]
+A --> C[bonus(miniRT_bonus)]
+B --> D[Utilities]
+C --> D
+
+```
