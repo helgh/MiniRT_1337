@@ -6,7 +6,7 @@
 MiniRT is a C-based ray tracing engine that renders 3D scenes from custom configuration files. It includes both mandatory (basic) and bonus (advanced) implementations.
 
 ## Table of Contents
-- [Features](#Overview)
+- [Overview](#Overview)
 - [System Architecture](#system-architecture)
 - [Ray Tracing Pipeline](#ray-tracing-pipeline)
 - [Core Data Structures](#core-data-structures)
@@ -22,7 +22,7 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 - [License](#license)
 
 ## Overview
-This document provides a high-level overview of MiniRT, a ray tracing engine implemented in C that renders 3D scenes described in a custom .rt file format. For specific details about the scene file format, see (#Scene Description Format).
+This document provides a high-level overview of MiniRT, a ray tracing engine implemented in C that renders 3D scenes described in a custom .rt file format. For specific details about the scene file format, see [System Architecture](#system-architecture)
 
 ### Mandatory Features
 - 🎯 Ray tracing with spheres, planes, and cylinders
