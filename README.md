@@ -63,9 +63,9 @@ graph TD
 ### -^- Supported Primitive Types
 ##### MiniRT supports several geometric primitives:
 
-| Primitive  | Mandatory | Bonus | Description                          |
-|------------|-----------|-------|--------------------------------------|
-| Sphere     | ✓         | ✓     | Simple sphere defined by center position and radius        |
-| Plane      | ✓         | ✓     | Infinite plane defined by point and normal vector |
-| Cylinder   | ✓         | ✓     | Cylinder defined by center, axis, radius, and height  |
-| Cone       | ✗         | ✓     | Cone defined by center, axis, radius, and height        |
+    | Primitive  | Mandatory | Bonus | Description                          |
+    |------------|-----------|-------|--------------------------------------|
+    | Sphere     | ✓         | ✓     | Simple sphere defined by center position and radius        |
+    | Plane      | ✓         | ✓     | Infinite plane defined by point and normal vector |
+    | Cylinder   | ✓         | ✓     | Cylinder defined by center, axis, radius, and height  |
+    | Cone       | ✗         | ✓     | Cone defined by center, axis, radius, and height        |
