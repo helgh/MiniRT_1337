@@ -1,6 +1,6 @@
 # MiniRT - A Minimal Ray Tracer in C
 
-![MiniRT Banner](https://via.placeholder.com/1200x400?text=MiniRT+Ray+Tracing+Renderer)
+![MiniRT Banner](https://github.com/helgh/MiniRT_1337/blob/master/Screenshot%20from%202025-05-17%2018-29-59.png)
 
 MiniRT is a C-based ray tracing engine that renders 3D scenes from custom configuration files. It includes both mandatory (basic) and bonus (advanced) implementations.
 
