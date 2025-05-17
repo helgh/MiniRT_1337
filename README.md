@@ -216,7 +216,29 @@ C --> D["Element-specific Parameters"]
 
 `Example: co 10,10,-5 1,-1,0 4 10 0,51,255`
 
-### -^- Surface Properties
-
-
-
+### -^- Parsing Process
+``` mermaid
+graph TD
+A["Read `.rt` file"] --> B["Process line by line"]
+B --> C["Identify element type"]
+C --> D["Parse ambient light"]
+C --> E["Parse camera"]
+C --> F["Parse light source"]
+C --> G["Parse sphere"]
+C --> H["Parse plane"]
+C --> I["Parse cylinder"]
+C --> J["Parse cone (bonus)"]
+D--> K["Add to t_scene data structure"]
+E --> K
+F --> K
+G --> K
+H --> K
+I --> K
+J --> K
+K --> L["Continue to next line"]
+L --> M["End of file ?"]
+M --> N["Yes"]
+M --> O["No"]
+N --> P["Complete scene ready for ray tracing"]
+O --> B
+```
