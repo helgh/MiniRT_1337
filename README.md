@@ -83,5 +83,10 @@ A["Makefile"] --> B["mandatory(miniRT)"]
 A --> C["bonus(miniRT_bonus)"]
 B --> D["Utilities"]
 C --> D
-
+B --> E["Parser"]
+B --> F["Render"]
+B --> G["Intersect"]
+C --> H["Bonus Parser"]
+C --> I["Bonus Render"]
+C --> J["Bonus Intersect"]
 ```
