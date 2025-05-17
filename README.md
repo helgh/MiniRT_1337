@@ -121,9 +121,9 @@ C --> D["Element-specific Parameters"]
 | co         | Cone | No (Bonus) | Conical geometric primitive |
 
 ### -^- Scene Configuration Elements
-##### Ambient Light(A)
-    Defines the global ambient lighting for the entire scene.
-    **Syntax:** ` A intensity color`
+**Ambient Light(A)**
+##### Defines the global ambient lighting for the entire scene.
+`Syntax: A intensity color`
 
 
 
