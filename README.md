@@ -21,31 +21,26 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 - [Contributing](#contributing)
 - [License](#license)
 
-## Overview
-This document provides a high-level overview of MiniRT, a ray tracing engine implemented in C that renders 3D scenes described in a custom .rt file format. For specific details about the scene file format, see [System Architecture](#system-architecture)
+### Overview
+This document provides a high-level overview of MiniRT, a ray tracing engine implemented in C that renders 3D scenes described in a custom .rt file format. For specific details about the scene file format, see [System Architecture](#system-architecture).
 
-### Mandatory Features
-- 🎯 Ray tracing with spheres, planes, and cylinders
-- 💡 Multiple light sources with shadows
-- 📷 Camera movement and perspective control
-- 🖌️ Basic scene rendering
+#### What is MiniRT?
+MiniRT is a ray tracing renderer that simulates light physics to generate realistic images of 3D scenes. The project includes both a mandatory implementation with basic features and a bonus implementation that adds advanced capabilities such as textures, bump mapping, and additional primitive types.
 
-### Bonus Features
-- 🔺 Cone primitive support
-- 🖼️ Texture mapping (XPM files)
-- 🌀 Bump mapping effects
-- ♟️ Checkerboard patterns
-
-## System Architecture
+#### System Architecture
 
 ```mermaid
 graph TD
-    A[.rt Scene File] --> B[Scene Parser]
-    B --> C[t_scene Structure]
-    C --> D[Ray Tracer]
-    D --> E[MLX Display]
-    C --> F[Memory Manager]
-
+    A[Memory Management System] --> B[Scene Description (.rt files)]
+    A --> C[Scene Parser]
+    A --> D[Scene Data Structure (t_scene)]
+    A --> E[Ray Tracing Engine]
+    A --> F[MLX Rendering System]
+    B --> C
+    C --> D
+    D --> E
+    E --> F
+    F --> G[Output Image]
 ```
 
 | Primitive  | Mandatory | Bonus | Description                          |
