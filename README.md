@@ -40,14 +40,6 @@ graph TD
     A --> D
     A --> E
     A --> F
-    
-    style A fill:#f9f,stroke:#333
-    style B fill:#6af,stroke:#333
-    style C fill:#6af,stroke:#333
-    style D fill:#6af,stroke:#333
-    style E fill:#6af,stroke:#333
-    style F fill:#6af,stroke:#333
-    style G fill:#8f8,stroke:#333
 ```
 
 | Primitive  | Mandatory | Bonus | Description                          |
