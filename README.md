@@ -22,8 +22,6 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 
 ## Features
 
-### asdf
-
 ### Mandatory Features
 - 🎯 Ray tracing with spheres, planes, and cylinders
 - 💡 Multiple light sources with shadows
