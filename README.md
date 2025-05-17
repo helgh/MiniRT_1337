@@ -90,3 +90,9 @@ C --> H["Bonus Parser"]
 C --> I["Bonus Render"]
 C --> J["Bonus Intersect"]
 ```
+### -^- Usage
+##### MiniRT is invoked from the command line with a scene file as its only argument:
+    `./miniRT scene_file.rt`
+##### or for the bonus version:
+    `./miniRT_bonus scene_file.rt`
+The program will render the scene and display it in a window.
