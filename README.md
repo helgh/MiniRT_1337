@@ -124,6 +124,29 @@ C --> D["Element-specific Parameters"]
 **Ambient Light(A)**
 ##### Defines the global ambient lighting for the entire scene.
 `Syntax: A intensity color`
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| Intensity | Float (0.0-1.0) | Brightness of the ambient light |
+| color | r.g.b (0-255) | RGB color values of the ambient light |
+`Example: A 0.1 50,50,50`
+**Camera(C)**
+##### Defines the viewpoint from which the scene is rendered.
+`Syntax: C position orientation fov`
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of the camera position |
+| orientation | x,y,z | Normalized vector (-1 to 1) indicating camera direction |
+| fov | Integer | Field of view in degrees (typically 0-180) |
+`Example: C 0,0,-10 0,0,1.0 60`
+**Light Source(L/l)**
+##### Defines a point light source in the scene.
+`Syntax: L/l position bghitness color`
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of the light source |
+| bghitness | Float (0.0-1.0) | Intensity of the light source |
+| color | r,g,b (0-255) | RGB color values of the light |
+`Example: L/l -10,10,-10 1 255,255,255`
 
 
 
