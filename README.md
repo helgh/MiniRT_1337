@@ -42,7 +42,7 @@ graph TD
     A --> F
 ```
 
-**Each component has a specific responsibility:**
+##### Each component has a specific responsibility:
     - **Scene Parser**: Reads `.rt` files and creates scene objects
     - **Scene Data Structure**: Central data repository for all scene information  
     - **Ray Tracing Engine**: Performs ray-object intersections and lighting calculations
