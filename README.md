@@ -122,8 +122,8 @@ C --> D["Element-specific Parameters"]
 
 ### -^- Scene Configuration Elements
 ##### Ambient Light(A)
-Defines the global ambient lighting for the entire scene.
-**Syntax:** `A intensity color`
+    Defines the global ambient lighting for the entire scene.
+    **Syntax:** ` A intensity color`
 
 
 
