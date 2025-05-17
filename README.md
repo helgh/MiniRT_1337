@@ -44,6 +44,8 @@ graph TD
     D --> E[MLX Display]
     C --> F[Memory Manager]
 
+```
+
 | Primitive  | Mandatory | Bonus | Description                          |
 |------------|-----------|-------|--------------------------------------|
 | Sphere     | ✓         | ✓     | Defined by center and radius         |
