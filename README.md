@@ -7,7 +7,7 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 
 ## Table of Contents
 - [Overview](#Overview)
-- [System Architecture](#system-architecture)
+- [Scene Description Format](#Scene-Description-Format)
 - [Ray Tracing Pipeline](#ray-tracing-pipeline)
 - [Core Data Structures](#core-data-structures)
 - [Primitive Types](#primitive-types)
@@ -90,9 +90,48 @@ C --> H["Bonus Parser"]
 C --> I["Bonus Render"]
 C --> J["Bonus Intersect"]
 ```
+
 ### -^- Usage
 ##### MiniRT is invoked from the command line with a scene file as its only argument:
     `./miniRT scene_file.rt`
 ##### or for the bonus version:
     `./miniRT_bonus scene_file.rt`
 The program will render the scene and display it in a window.
+
+## Scene Description Format
+### -^- File Format Overview
+MiniRT uses text-based .rt files to define complete 3D scenes. Each line in the file represents a single scene element, with the first identifier determining the type of element.
+``` mermaid
+graph TD
+A["Scene Description File(.rt)"] --> B["Scene Elements(one per line)"]
+B --> C["Element Type Identifier"]
+C --> D["Element-specific Parameters"]
+```
+### -^- Element Types and Syntax
+##### The .rt file format supports the following element types:
+
+| Identifier | Element Type | Required | Description |
+| ---------- | ------------ | -------- | ----------- |
+| A          | Ambient Light | Yes(1) | Global ambient lighting for the scene |
+| C          | Camera | Yes(1) | Viewpoint for rendering the scene |
+| L or l     | Light | Yes(>= 1) | Point light source |
+| sp         | Sphere | No | Spherical geometric primitive |
+| pl         | plane | NO | Infinite plane geometric primitive |
+| cy         | Cylinder | No | Cylindrical geometric primitive |
+| co         | Cone | No (Bonus) | Conical geometric primitive |
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
