@@ -156,15 +156,67 @@ C --> D["Element-specific Parameters"]
 
 `Example: L/l -10,10,-10 1 255,255,255`
 
+**Sphere(sp)**
+##### Defines a sphere in the scene.
+`Syntax: sp position diameter color [checker size checker_color] [texture=path]`
 
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of the sphere's center |
+| diameter | Float | Diameter of the sphere |
+| color | r,g,b (0-255) | RGB color values of the sphere |
 
+- checker and textures are optional
 
+`Example: sp 0,0,0 4 255,51,255`
 
+**Plane(pl)**
+##### Defines an infinite plane in the scene.
+`Syntax: pl position normal color [checker size checker_color] [texture=path]`
 
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of a point on the plane |
+| normal | x,y,z | Normalized vector perpendicular to the plane |
+| color | r,g,b (0-255) | RGB color values of the plane |
 
+- checker and textures are optional
 
+`Example: pl 0,0,0 0,-1,0 255,200,40`
 
+**Cylinder(cy)**
+##### Defines a cylinder in the scene.
+`Syntax: cy position axis radius height color [checker size checker_color]`
 
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of the center of cylinder's base |
+| axis | x,y,z | Normalized vector indicating cylinder orientation |
+| radius | Float | Radius of the cylinder |
+| height | Float | Height of the cylinder |
+| color | r,g,b (0-255) | RGB color values of the cylinder |
+
+- checker and textures are optional
+
+`Example: cy 2,0,0 0,1,0 2 4 100,200,100`
+
+**Cone(co)-Bonus Feature**
+##### Defines a cone in the scene (only available in the bonus implementation).
+`Syntax: co position axis radius height color [checker size checker_color] [texture=path]`
+
+| Parameter | Type | Description |
+| --------- | ---- | ----------- |
+| position | x,y,z | 3D coordinates of the center of cone's base |
+| axis | x,y,z | Normalized vector indicating cone orientation |
+| radius | Float | Radius of the cone's base |
+| height | Float | Height of the cone |
+| color | r,g,b (0-255) | RGB color values of the cone |
+
+- checker and textures are optional
+
+`Example: co 10,10,-5 1,-1,0 4 10 0,51,255`
+
+### -^- Surface Properties
 
 
 
