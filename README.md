@@ -284,6 +284,14 @@ L --> M["Store matrices in object structure"]
 ## Guide
 [Ray tracing challenge](https://api.pageplace.de/preview/DT0400.9781680506792_A37437237/preview-9781680506792_A37437237.pdf)
 
+##### ray sphere intersection
+[ray sphere intersection](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-sphere-intersection.html)
+
+##### ray plane intersection
+[ray plane intersection](https://www.scratchapixel.com/lessons/3d-basic-rendering/minimal-ray-tracer-rendering-simple-shapes/ray-plane-and-ray-disk-intersection.html)
+
+##### ray cylinder intersection
+[ray cylinder intersection](https://mrl.cs.nyu.edu/~dzorin/rendering/lectures/lecture3/lecture3.pdf)
 
 
 
