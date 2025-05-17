@@ -9,7 +9,7 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 - [Overview](#Overview)
 - [Scene Description Format](#Scene-Description-Format)
 - [Object Structures and Representation](#Object-Structures-and-Representation)
-- [Core Data Structures](#core-data-structures)
+- [Guide](#Ray-tracing-challenge)
 - [Primitive Types](#primitive-types)
 - [Memory Management](#memory-management)
 - [Build System](#build-system)
@@ -279,10 +279,10 @@ L --> M["Store matrices in object structure"]
 ##### The transformation matrices serve several key purposes:
     1. They allow complex intersection calculations to be performed in a simplified object space
     2. They enable calculation of surface normals which are essential for lighting and reflection
-    3.They maintain the orientation and scale of objects relative to the world coordinate system
+    3. They maintain the orientation and scale of objects relative to the world coordinate system
 
-
-
+## Guide
+[Ray tracing challenge](https://api.pageplace.de/preview/DT0400.9781680506792_A37437237/preview-9781680506792_A37437237.pdf)
 
 
 
