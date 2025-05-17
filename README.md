@@ -120,8 +120,10 @@ C --> D["Element-specific Parameters"]
 | cy         | Cylinder | No | Cylindrical geometric primitive |
 | co         | Cone | No (Bonus) | Conical geometric primitive |
 
-
-
+### -^- Scene Configuration Elements
+##### Ambient Light(A)
+Defines the global ambient lighting for the entire scene.
+**Syntax:** `A intensity color`
 
 
 
