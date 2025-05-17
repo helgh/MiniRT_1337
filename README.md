@@ -8,7 +8,7 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 ## Table of Contents
 - [Overview](#Overview)
 - [Scene Description Format](#Scene-Description-Format)
-- [Ray Tracing Pipeline](#ray-tracing-pipeline)
+- [Object Structures and Representation](#Object-Structures-and-Representation)
 - [Core Data Structures](#core-data-structures)
 - [Primitive Types](#primitive-types)
 - [Memory Management](#memory-management)
@@ -242,3 +242,53 @@ M --> O["No"]
 N --> P["Complete scene ready for ray tracing"]
 O --> B
 ```
+
+## Object Structures and Representation
+##### Each object type in MiniRT has its own data structure to store its properties.
+### Camera Representation
+The camera defines the viewpoint from which the scene is rendered.
+When a camera is parsed, a view transformation matrix is calculated based on its position and orientation. This matrix is then inverted to transform rays from the camera space into world space.
+
+### Light and Ambient Light Representation
+Lights are essential for illumination calculation in the ray tracer.
+The ambient light provides a base level of illumination for all objects, while point lights create directional lighting effects.
+
+### Geometric Objects Representation
+###### Each geometric object maintains:
+    - Position information
+    - Shape-specific parameters (radius, normal vector, etc.)
+    - Color information
+    - Transformation matrices for ray intersection calculations
+    - A pointer to the next object of the same type (linked list)
+
+### Transformation Calculation
+##### A key aspect of object representation is the calculation of transformation matrices, which are used to simplify intersection calculations.
+
+``` mermaid
+graph TD
+A["Object Parsing"] --> B["Calculate Transform"]
+B --> C["Sphere Transform"] --> D["Translation matrix"<br><small>"(object position)"<small>] --> E["Scaling matrix"<br><small>"object radius"<small>] --> F["Combine matrices"]
+B --> G["Plane/Cylinder Transform"] --> H["rotation matrix"<br><small>"(normal vector alignment)"<small>] --> I["translation matrix"<br><small>"object position"<small>] --> J["Combine matrices"]
+F --> K["Calculate inverse matrix"]
+J --> K
+K --> L["Calculate transpose of inverse matrix"]
+L --> M["Store matrices in object structure"]
+```
+
+### Transformation Purpose
+##### The transformation matrices serve several key purposes:
+    1. They allow complex intersection calculations to be performed in a simplified object space
+    2. They enable calculation of surface normals which are essential for lighting and reflection
+    3.They maintain the orientation and scale of objects relative to the world coordinate system
+
+
+
+
+
+
+
+
+
+
+
+
