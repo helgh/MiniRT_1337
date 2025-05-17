@@ -131,6 +131,7 @@ C --> D["Element-specific Parameters"]
 | color | r.g.b (0-255) | RGB color values of the ambient light |
 
 `Example: A 0.1 50,50,50`
+
 **Camera(C)**
 ##### Defines the viewpoint from which the scene is rendered.
 `Syntax: C position orientation fov`
@@ -142,6 +143,7 @@ C --> D["Element-specific Parameters"]
 | fov | Integer | Field of view in degrees (typically 0-180) |
 
 `Example: C 0,0,-10 0,0,1.0 60`
+
 **Light Source(L/l)**
 ##### Defines a point light source in the scene.
 `Syntax: L/l position bghitness color`
