@@ -79,9 +79,9 @@ graph TD
 ##### MiniRT uses a Makefile to manage compilation of both the mandatory and bonus implementations:
 ``` mermaid
 graph TD
-A[Makefile] --> B[mandatory(miniRT)]
-A --> C[bonus(miniRT_bonus)]
-B --> D[Utilities]
+A["Makefile"] --> B["mandatory(miniRT)"]
+A --> C["bonus(miniRT_bonus)"]
+B --> D["Utilities"]
 C --> D
 
 ```
