@@ -43,3 +43,10 @@ graph TD
     C --> D[Ray Tracer]
     D --> E[MLX Display]
     C --> F[Memory Manager]
+
+| Primitive  | Mandatory | Bonus | Description                          |
+|------------|-----------|-------|--------------------------------------|
+| Sphere     | ✓         | ✓     | Defined by center and radius         |
+| Plane      | ✓         | ✓     | Infinite plane with point and normal |
+| Cylinder   | ✓         | ✓     | Defined by center, axis, dimensions  |
+| Cone       | ✗         | ✓     | Circular cone with apex angle        |
