@@ -17,7 +17,7 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 - [Overview](#Overview)
 - [Scene Description Format](#Scene-Description-Format)
 - [Object Structures and Representation](#Object-Structures-and-Representation)
-- [Guide](#Ray-tracing-challenge)
+- [Guide](#Guide)
 - [Primitive Types](#primitive-types)
 - [Memory Management](#memory-management)
 - [Build System](#build-system)
