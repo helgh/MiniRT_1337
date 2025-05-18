@@ -17,17 +17,8 @@ MiniRT is a C-based ray tracing engine that renders 3D scenes from custom config
 - [Overview](#Overview)
 - [Scene Description Format](#Scene-Description-Format)
 - [Object Structures and Representation](#Object-Structures-and-Representation)
+- [Usage](#Usage)
 - [Guide](#Guide)
-- [Primitive Types](#primitive-types)
-- [Memory Management](#memory-management)
-- [Build System](#build-system)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Scene File Format](#scene-file-format)
-- [Controls](#controls)
-- [Examples](#examples)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Overview
 This document provides a high-level overview of MiniRT, a ray tracing engine implemented in C that renders 3D scenes described in a custom .rt file format. For specific details about the scene file format, see [-^- System Architecture](#system-architecture).
@@ -98,13 +89,6 @@ C --> H["Bonus Parser"]
 C --> I["Bonus Render"]
 C --> J["Bonus Intersect"]
 ```
-
-### -^- Usage
-##### MiniRT is invoked from the command line with a scene file as its only argument:
-    `./miniRT scene_file.rt`
-##### or for the bonus version:
-    `./miniRT_bonus scene_file.rt`
-The program will render the scene and display it in a window.
 
 ## Scene Description Format
 ### -^- File Format Overview
@@ -288,6 +272,14 @@ L --> M["Store matrices in object structure"]
     1. They allow complex intersection calculations to be performed in a simplified object space
     2. They enable calculation of surface normals which are essential for lighting and reflection
     3. They maintain the orientation and scale of objects relative to the world coordinate system
+
+## Usage
+
+##### MiniRT is invoked from the command line with a scene file as its only argument:
+    `./miniRT scene_file.rt`
+##### or for the bonus version:
+    `./miniRT_bonus scene_file.rt`
+The program will render the scene and display it in a window.
 
 ## Guide
 [Ray tracing challenge](https://api.pageplace.de/preview/DT0400.9781680506792_A37437237/preview-9781680506792_A37437237.pdf)
